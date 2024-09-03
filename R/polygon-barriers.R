@@ -16,29 +16,29 @@
 
 
 #' @export
-as_point_barriers <- function(x, ...) {
-  UseMethod("as_point_barriers")
+as_polygon_barriers <- function(x, ...) {
+  UseMethod("as_polygon_barriers")
 }
 
 #'@export
-as_point_barriers.NULL <- function(x, ...) {
+as_polygon_barriers.NULL <- function(x, ...) {
   NULL
 }
 
 #' @export
-as_point_barriers.sfc <- function(x, ...) {
+as_polygon_barriers.sfc <- function(x, ...) {
 
-  if (length(x) > 250) {
-    cli::cli_abort("Only a maximum of 250 point barriers can be provided found {.val {length(x)}}")
+  cat("dispatching sfc\n")
+  if (!inherits(x, c("sfc_POLYGON", "sfc_MULTIPOLYGON"))) {
+    cli::cli_abort("Polygon barriers must be a POLYGON or a MULTIPOLYGON not {obj_type_friendly(x)}")
   }
 
-  if (!inherits(x, "sfc_POINT")) {
-    cli::cli_abort("Polyline barriers must be a LINESTRING or a MULTILINESTRING not {obj_type_friendly(x)}")
-  }
-
-  # if an sfc, then we just assume all points are barriers
   if (is.na(sf::st_crs(x))) {
     cli::cli_abort(c("!" = "`crs` is not set. Please set the crs."))
+  }
+
+  if (length(x) > 2000) {
+    cli::cli_abort("Only a maximum of 2000 polygon barriers can be provided found {.val {length(x)}}")
   }
 
   arcgisutils::as_esri_features(
@@ -52,28 +52,36 @@ as_point_barriers.sfc <- function(x, ...) {
 
 
 #'@export
-as_point_barriers.sf <- function(x, ...) {
+as_polygon_barriers.sf <- function(x, ...) {
+
   if (is.na(sf::st_crs(x))) {
     cli::cli_abort(c("!" = "`crs` is not set. Please set the crs."))
   }
 
   if (ncol(x) == 1L) {
-    return(as_point_barriers(sf::st_geometry(x)))
+    return(as_polygon_barriers(sf::st_geometry(x)))
   }
 
   n <- nrow(x)
-  if (n > 250) {
-    cli::cli_abort("Only a maximum of 250 point barriers can be provided found {.val {n}}")
+  if (n > 2000) {
+    cli::cli_abort("Only a maximum of 2000 polygon barriers can be provided found {.val {n}}")
+  }
+
+  geo_type <- as.character(sf::st_geometry_type(x, by_geometry = FALSE))
+
+  # check geometry type
+  if (!geo_type %in% c("POLYGON", "MULTIPOLYGON")) {
+    cli::cli_abort("Polygon barriers must be a POLYGON or a MULTIPOLYGON not {.val {geo_type}}")
   }
 
   # create a lookup for this here fellas
   imp_lu <- setNames(paste0("Attr_", impedance_lu), names(impedance_lu))
-  lu <- c(imp_lu, "name" = "Name", "full_edge" = "FullEdge")
+  lu <- c(imp_lu, "name" = "Name")
 
   common_cols <- intersect(names(lu), colnames(x))
   
   if (is.null(common_cols)) {
-    as_point_barriers(sf::st_geometry(x))
+    as_polygon_barriers(sf::st_geometry(x))
   }
 
   # subset in the event there are extras
@@ -81,23 +89,20 @@ as_point_barriers.sf <- function(x, ...) {
 
   # do column level checks in here
   for (col in common_cols) {
-    # if the column is full_edge check that it is a boolean and coerce to int
-    if (col == "full_edge") {
-      check_logical(x[[col]], arg = col)
-      x[[col]] <- as.integer(x[[col]])
-    } else if (col == "name") {
+    if (col == "name") {
       check_character(x[[col]])
     } else if (!rlang::is_bare_numeric(x[[col]])) {
       cli::cli_abort("Expected impedance column {.col {col}} to be numeric. Found {obj_type_friendly(x[[col]])}.")
     }
   }
+  
 
   # set the names appropriately
   colnames(x) <- c(lu[common_cols], "geometry")
   sf::st_geometry(x) <- "geometry"
 
   # set the barrier type
-  x[["BarrierType"]] <- 2L
+  x[["BarrierType"]] <- 1L
 
   arcgisutils::as_esri_features(x)
 }

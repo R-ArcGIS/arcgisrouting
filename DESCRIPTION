@@ -14,10 +14,11 @@ Imports:
     arcgisutils,
     cli,
     httr2,
-    wk,
+    sf,
     yyjsonr
 Depends: 
     R (>= 4.1)
 Suggests: 
+    arcgislayers,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

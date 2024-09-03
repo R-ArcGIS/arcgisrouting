@@ -64,8 +64,11 @@ travel_cost_matrix <- function(
     restrictions = NULL,
     point_barriers = NULL,
     line_barriers = NULL,
-    polygon_barriers = NULL
+    polygon_barriers = NULL,
+    token = arcgisutils::arc_token()
   ) {
+  # TODO choose altrenative routing services
+  
   # travel_mode, if provided needs to be turned into JSON from
   # retrieve_travel_modes() stored in the attributeParameterValues column
 

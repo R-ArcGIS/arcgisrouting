@@ -4,7 +4,7 @@
 \alias{retrieve_travel_modes}
 \title{Retrieve Available Travel Modes}
 \usage{
-retrieve_travel_modes(token = arc_token())
+retrieve_travel_modes(token = arcgisutils::arc_token())
 }
 \description{
 Retrieve Available Travel Modes

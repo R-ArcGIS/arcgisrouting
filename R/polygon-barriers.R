@@ -28,7 +28,6 @@ as_polygon_barriers.NULL <- function(x, ...) {
 #' @export
 as_polygon_barriers.sfc <- function(x, ...) {
 
-  cat("dispatching sfc\n")
   if (!inherits(x, c("sfc_POLYGON", "sfc_MULTIPOLYGON"))) {
     cli::cli_abort("Polygon barriers must be a POLYGON or a MULTIPOLYGON not {obj_type_friendly(x)}")
   }

@@ -17,17 +17,19 @@
 #   useHierarchy - easy
 #   restrictUTurns -
 #   impedanceAttributeName -
-#   accumulateAttributeNames - 
-#   restrictionAttributeNames - 
-#   attributeParameterValues - 
+#   accumulateAttributeNames -
+#   restrictionAttributeNames -
+#   attributeParameterValues -
 #   barriers - needs to be treated as points, max 250, can have a additional fields
 #   polylineBarriers - lines, max 500
-#   polygonBarriers - polygon, 
+#   polygonBarriers - polygon,
 #   returnOrigins
 #   returnDestinations
 #   returnBarriers
 
 
+#' @param origins TODO
+#' @param destinations TODO
 #' @param travel_mode default `NULL`. A scalar character of the travel mode's ID.
 #' @param cutoff default `NULL`. Determines the maximum distance or time to stop searching.
 #' @param n_target_destinations a numeric scalar. By default all origins and destinations are matched.
@@ -36,31 +38,19 @@
 #' @param u_turns default `"allow_backtrack"`. Must be one of `"allow_backtrack"`, `"deadend_intersection"`, `"deadend"`, or `"no_backtrack"`. Determines the conditions when a U-turn is permitted.
 #' @param impedance default `"travel_time"`. Determines how travel distance is measured. Must be one of `"travel_time"`, `"minutes"`, `"truck_travel_time"`, `"truck_minutes"`, `"walk_time"`, `"miles"`, `"kilometers"`. Suppressed by `travel_mode`. ([Reference](https://developers.arcgis.com/rest/routing/origin-destination-cost-matrix-synchronous-service/#impedanceattributename))
 #' @param accumulate_impedance default `NULL`. Calculate additional impedance metrics. These will be reported, but not used in calculating the best route. Has same values as `impedance`. ([Reference](https://developers.arcgis.com/rest/routing/origin-destination-cost-matrix-synchronous-service/#accumulateattributenames))
-#' 
-#' ## Argument Details
 #'
-#' ### `travel_mode`
-#'
-#' When the `travel_mode` parameter is set, you are choosing a travel mode configured in your organization, and the service automatically overrides the values of other parameters with values that model the chosen travel mode. The following parameters are overridden: `impedance_attribute_name` , `attribute_parameter_values` , `restrict_uturns` , `use_hierarchy` , `restriction_attribute_names` , and `directions_time_attribute_name`. ([Reference](https://developers.arcgis.com/rest/routing/origin-destination-cost-matrix-synchronous-service/#travelmode))
-#'
-#' ### `cutoff`
-#'
-#' The travel time or travel distance value at which to stop searching for destinations from a given origin. ([Reference](https://developers.arcgis.com/rest/routing/origin-destination-cost-matrix-synchronous-service/#defaultcutoff))
-#'
-#' ### `n_target_destinations`
-#'
-#' The maximum number of destinations to find per origin. If a value for this parameter is not specified, the output matrix includes travel costs from each origin to every destination. ([Reference](https://developers.arcgis.com/rest/routing/origin-destination-cost-matrix-synchronous-service/#defaulttargetdestinationcount))
+
 #' @export
 travel_cost_matrix <- function(
-    origin,
-    destinations,
+    origins,
+    destinations = origins,
     travel_mode = NULL,
-    cutoff = NULL, # defaultCutoff
+    cutoff = NULL, # IGNORED
     time_of_day = NULL,
     use_hierarchy = NULL,
     u_turns = NULL,
     impedance = NULL,
-    acumulate_impedence = NULL,
+    accumulate_impedance = NULL,
     restrictions = NULL,
     point_barriers = NULL,
     line_barriers = NULL,
@@ -68,15 +58,34 @@ travel_cost_matrix <- function(
     token = arcgisutils::arc_token()
   ) {
   # TODO choose altrenative routing services
-  
+
+  # handle travel mode if it is present
   # travel_mode, if provided needs to be turned into JSON from
   # retrieve_travel_modes() stored in the attributeParameterValues column
+  if (!is.null(travel_mode)) {
+    check_string(travel_mode)
+    available_modes <- retrieve_travel_modes(token)[["supportedTravelModes"]]
+    mode_idx <- which(available_modes[["id"]] == travel_mode)
+    if (length(mode_idx) == 0) {
+      cli::cli_abort(
+        c(
+          "{.arg travel_mode} ID is not found.",
+          "i" = "use {.fn retrieve_travel_modes} to identify available travel modes."
+        )
+      )
+    }
+
+    mode_attrs <- available_modes[["attributeParameterValues"]][[mode_idx]]
+    # convert to a json string
+    travel_mode <- yyjsonr::write_json_str(unclass(mode_attrs), auto_unbox = TRUE)
+  }
+
 
   # TODO default_cutoff: we can set Cutoff_[Impedance] to provide a per feature
   # cutoff value. How do we set this???
 
   # if time_of_day is a character try and parse it
-  check_time_of_day(time_of_day)
+  time_of_day <- validate_time_of_day(time_of_day)
 
   # set time of day is UTC parameter
   if (!is.null(time_of_day)) {
@@ -89,26 +98,85 @@ travel_cost_matrix <- function(
 
   # validate the u-turns argument
   u_turns <- validate_u_turns(u_turns)
-  
+
   # the impedance value
   impedance <- validate_impedance_value(impedance)
 
   # allow for multiple
-  accumulate_impedence <- validate_impedance_value(accumulate_impedence, multiple = TRUE)
-  
+  accumulate_impedance <- validate_impedance_value(accumulate_impedance, multiple = TRUE)
+
   # if this is not null, we collapse to a comma separated list
-  if (!is.null(accumulate_impedence)) {
-    accumulate_impedence <- paste(accumulate_impedence, collapse = ",")
+  if (!is.null(accumulate_impedance)) {
+    accumulate_impedance <- paste(accumulate_impedance, collapse = ",")
   }
 
   restrictions <- validate_restrictions(restrictions)
-  # TODO
+
+  meta <- arcgisutils::arc_self_meta(token = token)
+  od_cost_url <- meta$helperServices$odCostMatrix$url
+  req <- arc_base_req(od_cost_url, token, "solveODCostMatrix", query = c(f = "json"))
+
+
+  ## TODOFIX THIS
+  points_spo <- read.csv(system.file("extdata/spo/spo_hexgrid.csv", package = "r5r"))
+  origins <- sf::st_as_sf(points_spo, coords = c("lon", "lat"), crs = 4326)["id"]
+  xx <- origins[1:50, "geometry"]
+  # xx[["ObjectID"]] <- 1:5L * 10L
+  # xx[["Name"]] <- letters[1:5]
+  # feats <- as_features(xx$geometry)
+  # feats <- list(features = feats) |>
+  #   yyjsonr::write_json_str(auto_unbox = TRUE)
+  feats <- as_esri_featureset(xx$geometry)
+
+  resp <- req |>
+    httr2::req_body_form(
+      origins = feats,
+      destinations = feats,
+      travelMode = travel_mode,
+      # defaultCutoff = cutoff ,
+      # defaultTargetDestinationCount (NOT IMPLEMENTED)
+      timeOfDay = time_of_day,
+      timeOfDayIsUTC = time_of_day_is_utc,
+      useHierarchy = use_hierarchy,
+      restrictUTurns = u_turns,
+      impedanceAttributeName = impedance,
+      accumulateAttributeNames = accumulate_impedance,
+      restrictionAttributeNames = restrictions,
+      # attributeParameterValues (NOT IMPLEMENTED)
+      barriers = as_point_barriers(barriers),
+      polylineBarriers = as_polyline_barriers(line_barriers),
+      polygonBarriers = as_polygon_barriers(polygon_barriers),
+      outputType = "esriNAODOutputNoLines"
+    ) |>
+    httr2::req_error(is_error = function(e) FALSE) |>
+    httr2::req_perform()
+
+  resp_str <- httr2::resp_body_string(resp) 
+  res <- yyjsonr::read_json_str(resp_str)
+
+  # check for errors
+  # due to use of {yyjsonr} have to adjust....
+  if (!is.null(res[["error"]])) {
+    if (is.list(res$error$details)) {
+      res[["error"]][["details"]] <- NULL
+      detect_errors(res)
+    }
+    detect_errors(res)
+  }
+
+  # there's never more than 2,500 rows so speed isn't too important here...
+  # The column names aren't very clean or anything but it is what it is! 
+  do.call(rbind.data.frame, res$odLines$features$attributes)
 }
+
 
 
 #' @keywords internal
 #' @noRd
-check_time_of_day <- function(time_of_day) {
+validate_time_of_day <- function(time_of_day) {
+  if (is.null(time_of_day)) {
+    return(NULL)
+  }
   if (inherits(time_of_day, "character")) {
     check_string(time_of_day)
     caller <- rlang::caller_call()
@@ -128,6 +196,7 @@ check_time_of_day <- function(time_of_day) {
   } else if (!is.null(time_of_day)) {
     cli::cli_abort("{.arg time_of_day} must be a character or POSIX scalar")
   }
+  arcgisutils::date_to_ms(time_of_day)
 }
 
 
@@ -164,12 +233,12 @@ validate_u_turns <- function(
 validate_restrictions <- function(
     x,
     error_arg = rlang::caller_arg(x),
-    error_call = rlang::caller_call()
-) {
-
+    error_call = rlang::caller_call()) {
   # early return for NULL
-  if (is.null(x)) return(x)
-  
+  if (is.null(x)) {
+    return(x)
+  }
+
   # known restriction types
   restrictions <- c("Any Hazmat Prohibited", "Avoid Carpool Roads", "Avoid Express Lanes", "Avoid Gates", "Avoid Limited Access Roads", "Avoid Private Roads", "Avoid Roads Unsuitable for Pedestrians", "Avoid Stairways", "Avoid Toll Roads", "Avoid Toll Roads for Trucks", "Avoid Truck Restricted Roads", "Avoid Unpaved Roads", "Axle Count Restriction", "Driving a Bus", "Driving a Taxi", "Driving a Truck", "Driving an Automobile", "Driving an Emergency Vehicle", "Height Restriction", "Kingpin to Rear Axle Length Restriction", "Length Restriction", "Preferred for Pedestrians", "Riding a Motorcycle", "Roads Under Construction Prohibited", "Semi or Tractor with One or More Trailers Prohibited", "Single Axle Vehicles Prohibited", "Tandem Axle Vehicles Prohibited", "Through Traffic Prohibited", "Truck with Trailers Restriction", "Use Preferred Hazmat Routes", "Use Preferred Truck Routes", "Walking", "Weight Restriction", "Weight per Axle Restriction", "Width Restriction")
 
@@ -178,7 +247,7 @@ validate_restrictions <- function(
 
   # create a lookup vector because we need caps
   lu <- setNames(restrictions, restrictions_lower)
-  
+
   # set to lowercase for check
   x <- tolower(x)
 
@@ -191,12 +260,19 @@ validate_restrictions <- function(
     error_call = error_call
   )
 
-  # if there is more than one result we need to collapse 
+  # if there is more than one result we need to collapse
   if (length(restrictions) > 1) {
     paste(lu[restrictions], collapse = ",")
   } else {
     unname(lu[restrictions])
   }
-  
 }
 
+
+
+st_count <- function(x) {
+  UseMethod("st_count")
+}
+
+st_count.sf <- function(x) nrow(x)
+st_count.sfc <- function(x) length(x)

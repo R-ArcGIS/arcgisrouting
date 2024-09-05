@@ -6,7 +6,7 @@
 #' Retrieve Available Travel Modes
 #'
 #' @export
-retrieve_travel_modes <- function(token = arc_token()) {
+retrieve_travel_modes <- function(token = arcgisutils::arc_token()) {
   # get portal metadata
   meta <- arc_self_meta(token = token)
 

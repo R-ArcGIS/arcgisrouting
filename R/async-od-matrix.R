@@ -11,12 +11,12 @@ travel_cost_matrix_async <- function(
   use_hierarchy = NULL,
   u_turns = NULL,
   restrictions = NULL,
+  impedance = NULL,
+  time_impedance = NULL,
+  distance_impedance = NULL,
   point_barriers = NULL,
   line_barriers = NULL,
   polygon_barriers = NULL,
-  impedance = NULL,
-  # ----
-  accumulate_impedance = NULL,
   token = arcgisutils::arc_token()
   # attribute_parameter_values: TODO (unimplemented)
   # save_output_network_analysis_layer = FALSE
@@ -62,6 +62,48 @@ travel_cost_matrix_async <- function(
   restrictions <- validate_restrictions(restrictions)
   impedance <- validate_impedance_value(impedance)
   time_impedance <- validate_time_impedance(time_impedance)
+  distance_impedance <- validate_distance_impedance(distance_impedance)
+
+  params <- list(
+      origins = as_od_points(origins),
+      destinations = as_od_points(destinations),
+      travel_mode = travel_mode,
+      time_units = time_units,
+      distance_units = distance_units,
+      analysis_region = analysis_region,
+      number_of_destinations_to_find = n_dests,
+      cutoff = cutoff,
+      time_of_day = time_of_day,
+      time_zone_for_time_of_Day = time_zone_for_time_of_day,
+      point_barriers = as_point_barriers(point_barriers),
+      line_barriers = as_polyline_barriers(line_barriers),
+      polygon_barriers = as_polygon_barriers(polygon_barriers),
+      uturn_at_junctions = u_turns,
+      use_hierarchy = use_hierarchy,
+      restrictions = restrictions,
+      # attribute_parameter_values 
+      # origin_destination_line_shape
+      # save_output_network_analysis_layer
+      # overrides
+      impedance = impedance,
+      time_impedance = time_impedance,
+      distance_impedance = distance_impedance,
+      output_format = "CSV File",
+      f = "json"
+      # ignore_invalid_locations
+      # locate_settings
+  )
+
+  # get service url 
+  meta <- arcgisutils::arc_self_meta(token)
+
+
+  burl <- httr2::req_url_path_append(
+    httr2::request(meta$helperServices$asyncODCostMatrix$url),
+    "GenerateOriginDestinationCostMatrix"
+  )$url
+  
+  new_esri_job$new(burl, params, token)
 
 }
 

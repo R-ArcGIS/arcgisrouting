@@ -123,6 +123,6 @@ as_od_points.sf <- function(x, verbose = TRUE, ...) {
   x <- x[common_cols]
   colnames(x) <- c(na.omit(common_lu_vals), "geometry")
   sf::st_geometry(x) <- "geometry"
-  arcgisutils::as_esri_features(x)
+  arcgisutils::as_esri_featureset(x)
 }
 

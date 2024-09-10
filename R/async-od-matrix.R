@@ -100,7 +100,6 @@ travel_cost_matrix_async <- function(
   # get service url 
   meta <- arcgisutils::arc_self_meta(token)
 
-
   burl <- httr2::req_url_path_append(
     httr2::request(meta$helperServices$asyncODCostMatrix$url),
     "GenerateOriginDestinationCostMatrix"

@@ -17,7 +17,9 @@ Imports:
     httr2,
     sf,
     readr,
-    yyjsonr
+    yyjsonr,
+    S7,
+    R6
 Depends: 
     R (>= 4.1)
 Suggests: 

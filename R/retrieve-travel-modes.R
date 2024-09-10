@@ -6,7 +6,7 @@
 #' Retrieve Available Travel Modes
 #'
 #' @export
-retrieve_travel_modes <- function(token = arcgisutils::arc_token()) {
+retrieve_travel_modes <- function(token = arcgisutils::arc_token(), error_call = rlang::call_call()) {
   # get portal metadata
   meta <- arc_self_meta(token = token)
 
@@ -16,7 +16,10 @@ retrieve_travel_modes <- function(token = arcgisutils::arc_token()) {
 
   # if this is null stop
   if (is.null(od_cost_url)) {
-    cli::cli_abort("Cannot find origin-destination cost matrix service associated with your token")
+    cli::cli_abort(
+      "Cannot find origin-destination cost matrix service associated with your token",
+      call = error_call
+    )
   }
 
   # fetch the travel modes
@@ -35,7 +38,10 @@ retrieve_travel_modes <- function(token = arcgisutils::arc_token()) {
 
   # if travel modes were not found, then we abort
   if (is.null(travel_modes[["supportedTravelModes"]])) {
-    cli::cli_abort("Supported travel modes were not found")
+    cli::cli_abort(
+      "Supported travel modes were not found",
+      call = error_call
+    )
   }
 
   # desired column order—put the name and id first.

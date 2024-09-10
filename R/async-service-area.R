@@ -26,6 +26,7 @@ generate_service_areas_async <- function(
 ) {
 
   check_bool(use_hierarchy, allow_null = TRUE)
+  travel_mode <- validate_travel_mode(travel_mode)
   break_units <- validate_break_units(break_units)
   break_values <- validate_break_values(break_values)
   travel_direction <- validate_travel_direction(travel_direction)
@@ -47,24 +48,7 @@ generate_service_areas_async <- function(
   line_barriers <- as_polyline_barriers(line_barriers)
   polygon_barriers <- as_polygon_barriers(polygon_barriers)
 
-  # validate travel_mode
-  if (!is.null(travel_mode)) {
-    check_string(travel_mode)
-    available_modes <- retrieve_travel_modes(token)[["supportedTravelModes"]]
-    mode_idx <- which(available_modes[["id"]] == travel_mode)
-    if (length(mode_idx) == 0) {
-      cli::cli_abort(
-        c(
-          "{.arg travel_mode} ID is not found.",
-          "i" = "use {.fn retrieve_travel_modes} to identify available travel modes."
-        )
-      )
-    }
 
-    mode_attrs <- available_modes[["attributeParameterValues"]][[mode_idx]]
-    # convert to a json string
-    travel_mode <- yyjsonr::write_json_str(unclass(mode_attrs), auto_unbox = TRUE)
-  }
 
   params <- list(
     travel_mode = travel_mode,

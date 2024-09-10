@@ -13,7 +13,7 @@ generate_service_areas_async <- function(
   polygon_overlap_type = c("rings", "disks"), # RENAME # 
   polygon_trim_distance = NULL, # 
   polygon_simplification_tolerance = NULL, # 
-  polygon_detail = NULL, # c("standard", "generalized", "high") # 
+  polygon_detail = NULL, # 
   impedance = NULL, # 
   time_impedance = NULL, # 
   distance_impedance = NULL, # 
@@ -25,8 +25,9 @@ generate_service_areas_async <- function(
   token = arcgisutils::arc_token()
 ) {
 
-
   check_bool(use_hierarchy, allow_null = TRUE)
+  break_units <- validate_break_units(break_units)
+  break_values <- validate_break_values(break_values)
   travel_direction <- validate_travel_direction(travel_direction)
   analysis_region <- validate_analysis_region(analysis_region)
   u_turns <- validate_u_turns_async(u_turns)
@@ -65,6 +66,43 @@ generate_service_areas_async <- function(
     travel_mode <- yyjsonr::write_json_str(unclass(mode_attrs), auto_unbox = TRUE)
   }
 
+  params <- list(
+    travel_mode = travel_mode,
+    break_values = break_values,
+    break_units = break_units,
+    travel_direction = travel_direction,
+    time_of_day = time_of_day,
+    time_zone_for_time_of_day = time_zone_for_time_of_day,
+    use_hierarchy = use_hierarchy,
+    uturn_at_junctions = u_turns,
+    polygons_for_multiple_facilities = polygons_for_multiple_facilities,
+    polygon_overlap_type = polygon_overlap_type,
+    polygon_trim_distance = polygon_trim_distance,
+    polygon_simplification_tolerance = polygon_simplification_tolerance,
+    point_barriers = point_barriers,
+    line_barriers = line_barriers,
+    polygon_barriers = polygon_barriers,
+    restrictions = restrictions,
+    impedance = impedance,
+    analysis_region = analysis_region,
+    time_impedance = time_impedance,
+    distance_impedance = distance_impedance,
+    polygon_detail = polygon_detail,
+    output_type = "Polygons",
+    output_format = "JSON File",
+    f = "json"
+  )
+
+    # get service url 
+    meta <- arcgisutils::arc_self_meta(token)
+
+    burl <- httr2::req_url_path_append(
+      httr2::request(meta$helperServices$asyncServiceArea$url),
+      "GenerateServiceAreas"
+    )$url
+    
+    new_esri_job$new(burl, params, token)
+  
 }
 
 validate_travel_direction <- function(x, error_arg = rlang::caller_arg(x), error_call = rlang::caller_call()) {
@@ -208,3 +246,55 @@ validate_detail <- function(
   unname(lu[x])
 }
 
+
+validate_break_units <- function(
+    x,
+    error_arg = rlang::caller_arg(x),
+    error_call = rlang::caller_call()
+) {
+  if (is.null(x)) {
+  return(NULL)
+  }
+
+  lu <- c(
+    "meters" = "Meters",
+    "kilometers" = "Kilometers",
+    "feet" = "Feet",
+    "yards" = "Yards",
+    "miles" = "Miles",
+    "nautical_miles" = "NauticalMiles",
+    "seconds" = "Seconds",
+    "minutes" = "Minutes",
+    "hours" = "Hours",
+    "days" = "Days"
+  )
+
+  x <- rlang::arg_match(
+    distance_units,
+    names(lu),
+    error_arg = error_arg,
+    error_call = error_call
+  )
+
+  unname(lu[x])
+}
+
+validate_break_values <- function(
+    x,
+    error_arg = rlang::caller_arg(x),
+    error_call = rlang::caller_call()
+) {
+  if (is.null(x)) {
+    return(NULL)
+  }
+
+  if (!rlang::is_bare_numeric(x)) {
+    cli::cli_abort(
+      c(
+        "{.arg {error_arg}} must be a numeric vector.",
+        "i" = "Found {obj_type_friendly(x)}."
+      )
+    )
+  }
+  paste(x, collapse = " ")
+}

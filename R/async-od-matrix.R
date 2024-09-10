@@ -1,3 +1,6 @@
+#TODO create OD cost matrix r6 class 
+# R6::R6Class("od_cost_matrix_job", inherit = new_esri_job)
+
 travel_cost_matrix_async <- function(
   origins,
   destinations = NULL,

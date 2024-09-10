@@ -188,3 +188,4 @@ new_esri_job <- R6::R6Class(
     job_results = .job_results
   )
 )
+

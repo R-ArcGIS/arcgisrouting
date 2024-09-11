@@ -108,7 +108,7 @@ esri_form_params <- S7::new_class(
 }
 
 
-new_esri_job <- R6::R6Class(
+esri_job <- R6::R6Class(
   "esri_job",
   public = list(
     base_url = NULL, 
@@ -142,6 +142,7 @@ new_esri_job <- R6::R6Class(
         detect_errors(res)
       }
 
+      print(res)
       self$status <- class_job_status(status = res$jobStatus)
       self$job_id <- res$jobId
       self

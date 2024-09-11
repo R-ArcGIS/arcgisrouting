@@ -5,10 +5,9 @@
 
 #' Retrieve Available Travel Modes
 #'
-#' @export
-retrieve_travel_modes <- function(token = arcgisutils::arc_token(), error_call = rlang::call_call()) {
+.retrieve_travel_modes <- function(token = arcgisutils::arc_token(), error_call = rlang::call_call()) {
   # get portal metadata
-  meta <- arc_self_meta(token = token)
+  meta <- arcgisutils::arc_self_meta(token = token)
 
   # fetch the odCostMatrix url
   # idk if this is different than the async one—but I don't think so
@@ -58,3 +57,5 @@ retrieve_travel_modes <- function(token = arcgisutils::arc_token(), error_call =
 
   travel_modes
 }
+#' @export
+retrieve_travel_modes <- memoise::memoise(.retrieve_travel_modes)

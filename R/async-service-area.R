@@ -1,6 +1,8 @@
+service_area_job <- R6::R6Class("service_area_job", inherit = esri_job)
+
 # TODO 
 # set output format / output type
-generate_service_areas_async <- function(
+service_areas_async <- function(
   facilities,
   travel_mode = NULL,  # 
   break_values = NULL,
@@ -21,12 +23,12 @@ generate_service_areas_async <- function(
   restrictions = NULL, # 
   point_barriers = NULL, # 
   line_barriers = NULL,# 
-  polygon_barriers = NULL,# 
+  polygon_barriers = NULL,#  
   token = arcgisutils::arc_token()
 ) {
 
   check_bool(use_hierarchy, allow_null = TRUE)
-  travel_mode <- validate_travel_mode(travel_mode)
+  travel_mode <- validate_travel_mode(travel_mode, token = token)
   break_units <- validate_break_units(break_units)
   break_values <- validate_break_values(break_values)
   travel_direction <- validate_travel_direction(travel_direction)
@@ -48,9 +50,8 @@ generate_service_areas_async <- function(
   line_barriers <- as_polyline_barriers(line_barriers)
   polygon_barriers <- as_polygon_barriers(polygon_barriers)
 
-
-
   params <- list(
+    facilities = as_od_points(facilities),
     travel_mode = travel_mode,
     break_values = break_values,
     break_units = break_units,
@@ -79,13 +80,8 @@ generate_service_areas_async <- function(
 
     # get service url 
     meta <- arcgisutils::arc_self_meta(token)
-
-    burl <- httr2::req_url_path_append(
-      httr2::request(meta$helperServices$asyncServiceArea$url),
-      "GenerateServiceAreas"
-    )$url
     
-    new_esri_job$new(burl, params, token)
+    service_area_job$new(meta$helperServices$asyncServiceArea$url, params, token)
   
 }
 

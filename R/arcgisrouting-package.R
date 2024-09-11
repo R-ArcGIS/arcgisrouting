@@ -1,3 +1,4 @@
+#' @import arcgisutils
 #' @keywords internal
 "_PACKAGE"
 
@@ -6,4 +7,4 @@
 NULL
 
 
-#' @import arcgisutils
+

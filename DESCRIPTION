@@ -19,7 +19,8 @@ Imports:
     readr,
     yyjsonr,
     S7,
-    R6
+    R6,
+    memoise
 Depends: 
     R (>= 4.1)
 Suggests: 

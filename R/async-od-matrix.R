@@ -105,7 +105,7 @@ travel_cost_matrix_async <- function(
     "GenerateOriginDestinationCostMatrix"
   )$url
   
-  new_esri_job$new(burl, params, token)
+  esri_job$new(burl, params, token)
 
 }
 

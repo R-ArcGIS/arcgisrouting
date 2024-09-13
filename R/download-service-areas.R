@@ -7,15 +7,15 @@ download_service_area_results <- function(job) {
 
   # fetch the results data.frame
   cli::cli_alert_info("Checking job status...")
-  status <- job$job_status
+  status <- job$status@status
   
   # check that the status is a success 
-  if (!status$jobStatus == "esriJobSucceeded") {
+  if (!status == "esriJobSucceeded") {
     cli::cli_abort("Job did not succeed. The status is {.val {results$jobStatus}}.")
   }
 
   cli::cli_alert_success("Job succeed. Downloading results...")
-  results <- job$job_results
+  results <- job$results
 
   # figure out which one contains the file 
   out_file_idx <- which(results$paramName == "Output_Result_File")
@@ -46,7 +46,6 @@ download_service_area_results <- function(job) {
     pattern = "*.json$",
     full.names = TRUE
   )
-
 
   json_names <- heck::to_snek_case(
     gsub("SAOutput", "", tools::file_path_sans_ext(basename(json_files)))

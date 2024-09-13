@@ -5,7 +5,7 @@
 
 #' Retrieve Available Travel Modes
 #'
-.retrieve_travel_modes <- function(token = arcgisutils::arc_token(), error_call = rlang::call_call()) {
+.retrieve_travel_modes <- function(token = arcgisutils::arc_token(), error_call = rlang::caller_call()) {
   # get portal metadata
   meta <- arcgisutils::arc_self_meta(token = token)
 

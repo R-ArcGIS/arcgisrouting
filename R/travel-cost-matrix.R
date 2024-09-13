@@ -117,21 +117,11 @@ travel_cost_matrix <- function(
   req <- arc_base_req(od_cost_url, token, "solveODCostMatrix", query = c(f = "json"))
 
 
-  ## TODOFIX THIS
-  points_spo <- read.csv(system.file("extdata/spo/spo_hexgrid.csv", package = "r5r"))
-  origins <- sf::st_as_sf(points_spo, coords = c("lon", "lat"), crs = 4326)["id"]
-  xx <- origins[1:50, "geometry"]
-  # xx[["ObjectID"]] <- 1:5L * 10L
-  # xx[["Name"]] <- letters[1:5]
-  # feats <- as_features(xx$geometry)
-  # feats <- list(features = feats) |>
-  #   yyjsonr::write_json_str(auto_unbox = TRUE)
-  feats <- as_esri_featureset(xx$geometry)
 
   resp <- req |>
     httr2::req_body_form(
-      origins = feats,
-      destinations = feats,
+      origins = as_od_points(origins),
+      destinations = as_od_points(destinations),
       travelMode = travel_mode,
       # defaultCutoff = cutoff ,
       # defaultTargetDestinationCount (NOT IMPLEMENTED)
@@ -143,7 +133,7 @@ travel_cost_matrix <- function(
       accumulateAttributeNames = accumulate_impedance,
       restrictionAttributeNames = restrictions,
       # attributeParameterValues (NOT IMPLEMENTED)
-      barriers = as_point_barriers(barriers),
+      barriers = as_point_barriers(point_barriers),
       polylineBarriers = as_polyline_barriers(line_barriers),
       polygonBarriers = as_polygon_barriers(polygon_barriers),
       outputType = "esriNAODOutputNoLines"
@@ -166,7 +156,9 @@ travel_cost_matrix <- function(
 
   # there's never more than 2,500 rows so speed isn't too important here...
   # The column names aren't very clean or anything but it is what it is! 
-  do.call(rbind.data.frame, res$odLines$features$attributes)
+  res <- do.call(rbind.data.frame, res$odLines$features$attributes)
+  colnames(res) <- heck::to_snek_case(colnames(res))
+  res
 }
 
 
@@ -269,10 +261,12 @@ validate_restrictions <- function(
 }
 
 
-
+#' @export
 st_count <- function(x) {
   UseMethod("st_count")
 }
 
+#' @export
 st_count.sf <- function(x) nrow(x)
+#' @export
 st_count.sfc <- function(x) length(x)

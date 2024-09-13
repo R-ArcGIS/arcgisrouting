@@ -2,6 +2,7 @@ service_area_job <- R6::R6Class("service_area_job", inherit = esri_job)
 
 # TODO 
 # set output format / output type
+#' @export
 service_areas_async <- function(
   facilities,
   travel_mode = NULL,  # 

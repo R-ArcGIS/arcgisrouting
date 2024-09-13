@@ -22,7 +22,7 @@ Imports:
     R6,
     memoise
 Depends: 
-    R (>= 4.1)
+    R (>= 4.3)
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

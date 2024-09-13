@@ -1,49 +1,42 @@
 library(sf)
+library(dplyr)
+library(ggplot2)
 library(arcgisutils)
+library(arcgisrouting)
 set_arc_token(auth_user())
 
 # read sample dataset
-points_spo <- read.csv(system.file("extdata/spo/spo_hexgrid.csv", package = "r5r"))
+points_spo <- readr::read_csv(
+  system.file("extdata/spo/spo_hexgrid.csv", package = "r5r"),
+  n_max = 3
+)
 
 # create small sample dataset
-origins <- st_as_sf(points_spo, coords = c("lon", "lat"), crs = 4326)["id"]
-x <- od::od_data_coordinates |> 
-  sf::st_as_sf(coords = c("X", "Y"), crs = 4326) |> 
-  dplyr::rename(name = "geo_code") |> 
-  dplyr::mutate("object_id" = 1:dplyr::n()) |> 
-  head(3)
+x <- st_as_sf(points_spo, coords = c("lon", "lat"), crs = 4326)
 
-# job <- travel_cost_matrix_async(x, x, token = arc_token())
+# Calculate travel matrix
+travel_cost_matrix(x, x, token = arc_token())
 
-# job$start_job()
-
-# job$job_status
-# job$job_results
-
-# download_od_results(job)
 
 
 
 job <- service_areas_async(x, "Walking Time", token = auth_user())
-job$start_job()
-job$job_status
-results <- download_service_area_results(job)
 
-tmp <- results$service_areas
+res <- poll_and_resolve_job(
+  job$start(),
+  on_completion = download_service_area_results
+)
 
-library(ggplot2)
 
-travel_modes <- get_travel_modes(token = auth_user())
+isochrones <- res$service_areas
 
-tm <- validate_travel_mode("Walking Time", token = arc_token()) 
-
-jsonify::pretty_json(tm)
-tmp |> 
+isochrones |> 
   dplyr::mutate(breaks = paste0(from_break, " - ", to_break, " minutes (driving)")) |> 
   ggplot() +
   geom_sf(aes(fill = breaks), lwd = 0.1, color = NA, alpha = 0.7) +
-  geom_sf(data = x, size = 0.5) + 
+  geom_sf(data = x, size = 1, color = "white") + 
   scale_fill_viridis_d() + 
-  theme_minimal() +
-  theme(legend.position = "none")
+  theme_void() +
+  theme(legend.position = "none") +
+  facet_wrap("facility_id")
 

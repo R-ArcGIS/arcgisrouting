@@ -31,6 +31,17 @@ check_od_points <- function(x, error_call = rlang::caller_call()) {
   if (is.na(sf::st_crs(x))) {
     cli::cli_abort(c("!" = "`crs` is not set. Please set the crs."))
   }
+
+  if (st_count(x) > 1000L) {
+    cli::cli_abort(
+      c(
+        "The maximum number of points supported is {.val {1000L}}",
+        "i" = "If this is a limitation for you, please report it",
+        " " = "{.url https://github.com/r-arcgis/arcgisrouting/issues}"
+      ),
+      call = error_call
+    )
+  }
 }
 
 #' @export
@@ -58,12 +69,18 @@ as_od_points.sf <- function(x, verbose = TRUE, ...) {
     colnames(x)
   )
 
+  common_lu_vals <- na.omit(od_point_colname_lu[colnames(x)])
+  n_common <- length(common_lu_vals)
+  
   # inform
-  if (verbose) {
+  if (verbose && n_common > 0) {
     cli::cli_alert_info("Using the provided attributes: {.col {common_cols}}")
   }
 
-  common_lu_vals <- od_point_colname_lu[colnames(x)]
+
+  if (n_common == 0) {
+    return(as_od_points(sf::st_geometry(x)))
+  }
 
   # check for dupe cols
   n_col <- table(common_lu_vals) 

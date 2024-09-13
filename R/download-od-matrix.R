@@ -2,8 +2,8 @@
 download_od_results <- function(job) {
 
   # check that the object is an esri job
-  if (!inherits(job, "esri_job")) {
-    cli::cli_abort("Expected {.cls esri_job} found {obj_type_friendly(job)}.")
+  if (!inherits(job, "gp_job")) {
+    cli::cli_abort("Expected {.cls gp_job} found {obj_type_friendly(job)}.")
   }
 
   # fetch the results data.frame

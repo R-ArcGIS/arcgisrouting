@@ -3,23 +3,22 @@ library(dplyr)
 library(ggplot2)
 library(arcgisutils)
 library(arcgisrouting)
+
+
 set_arc_token(auth_user())
 
 # read sample dataset
-points_spo <- readr::read_csv(
+x <- readr::read_csv(
   system.file("extdata/spo/spo_hexgrid.csv", package = "r5r"),
   n_max = 3
-)
+) |> st_as_sf(coords = c("lon", "lat"), crs = 4326)
 
-# create small sample dataset
-x <- st_as_sf(points_spo, coords = c("lon", "lat"), crs = 4326)
 
 # Calculate travel matrix
-travel_cost_matrix(x, x, token = arc_token())
+travel_cost_matrix(origins = x)
 
 
-
-
+# Calculate a service area 
 job <- service_areas_async(x, "Walking Time", token = auth_user())
 
 res <- poll_and_resolve_job(
@@ -27,14 +26,12 @@ res <- poll_and_resolve_job(
   on_completion = download_service_area_results
 )
 
-
+# extract the service areas
 isochrones <- res$service_areas
 
 isochrones |> 
-  dplyr::mutate(breaks = paste0(from_break, " - ", to_break, " minutes (driving)")) |> 
   ggplot() +
-  geom_sf(aes(fill = breaks), lwd = 0.1, color = NA, alpha = 0.7) +
-  geom_sf(data = x, size = 1, color = "white") + 
+  geom_sf(aes(fill = as.factor(from_break)), lwd = 0.1, color = NA, alpha = 0.7) +
   scale_fill_viridis_d() + 
   theme_void() +
   theme(legend.position = "none") +

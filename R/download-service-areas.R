@@ -1,3 +1,4 @@
+#' @export
 download_service_area_results <- function(job) {
 
   # check that the object is an esri job

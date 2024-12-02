@@ -1,4 +1,6 @@
 # Internal S7 class to validate the status of the GP job
+#' @export
+#' @rdname class_gp_job
 class_job_status <- S7::new_class(
   "gp_job_status",
   properties = list(status = S7::class_character),
@@ -28,7 +30,8 @@ class_job_status <- S7::new_class(
 
 # S7 class to represent all of the job parameters we might have 
 # s7 class which validates the esri form parameters 
-esri_form_params <- S7::new_class(
+#' @export class_form_params
+class_form_params <- S7::new_class(
   "gp_job_params",
   properties = list(params = S7::class_list),
   validator = function(self) {
@@ -78,7 +81,6 @@ esri_form_params <- S7::new_class(
   }
   
   class_job_status(res[["jobStatus"]])
-  
 }
 
 .job_results <- function() {
@@ -117,25 +119,25 @@ esri_form_params <- S7::new_class(
 }
 
 
-#' Create a Geoprocessing Job
+
 #' 
-#' The `gp_job` class is used to interact with Geoprocessing Services in 
-#' ArcGIS Online and Enterprise. 
+#' 
+#' 
 #' @export
 esri_job <- R6::R6Class(
   "gp_job",
   public = list(
     #' @field base_url the URL of the job service (without `/submitJob`)
-    base_url = NULL, 
     #' @field id the ID of the started job. `NULL` `self$start()` has not been called.
-    id = NULL, 
     #' @param base_url the URL of the job endpoint (without `/submitJob`)
     #' @param params a named list where each element is a scalar character
     #' @param token default [arcgisutils::arc_token()]. The token to be used with the job. 
+    base_url = NULL, 
+    id = NULL, 
     initialize = function(base_url, params = list(), token = arc_token()) {
       # use S7 to validate the form parameters
       self$base_url <- base_url
-      private$.params <- esri_form_params(params)
+      private$.params <- class_form_params(params)
       private$token <- token
       self
     },
@@ -200,11 +202,13 @@ esri_job <- R6::R6Class(
     token = NULL
   ),
   active = list(
-    #' @field params returns an S7 object of class [esri_form_params] the list can be accessed via `self$params@params`.
+    #' @field params returns an S7 object of class `gp_job_params` (see [class_form_params()]). The underlying parameters list can be accessed via `self$params@params`.
     params = function() {
       private$.params
     },
+    #' @field status returns an S7 object of class `gp_job_status` (see [class_job_status()]). 
     status = function() private$.status(),
+    #' @field results returns a `data.frame` with the job results.
     results = .job_results
   )
 )

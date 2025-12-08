@@ -1,1 +1,15 @@
 .Rproj.user
+
+# Compiled Object files
+*.o
+*.so
+*.dll
+*.dylib
+
+# R build artifacts
+src/*.o
+src/*.so
+src/*.dll
+src-i386/
+src-x64/
+src/.libs/

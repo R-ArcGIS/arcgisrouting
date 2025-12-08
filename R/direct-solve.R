@@ -125,6 +125,92 @@
 #'
 #' @returns A list containing the routing results.
 #'
+#' @examples
+#' \dontrun{
+#' library(sf)
+#'
+#' # Simple route between 3 stops
+#' stops <- st_sf(
+#'   name = c("Start", "Middle", "End"),
+#'   geometry = st_sfc(
+#'     st_point(c(-122.4194, 37.7749)),  # San Francisco
+#'     st_point(c(-122.0312, 37.3318)),  # Cupertino
+#'     st_point(c(-121.8863, 37.3382)),  # San Jose
+#'     crs = 4326
+#'   )
+#' )
+#'
+#' result <- find_routes(stops)
+#'
+#' # Route with time windows for deliveries
+#' delivery_stops <- st_sf(
+#'   name = c("Warehouse", "Customer A", "Customer B", "Customer C"),
+#'   time_window_start = as.POSIXct(c(
+#'     "2024-01-15 08:00:00",
+#'     "2024-01-15 09:00:00",
+#'     "2024-01-15 11:00:00",
+#'     "2024-01-15 14:00:00"
+#'   )),
+#'   time_window_end = as.POSIXct(c(
+#'     "2024-01-15 08:30:00",
+#'     "2024-01-15 10:00:00",
+#'     "2024-01-15 13:00:00",
+#'     "2024-01-15 16:00:00"
+#'   )),
+#'   geometry = st_sfc(
+#'     st_point(c(-122.4194, 37.7749)),
+#'     st_point(c(-122.4083, 37.7858)),
+#'     st_point(c(-122.4313, 37.7793)),
+#'     st_point(c(-122.4000, 37.7900)),
+#'     crs = 4326
+#'   )
+#' )
+#'
+#' delivery_route <- find_routes(
+#'   delivery_stops,
+#'   start_time = as.POSIXct("2024-01-15 08:00:00"),
+#'   travel_mode = "Driving Time"
+#' )
+#'
+#' # Find optimal order for stops
+#' sales_stops <- st_sf(
+#'   name = c("Office", "Client 1", "Client 2", "Client 3", "Office"),
+#'   geometry = st_sfc(
+#'     st_point(c(-122.4194, 37.7749)),
+#'     st_point(c(-122.4083, 37.7858)),
+#'     st_point(c(-122.4313, 37.7793)),
+#'     st_point(c(-122.4000, 37.7900)),
+#'     st_point(c(-122.4194, 37.7749)),
+#'     crs = 4326
+#'   )
+#' )
+#'
+#' optimized_route <- find_routes(
+#'   sales_stops,
+#'   find_best_sequence = TRUE,
+#'   preserve_first_stop = TRUE,
+#'   preserve_last_stop = TRUE
+#' )
+#'
+#' # Route with barriers
+#' barrier_pts <- st_sfc(
+#'   st_point(c(-122.4150, 37.7800)),
+#'   crs = 4326
+#' )
+#'
+#' route_with_barriers <- find_routes(
+#'   stops,
+#'   barriers = barrier_pts
+#' )
+#'
+#' # Accumulate multiple impedances
+#' multi_impedance_route <- find_routes(
+#'   stops,
+#'   impedance_attribute_name = "travel_time",
+#'   accumulate_attribute_names = c("miles", "kilometers")
+#' )
+#' }
+#'
 #' @export
 find_routes <- function(
   stops,
@@ -180,7 +266,6 @@ find_routes <- function(
   # we set this value from the input stops
   use_time_windows <- detect_time_windows(stops)
 
-  # Build parameters list
   params <- compact(list(
     stops = stops,
     travelMode = travel_mode,

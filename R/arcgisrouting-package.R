@@ -1,4 +1,5 @@
 #' @import arcgisutils
+#' @useDynLib arcgisrouting, .registration = TRUE
 #' @keywords internal
 "_PACKAGE"
 

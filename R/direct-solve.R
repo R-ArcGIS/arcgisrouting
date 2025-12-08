@@ -117,13 +117,35 @@
 #'   Default: `TRUE`.
 #' @param directions_language Character. Language code for directions (e.g., `"en"`).
 #'   Default: `"en"`.
-#' @param return_routes Logical. Whether to return route geometries. Default: `TRUE`.
-#' @param return_stops Logical. Whether to return stops in output. Default: `FALSE`.
+#' @param directions_type Character. Specifies the content and verbosity of driving
+#'   directions (`directionsOutputType` in REST API). One of: `"complete"`,
+#'   `"complete_no_events"`, `"instructions_only"`, `"standard"`, `"summary_only"`,
+#'   `"feature_sets"`. Default: `"standard"`.
+#' @param return_geometry Character vector. Specifies which features to return
+#'   in the output. Valid values: `"routes"`, `"directions"`, `"stops"`,
+#'   `"barriers"`, `"polyline_barriers"`, `"polygon_barriers"`,
+#'   `"traversed_edges"`, `"traversed_junctions"`, `"traversed_turns"`.
+#'   Default: `c("routes", "directions")`.
 #' @param ignore_invalid_locations Logical. Whether to ignore invalid locations.
 #'   Default: `TRUE`.
 #' @param token Authorization token. Default: [arcgisutils::arc_token()].
 #'
-#' @returns A list containing the routing results.
+#' @returns A list containing the routing results. The elements returned depend
+#'   on the `return_geometry` parameter. Possible elements include:
+#'   - `routes`: Route features
+#'   - `directions`: Driving directions
+#'   - `stops`: Stop features
+#'   - `barriers`: Barrier features
+#'   - `polyline_barriers`: Polyline barrier features
+#'   - `polygon_barriers`: Polygon barrier features
+#'   - `traversed_edges`: Traversed edge features
+#'   - `traversed_junctions`: Traversed junction features
+#'   - `traversed_turns`: Traversed turn features
+#'   - `messages`: Status and warning messages from the service
+#'
+#'   When `directions_type = "feature_sets"`, the response includes:
+#'   - `direction_points`: sf object with point features for direction maneuvers
+#'   - `direction_lines`: sf object with line features for route segments
 #'
 #' @examples
 #' \dontrun{
@@ -227,19 +249,15 @@ find_routes <- function(
   barriers = NULL,
   polyline_barriers = NULL,
   polygon_barriers = NULL,
-  return_directions = TRUE,
   directions_language = "en",
-  return_routes = TRUE,
-  return_stops = FALSE,
+  directions_type = "standard",
+  return_geometry = c("routes", "directions"),
   ignore_invalid_locations = TRUE,
   token = arcgisutils::arc_token()
 ) {
   obj_check_token(token)
   stops <- as_stops(stops)
 
-  check_bool(return_stops)
-  check_bool(return_routes)
-  check_bool(return_directions)
   check_bool(preserve_last_stop)
   check_bool(find_best_sequence)
   check_bool(preserve_first_stop)
@@ -247,11 +265,14 @@ find_routes <- function(
   check_bool(ignore_invalid_locations)
   check_bool(use_hierarchy, allow_null = TRUE)
 
+  return_geometry <- validate_return_geometry(return_geometry)
+
   start_time <- validate_start_time(start_time)
   restrictions <- validate_restrictions(restrictions)
   restrict_u_turns <- validate_u_turns(restrict_u_turns)
   travel_mode <- validate_travel_mode(travel_mode, token = token)
   impedance_attribute_name <- validate_impedance_value(impedance_attribute_name)
+  directions_type <- validate_directions_output_type(directions_type)
 
   accumulate_attribute_names <- validate_impedance_value(
     accumulate_attribute_names,
@@ -282,10 +303,17 @@ find_routes <- function(
     barriers = barriers,
     polylineBarriers = polyline_barriers,
     polygonBarriers = polygon_barriers,
-    returnDirections = return_directions,
+    returnDirections = return_geometry$returnDirections,
     directionsLanguage = directions_language,
-    returnRoutes = return_routes,
-    returnStops = return_stops,
+    directionsOutputType = directions_type,
+    returnRoutes = return_geometry$returnRoutes,
+    returnStops = return_geometry$returnStops,
+    returnBarriers = return_geometry$returnBarriers,
+    returnPolylineBarriers = return_geometry$returnPolylineBarriers,
+    returnPolygonBarriers = return_geometry$returnPolygonBarriers,
+    returnTraversedEdges = return_geometry$returnTraversedEdges,
+    returnTraversedJunctions = return_geometry$returnTraversedJunctions,
+    returnTraversedTurns = return_geometry$returnTraversedTurns,
     ignoreInvalidLocations = ignore_invalid_locations,
     f = "json"
   ))
@@ -305,11 +333,10 @@ find_routes <- function(
   ) |>
     httr2::req_body_form(!!!params) |>
     httr2::req_perform() |>
-    httr2::resp_body_string() |>
-    yyjsonr::read_json_str()
+    httr2::resp_body_string()
 
   # Check for errors
-  arcgisutils::detect_errors(resp)
+  # arcgisutils::detect_errors(resp)
 
   resp
 }
@@ -351,4 +378,109 @@ detect_time_windows <- function(stops) {
   )
 
   any(time_window_cols %in% colnames(stops))
+}
+
+validate_directions_output_type <- function(
+  x,
+  error_arg = rlang::caller_arg(x),
+  error_call = rlang::caller_env()
+) {
+  if (is.null(x)) {
+    return(NULL)
+  }
+
+  valid_values <- c(
+    "complete",
+    "complete_no_events",
+    "instructions_only",
+    "standard",
+    "summary_only",
+    "feature_sets"
+  )
+
+  x <- rlang::arg_match0(
+    x,
+    values = valid_values,
+    error_arg = error_arg,
+    error_call = error_call
+  )
+
+  lu <- c(
+    "complete" = "esriDOTComplete",
+    "complete_no_events" = "esriDOTCompleteNoEvents",
+    "instructions_only" = "esriDOTInstructionsOnly",
+    "standard" = "esriDOTStandard",
+    "summary_only" = "esriDOTSummaryOnly",
+    "feature_sets" = "esriDOTFeatureSets"
+  )
+
+  unname(lu[x])
+}
+
+validate_directions_style_name <- function(
+  x,
+  error_arg = rlang::caller_arg(x),
+  error_call = rlang::caller_env()
+) {
+  if (is.null(x)) {
+    return(NULL)
+  }
+
+  valid_values <- c(
+    "desktop",
+    "navigation",
+    "campus"
+  )
+
+  x <- rlang::arg_match0(
+    x,
+    values = valid_values,
+    error_arg = error_arg,
+    error_call = error_call
+  )
+
+  lu <- c(
+    "desktop" = "NA Desktop",
+    "navigation" = "NA Navigation",
+    "campus" = "NA Campus"
+  )
+
+  unname(lu[x])
+}
+
+validate_return_geometry <- function(
+  x,
+  error_arg = rlang::caller_arg(x),
+  error_call = rlang::caller_env()
+) {
+  check_character(x, arg = error_arg, call = error_call)
+
+  return_geometry_lu <- c(
+    "routes" = "returnRoutes",
+    "directions" = "returnDirections",
+    "stops" = "returnStops",
+    "barriers" = "returnBarriers",
+    "polyline_barriers" = "returnPolylineBarriers",
+    "polygon_barriers" = "returnPolygonBarriers",
+    "traversed_edges" = "returnTraversedEdges",
+    "traversed_junctions" = "returnTraversedJunctions",
+    "traversed_turns" = "returnTraversedTurns"
+  )
+
+  invalid <- setdiff(x, names(return_geometry_lu))
+
+  if (length(invalid) > 0) {
+    cli::cli_abort(
+      c(
+        "{.arg {error_arg}} contains invalid values: {.val {invalid}}",
+        "i" = "Valid values are: {.val {names(return_geometry_lu)}}"
+      ),
+      call = error_call
+    )
+  }
+
+  api_params <- return_geometry_lu[x]
+  as.list(
+    setNames(rep(TRUE, length(api_params)), api_params)
+  )
 }

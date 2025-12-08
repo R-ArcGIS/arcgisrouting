@@ -9,9 +9,51 @@ stops <- sf::st_sf(
   )
 )
 set_arc_token(auth_user())
-result <- find_routes(stops)
+result <- find_routes(stops, return_stops = TRUE)
+
+routes <- parse_esri_json(result, query = "/routes")
+stops <- parse_esri_json(result, query = "/stops")
+parse_esri_json(result, query = "/barriers")
+parse_esri_json(result, query = "/traversedJunctions")
+parse_esri_json(result, query = "/polylineBarriers")
+parse_esri_json(result, query = "/polygonBarriers")
+parse_esri_json(result, query = "/traversedEdges")
+parse_esri_json(result, query = "/traversedTurns")
+parse_esri_json(result, query = "/directionPoints")
+parse_esri_json(result, query = "/directionLines")
 
 
-decode_compressed_geometry(result$directions$features[[1]]$compressedGeometry[
-  5
-])
+routes <- parse_esri_json(result, query = "/directions")
+
+
+parse_esri_json(result, query = "/stops")
+
+res <- RcppSimdJson::fparse(result, query = "/directions") |> str(1)
+
+RcppSimdJson::fparse(
+  result,
+  query = list(features = "/directions/features")
+)
+
+RcppSimdJson::fparse(result, query = "/directions/features")
+
+
+clipr::write_clip(result)
+
+tmp <- RcppSimdJson::fparse(result, query = "/directions/0/features") |>
+  data_frame() |>
+  dplyr::select(-compressedGeometry)
+
+tmp$strings
+
+arcgisutils::rbind_results(tmp$attributes)
+
+tt <- list()
+for (i in seq_along(tmp$attributes)) {
+  tt[[i]] <- tibble::as_tibble(tmp$attributes[[i]])
+}
+
+directions <- rbind_results(tt) |>
+  data_frame()
+
+directions

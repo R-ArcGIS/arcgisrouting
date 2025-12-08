@@ -2,23 +2,27 @@ library(sf)
 library(dplyr)
 library(ggplot2)
 library(arcgisutils)
-library(arcgisrouting)
-
+# library(arcgisrouting)
 
 set_arc_token(auth_user())
+
+data_path <- system.file("extdata/poa", package = "r5r")
+poi <- data.table::fread(file.path(data_path, "poa_points_of_interest.csv"))
+head(poi)
 
 # read sample dataset
 x <- readr::read_csv(
   system.file("extdata/spo/spo_hexgrid.csv", package = "r5r"),
   n_max = 3
-) |> st_as_sf(coords = c("lon", "lat"), crs = 4326)
+) |>
+  st_as_sf(coords = c("lon", "lat"), crs = 4326)
 
 
 # Calculate travel matrix
 travel_cost_matrix(origins = x)
 
 
-# Calculate a service area 
+# Calculate a service area
 job <- service_areas_async(x, "Walking Time", token = auth_user())
 
 res <- poll_and_resolve_job(
@@ -29,11 +33,15 @@ res <- poll_and_resolve_job(
 # extract the service areas
 isochrones <- res$service_areas
 
-isochrones |> 
+isochrones |>
   ggplot() +
-  geom_sf(aes(fill = as.factor(from_break)), lwd = 0.1, color = NA, alpha = 0.7) +
-  scale_fill_viridis_d() + 
+  geom_sf(
+    aes(fill = as.factor(from_break)),
+    lwd = 0.1,
+    color = NA,
+    alpha = 0.7
+  ) +
+  scale_fill_viridis_d() +
   theme_void() +
   theme(legend.position = "none") +
   facet_wrap("facility_id")
-

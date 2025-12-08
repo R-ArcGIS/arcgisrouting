@@ -1,19 +1,17 @@
 # maximum 250 points
 # can have `doNotLocateOnRestrictedElements` property
 
-#' BarrierType: 
+#' BarrierType:
 #'   0 (restriction)
 #'   2 (added cost)
-#' Must have accompanying attribute 
+#' Must have accompanying attribute
 #' Valid attributes Attr_TravelTime , Attr_Miles , Attr_Kilometers , Attr_Minutes , Attr_WalkTime , Attr_TruckMinutes , or Attr_TruckTravelTime
-# ObjectID 
+# ObjectID
 # FullEdge
 # preserveObjectId: we will ignore this for now unless specifically asked for.
 
 # accept sfc_POINT object - all are restrictionss
-# sf object with 
-
-
+# sf object with
 
 #' @export
 as_point_barriers <- function(x, ...) {
@@ -27,13 +25,16 @@ as_point_barriers.NULL <- function(x, ...) {
 
 #' @export
 as_point_barriers.sfc <- function(x, ...) {
-
   if (length(x) > 250) {
-    cli::cli_abort("Only a maximum of 250 point barriers can be provided found {.val {length(x)}}")
+    cli::cli_abort(
+      "Only a maximum of 250 point barriers can be provided found {.val {length(x)}}"
+    )
   }
 
   if (!inherits(x, "sfc_POINT")) {
-    cli::cli_abort("Polyline barriers must be a LINESTRING or a MULTILINESTRING not {obj_type_friendly(x)}")
+    cli::cli_abort(
+      "Polyline barriers must be a LINESTRING or a MULTILINESTRING not {obj_type_friendly(x)}"
+    )
   }
 
   # if an sfc, then we just assume all points are barriers
@@ -47,7 +48,6 @@ as_point_barriers.sfc <- function(x, ...) {
       geometry = x
     )
   )
-
 }
 
 
@@ -63,7 +63,9 @@ as_point_barriers.sf <- function(x, ...) {
 
   n <- nrow(x)
   if (n > 250) {
-    cli::cli_abort("Only a maximum of 250 point barriers can be provided found {.val {n}}")
+    cli::cli_abort(
+      "Only a maximum of 250 point barriers can be provided found {.val {n}}"
+    )
   }
 
   # create a lookup for this here fellas
@@ -71,7 +73,7 @@ as_point_barriers.sf <- function(x, ...) {
   lu <- c(imp_lu, "name" = "Name", "full_edge" = "FullEdge")
 
   common_cols <- intersect(names(lu), colnames(x))
-  
+
   if (is.null(common_cols)) {
     as_point_barriers(sf::st_geometry(x))
   }
@@ -88,7 +90,9 @@ as_point_barriers.sf <- function(x, ...) {
     } else if (col == "name") {
       check_character(x[[col]])
     } else if (!rlang::is_bare_numeric(x[[col]])) {
-      cli::cli_abort("Expected impedance column {.col {col}} to be numeric. Found {obj_type_friendly(x[[col]])}.")
+      cli::cli_abort(
+        "Expected impedance column {.col {col}} to be numeric. Found {obj_type_friendly(x[[col]])}."
+      )
     }
   }
 

@@ -1,4 +1,4 @@
-service_area_job <- R6::R6Class("service_area_job", inherit = esri_job)
+service_area_job <- R6::R6Class("service_area_job", inherit = arcgisutils::arc_gp_job)
 
 # TODO 
 # set output format / output type

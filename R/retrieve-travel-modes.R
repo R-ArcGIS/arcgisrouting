@@ -2,12 +2,14 @@
 # to them. Run this to figure that out.
 # https://route.arcgis.com/arcgis/rest/services/World/OriginDestinationCostMatrix/NAServer/OriginDestinationCostMatrix_World/retrieveTravelModes?f=json&token=
 
-
 #' Retrieve Available Travel Modes
 #'
-.retrieve_travel_modes <- function(token = arcgisutils::arc_token(), error_call = rlang::caller_call()) {
+.retrieve_travel_modes <- function(
+  token = arcgisutils::arc_token(),
+  error_call = rlang::caller_call()
+) {
   # get portal metadata
-  meta <- arcgisutils::arc_self_meta(token = token)
+  meta <- arcgisutils::arc_portal_self(token = token)
 
   # fetch the odCostMatrix url
   # idk if this is different than the async one—but I don't think so
@@ -48,7 +50,6 @@
     c("name", "id", "description"),
     colnames(travel_modes[["supportedTravelModes"]])
   )
-
 
   # we make the travel modes a tbl for printing
   travel_modes[["supportedTravelModes"]] <- data_frame(

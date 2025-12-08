@@ -1,11 +1,3 @@
-# find_routes() function scaffold
-#
-# Based on ArcGIS /solve API endpoint documentation
-#
-# REQUIRED PARAMETERS:
-# - stops: point features (use as_stops())
-# - token: authentication token (default: arcgisutils::arc_token())
-#
 # OPTIONAL PARAMETERS WITH EXISTING VALIDATION:
 #
 # Travel Mode & Network:
@@ -16,9 +8,6 @@
 # - restrictions: validate_restrictions()
 # - use_hierarchy: check_bool()
 #
-# Timing:
-# - start_time: arcgisutils::date_to_ms() (always UTC)
-# - use_time_windows: DERIVED from stops having TimeWindowStart/TimeWindowEnd
 #
 # Route Optimization:
 # - find_best_sequence: check_bool() (default: FALSE)
@@ -37,23 +26,6 @@
 # - directions_style_name: NEEDS validate_directions_style()
 # - directions_length_units: NEEDS validate_length_units()
 # - directions_time_attribute_name: validate_impedance_value() (subset to time-based)
-#
-# Output Control:
-# - return_routes: check_bool() (default: TRUE)
-# - return_stops: check_bool() (default: FALSE)
-# - return_barriers: check_bool() (default: FALSE)
-# - return_polyline_barriers: check_bool() (default: FALSE)
-# - return_polygon_barriers: check_bool() (default: FALSE)
-# - output_lines: NEEDS validate_output_lines()
-#
-# Advanced/Debug:
-# - return_traversed_edges: check_bool() (default: FALSE)
-# - return_traversed_junctions: check_bool() (default: FALSE)
-# - return_traversed_turns: check_bool() (default: FALSE)
-#
-# Error Handling:
-# - ignore_invalid_locations: check_bool() (default: TRUE)
-# - return_empty_results: check_bool() (default: FALSE)
 #
 # Geometry:
 # - output_geometry_precision: check_number_decimal()
@@ -75,11 +47,6 @@
 # - validate_length_units()
 # - validate_output_lines()
 # - validate_precision_units()
-#
-# NOTES:
-# - Remove all UTC-related booleans (date_to_ms() always uses UTC)
-# - Many parameters override travel_mode settings
-# - use_time_windows should be automatically derived from stops data
 
 #' Find Routes
 #'
@@ -335,10 +302,37 @@ find_routes <- function(
     httr2::req_perform() |>
     httr2::resp_body_string()
 
-  # Check for errors
-  # arcgisutils::detect_errors(resp)
+  compact(list(
+    routes = try_parse(result, query = "/routes"),
+    stops = try_parse(result, query = "/stops"),
+    barriers = try_parse(result, query = "/barriers"),
+    traversed_junctions = try_parse(result, query = "/traversedJunctions"),
+    polyline_barriers = try_parse(result, query = "/polylineBarriers"),
+    polygon_barriers = try_parse(result, query = "/polygonBarriers"),
+    traversed_edges = try_parse(result, query = "/traversedEdges"),
+    traversed_turns = try_parse(result, query = "/traversedTurns"),
+    direction_points = try_parse(result, query = "/directionPoints"),
+    direction_lines = try_parse(result, query = "/directionLines"),
+    messages = RcppSimdJson::fparse(result, query = "/messages"),
+    checksum = RcppSimdJson::fparse(result, query = "/checksum"),
+    directions = RcppSimdJson::fparse(result, query = "/directions")
+  ))
+}
 
-  resp
+
+# safely try and parse the resultant geometries
+try_parse <- function(result, query) {
+  rlang::try_fetch(
+    parse_esri_json(result, query = query),
+    error = function(e) {
+      if (grepl("^NO_SUCH_FIELD", e$message)) {
+        NULL
+      } else {
+        cli::cli_alert_warning(e$message)
+        invisible(NULL)
+      }
+    }
+  )
 }
 
 
@@ -401,7 +395,7 @@ validate_directions_output_type <- function(
   x <- rlang::arg_match0(
     x,
     values = valid_values,
-    error_arg = error_arg,
+    arg_nm = error_arg,
     error_call = error_call
   )
 

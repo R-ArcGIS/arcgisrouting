@@ -1,4 +1,6 @@
+library(sf)
 # Simple route between 3 stops
+
 stops <- sf::st_sf(
   name = c("Start", "Middle", "End"),
   geometry = sf::st_sfc(
@@ -9,34 +11,80 @@ stops <- sf::st_sf(
   )
 )
 set_arc_token(auth_user())
-result <- find_routes(stops, return_stops = TRUE)
-
-routes <- parse_esri_json(result, query = "/routes")
-stops <- parse_esri_json(result, query = "/stops")
-parse_esri_json(result, query = "/barriers")
-parse_esri_json(result, query = "/traversedJunctions")
-parse_esri_json(result, query = "/polylineBarriers")
-parse_esri_json(result, query = "/polygonBarriers")
-parse_esri_json(result, query = "/traversedEdges")
-parse_esri_json(result, query = "/traversedTurns")
-parse_esri_json(result, query = "/directionPoints")
-parse_esri_json(result, query = "/directionLines")
-
-
-routes <- parse_esri_json(result, query = "/directions")
-
-
-parse_esri_json(result, query = "/stops")
-
-res <- RcppSimdJson::fparse(result, query = "/directions") |> str(1)
-
-RcppSimdJson::fparse(
-  result,
-  query = list(features = "/directions/features")
+result <- find_routes(
+  stops,
+  return_geometry = c(
+    "routes",
+    "directions",
+    "stops",
+    "barriers",
+    "polyline_barriers",
+    "polygon_barriers",
+    "traversed_edges",
+    "traversed_junctions",
+    "traversed_turns"
+  )
 )
 
-RcppSimdJson::fparse(result, query = "/directions/features")
 
+# Find optimal order for stops
+sales_stops <- st_sf(
+  name = c("Office", "Client 1", "Client 2", "Client 3", "Office"),
+  geometry = st_sfc(
+    st_point(c(-122.4194, 37.7749)),
+    st_point(c(-122.4083, 37.7858)),
+    st_point(c(-122.4313, 37.7793)),
+    st_point(c(-122.4000, 37.7900)),
+    st_point(c(-122.4194, 37.7749)),
+    crs = 4326
+  )
+)
+
+optimized_route <- find_routes(
+  sales_stops,
+  find_best_sequence = TRUE,
+  preserve_first_stop = TRUE,
+  preserve_last_stop = TRUE
+)
+
+
+all <- RcppSimdJson::fparse(optimized_route)
+
+all$directions$features |> str()
+res <- RcppSimdJson::fparse(result, query = "/directions") |>
+
+  RcppSimdJson::fparse(result, query = "/directions/features")
+
+
+# Route with time windows for deliveries
+delivery_stops <- st_sf(
+  name = c("Warehouse", "Customer A", "Customer B", "Customer C"),
+  time_window_start = as.POSIXct(c(
+    "2024-01-15 08:00:00",
+    "2024-01-15 09:00:00",
+    "2024-01-15 11:00:00",
+    "2024-01-15 14:00:00"
+  )),
+  time_window_end = as.POSIXct(c(
+    "2024-01-15 08:30:00",
+    "2024-01-15 10:00:00",
+    "2024-01-15 13:00:00",
+    "2024-01-15 16:00:00"
+  )),
+  geometry = st_sfc(
+    st_point(c(-122.4194, 37.7749)),
+    st_point(c(-122.4083, 37.7858)),
+    st_point(c(-122.4313, 37.7793)),
+    st_point(c(-122.4000, 37.7900)),
+    crs = 4326
+  )
+)
+
+delivery_route <- find_routes(
+  delivery_stops,
+  start_time = as.POSIXct("2024-01-15 08:00:00"),
+  travel_mode = "Driving Time"
+)
 
 clipr::write_clip(result)
 
@@ -44,10 +92,8 @@ tmp <- RcppSimdJson::fparse(result, query = "/directions/0/features") |>
   data_frame() |>
   dplyr::select(-compressedGeometry)
 
+
 tmp$strings
-
-arcgisutils::rbind_results(tmp$attributes)
-
 tt <- list()
 for (i in seq_along(tmp$attributes)) {
   tt[[i]] <- tibble::as_tibble(tmp$attributes[[i]])

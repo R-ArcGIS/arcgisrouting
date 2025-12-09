@@ -1,46 +1,3 @@
-# OPTIONAL PARAMETERS WITH EXISTING VALIDATION:
-#
-# Travel Mode & Network:
-# - travel_mode: validate_travel_mode()
-# - impedance_attribute_name: validate_impedance_value()
-# - accumulate_attribute_names: validate_impedance_value(multiple = TRUE)
-# - restrict_u_turns: validate_u_turns()
-# - restrictions: validate_restrictions()
-# - use_hierarchy: check_bool()
-#
-#
-# Route Optimization:
-# - find_best_sequence: check_bool() (default: FALSE)
-# - preserve_first_stop: check_bool() (default: TRUE, only applies if find_best_sequence = TRUE)
-# - preserve_last_stop: check_bool() (default: TRUE, only applies if find_best_sequence = TRUE)
-#
-# Barriers:
-# - barriers: as_point_barriers()
-# - polyline_barriers: as_polyline_barriers()
-# - polygon_barriers: as_polygon_barriers()
-#
-# Directions:
-# - return_directions: check_bool() (default: TRUE)
-# - directions_language: check_string() (default: "en")
-# - directions_output_type: NEEDS validate_directions_output_type()
-# - directions_style_name: NEEDS validate_directions_style()
-# - directions_length_units: NEEDS validate_length_units()
-# - directions_time_attribute_name: validate_impedance_value() (subset to time-based)
-#
-# Geometry:
-# - output_geometry_precision: check_number_decimal()
-# - output_geometry_precision_units: NEEDS validate_precision_units()
-# - geometry_precision: check_number_whole()
-# - geometry_precision_m: check_number_whole()
-#
-# Object ID:
-# - preserve_object_id: check_bool() (default: FALSE)
-#
-# PARAMETERS TO SKIP/HANDLE DIFFERENTLY:
-# - attributeParameterValues: Complex nested structure - handle later if needed
-# - context: Internal parameter for spatial reference - handle via arcgisutils
-# - overrides: Internal use only
-#
 # VALIDATION FUNCTIONS NEEDED:
 # - validate_directions_output_type()
 # - validate_directions_style()
@@ -97,7 +54,7 @@
 #'   Default: `TRUE`.
 #' @param token Authorization token. Default: [arcgisutils::arc_token()].
 #'
-#' @returns A list containing the routing results. The elements returned depend
+#' @returns A list containing the routing resps. The elements returned depend
 #'   on the `return_geometry` parameter. Possible elements include:
 #'   - `routes`: Route features
 #'   - `directions`: Driving directions
@@ -129,7 +86,7 @@
 #'   )
 #' )
 #'
-#' result <- find_routes(stops)
+#' resp <- find_routes(stops)
 #'
 #' # Route with time windows for deliveries
 #' delivery_stops <- st_sf(
@@ -201,6 +158,7 @@
 #' }
 #'
 #' @export
+#' @references [API Reference](https://developers.arcgis.com/rest/routing/route-service-direct/)
 find_routes <- function(
   stops,
   travel_mode = NULL,
@@ -303,27 +261,61 @@ find_routes <- function(
     httr2::resp_body_string()
 
   compact(list(
-    routes = try_parse(result, query = "/routes"),
-    stops = try_parse(result, query = "/stops"),
-    barriers = try_parse(result, query = "/barriers"),
-    traversed_junctions = try_parse(result, query = "/traversedJunctions"),
-    polyline_barriers = try_parse(result, query = "/polylineBarriers"),
-    polygon_barriers = try_parse(result, query = "/polygonBarriers"),
-    traversed_edges = try_parse(result, query = "/traversedEdges"),
-    traversed_turns = try_parse(result, query = "/traversedTurns"),
-    direction_points = try_parse(result, query = "/directionPoints"),
-    direction_lines = try_parse(result, query = "/directionLines"),
-    messages = RcppSimdJson::fparse(result, query = "/messages"),
-    checksum = RcppSimdJson::fparse(result, query = "/checksum"),
-    directions = RcppSimdJson::fparse(result, query = "/directions")
+    directions = .process_directions(resp),
+    routes = try_parse(resp, query = "/routes"),
+    stops = try_parse(resp, query = "/stops"),
+    barriers = try_parse(resp, query = "/barriers"),
+    traversed_junctions = try_parse(resp, query = "/traversedJunctions"),
+    polyline_barriers = try_parse(resp, query = "/polylineBarriers"),
+    polygon_barriers = try_parse(resp, query = "/polygonBarriers"),
+    traversed_edges = try_parse(resp, query = "/traversedEdges"),
+    traversed_turns = try_parse(resp, query = "/traversedTurns"),
+    direction_points = try_parse(resp, query = "/directionPoints"),
+    direction_lines = try_parse(resp, query = "/directionLines"),
+    messages = RcppSimdJson::fparse(resp, query = "/messages"),
+    checksum = RcppSimdJson::fparse(resp, query = "/checksum")
   ))
 }
 
+# process the summary
+.process_summary <- function(x, error_call = rlang::caller_call()) {
+  x$envelope <- arcgisutils::from_envelope(
+    x$envelope,
+    error_call = error_call
+  )
+}
 
-# safely try and parse the resultant geometries
-try_parse <- function(result, query) {
+# process the attributes of directions result
+.process_attributes <- function(x) {
+  lapply(x, \(.x) {
+    vctrs::new_data_frame(.x)
+  }) |>
+    rbind_results() |>
+    data_frame()
+}
+
+# an individual featureset
+.process_feature <- function(x) {
+  res <- .process_attributes(x$attributes)
+  res$compress_geometry <- x$compressedGeometry
+  res$strings <- x$strings
+  res
+}
+
+# process all directions
+.process_directions <- function(result) {
+  x <- RcppSimdJson::fparse(result, query = "/directions")
+  x$directions <- lapply(x$features, .process_feature)
+  x$features <- NULL
+  x$summary <- lapply(x$summary, .process_summary)
+  data_frame(x)
+}
+
+
+# safely try and parse the respant geometries
+try_parse <- function(resp, query) {
   rlang::try_fetch(
-    parse_esri_json(result, query = query),
+    parse_esri_json(resp, query = query),
     error = function(e) {
       if (grepl("^NO_SUCH_FIELD", e$message)) {
         NULL

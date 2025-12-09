@@ -103,3 +103,27 @@ directions <- rbind_results(tt) |>
   data_frame()
 
 directions
+
+
+# multiople routess ------------------------------------------------------
+set_arc_token(auth_user())
+multi_route_stops <- sf::st_sf(
+  name = c("A1", "A2", "B1", "B2"),
+  route_name = c("Route1", "Route1", "Route2", "Route2"),
+  geometry = sf::st_sfc(
+    sf::st_point(c(-122.4194, 37.7749)),
+    sf::st_point(c(-122.0312, 37.3318)),
+    sf::st_point(c(-121.8863, 37.3382)),
+    sf::st_point(c(-121.9, 37.4)),
+    crs = 4326
+  )
+)
+
+result <- find_routes(multi_route_stops)
+
+dirs_raw <- RcppSimdJson::fparse(result, query = "/directions")
+str(dirs_raw, 2)
+
+x <- dirs_raw$summary[[1]]
+
+data_frame(vctrs::new_data_frame(x))

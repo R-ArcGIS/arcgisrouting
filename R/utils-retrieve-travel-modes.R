@@ -58,5 +58,6 @@
 
   travel_modes
 }
+
 #' @export
 retrieve_travel_modes <- memoise::memoise(.retrieve_travel_modes)

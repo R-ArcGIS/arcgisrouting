@@ -2,12 +2,13 @@
 
 # token <- auth_user()
 # modes <- retrieve_travel_modes(token)
+# x <- modes$defaultTravelMode
 
 .validate_travel_mode <- function(
   x,
   error_arg = rlang::caller_arg(x),
   error_call = rlang::caller_call(),
-  token
+  token = arc_token()
 ) {
   # early exit for NULL
   if (is.null(x)) {
@@ -17,59 +18,43 @@
   # check that x is indeed a string
   check_string(x, arg = error_arg, call = error_call)
 
-  # fetch travel modes
+  # set x to lowercase to ensure no cap errors
+  x <- tolower(x)
+
+  # fetch travel modes and create a lookup vector
   modes_raw <- retrieve_travel_modes(token, error_call)
-  modes <- modes_raw[["supportedTravelModes"]][["name"]]
+  supported_modes <- modes_raw$supportedTravelModes
+  mode_ids <- supported_modes$id
+  mode_names <- supported_modes$name
 
-  modes_idx <- which(tolower(x) %in% tolower(modes))
+  # check if `x` is in the names or the IDs
+  mode_idx <- which(x == tolower(mode_ids))
+  mode_name_idx <- which(x == tolower(mode_names))
 
-  if (length(modes_idx) != 1) {
+  if (rlang::is_empty(mode_idx) && rlang::is_empty(mode_name_idx)) {
+    bullets <- setNames(
+      sprintf("{.val %s}: {.val %s}", mode_names, mode_ids),
+      rep("*", length(mode_ids))
+    )
     cli::cli_abort(
       c(
-        "{.arg {error_arg}} is not a valid {.arg travel_mode}",
-        "i" = "Must be one of {.val {modes}}"
+        "{.arg {error_arg}} is not a valid {.arg travel_mode}. Provide the mode ID or name directly.",
+        "i" = "Valid travel modes are:",
+        bullets
       ),
       call = error_call
     )
   }
 
-  modes[modes_idx]
-  # # create lookup vectors
-  # lu_name <- tibble::deframe(modes)
-  # lu_id <- names_swap(lu_name, error_call = error_call)
+  # extract id
+  id <- na.omit(c(mode_idx, mode_name_idx))
+  mode_attrs <- supported_modes[["attributeParameterValues"]][[]]
 
-  # travel_mode_name <- names(lu_name[x])
-  # if (is.na(travel_mode_name) || length(travel_mode_name) != 1) {
-  #   cli::cli_abort("Provided travel mode is not known.")
-  # }
-
-  # return(travel_mode_name)
-  # #TODO MAKE THIS BETTER EVERYTHING BELOW IWS NOT EXECUTED
-
-  # # get the first non-NA value
-  # travel_mode_id <- unname(na.omit(c(lu_name[x], lu_name[lu_id[x]]))[1])
-
-  # if (length(travel_mode_id) != 1L || is.na(travel_mode_id)) {
-  #   # provide informative error message
-  #   to_print <- paste(names(lu_name) ,": {.val ", lu_name, "}", sep = "")
-  #   names(to_print) <- rep("*", length(to_print))
-  #   cli::cli_abort(
-  #     c(
-  #       "{.arg {error_arg}} is not a valid {.arg travel_mode}.",
-  #       ">" = "Expected the name or ID of a travel mode",
-  #       to_print,
-  #       "i" = "use {.fn get_travel_modes} to identify available travel modes."
-  #     )
-  #   )
-  # }
-
-  # mode_idx <- which(modes_raw[["supportedTravelModes"]][["id"]] == travel_mode_id)
-  # mode_attrs <- modes_raw[["supportedTravelModes"]][["attributeParameterValues"]][[mode_idx]]
-  # # convert to a json string
-  # yyjsonr::write_json_str(
-  #   list("attributeParameterValues" = mode_attrs),
-  #   auto_unbox = TRUE
-  # )
+  # convert to json
+  yyjsonr::write_json_str(
+    list("attributeParameterValues" = mode_attrs),
+    auto_unbox = TRUE
+  )
 }
 
 

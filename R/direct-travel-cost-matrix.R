@@ -27,7 +27,6 @@
 #   returnDestinations
 #   returnBarriers
 
-
 #' @param origins TODO
 #' @param destinations TODO
 #' @param travel_mode default `NULL`. A scalar character of the travel mode's ID.
@@ -42,21 +41,21 @@
 
 #' @export
 travel_cost_matrix <- function(
-    origins,
-    destinations = origins,
-    travel_mode = NULL,
-    cutoff = NULL, # IGNORED
-    time_of_day = NULL,
-    use_hierarchy = NULL,
-    u_turns = NULL,
-    impedance = NULL,
-    accumulate_impedance = NULL,
-    restrictions = NULL,
-    point_barriers = NULL,
-    line_barriers = NULL,
-    polygon_barriers = NULL,
-    token = arcgisutils::arc_token()
-  ) {
+  origins,
+  destinations = origins,
+  travel_mode = NULL,
+  cutoff = NULL, # IGNORED
+  time_of_day = NULL,
+  use_hierarchy = NULL,
+  u_turns = NULL,
+  impedance = NULL,
+  accumulate_impedance = NULL,
+  restrictions = NULL,
+  point_barriers = NULL,
+  line_barriers = NULL,
+  polygon_barriers = NULL,
+  token = arcgisutils::arc_token()
+) {
   # TODO choose altrenative routing services
 
   # handle travel mode if it is present
@@ -77,9 +76,11 @@ travel_cost_matrix <- function(
 
     mode_attrs <- available_modes[["attributeParameterValues"]][[mode_idx]]
     # convert to a json string
-    travel_mode <- yyjsonr::write_json_str(unclass(mode_attrs), auto_unbox = TRUE)
+    travel_mode <- yyjsonr::write_json_str(
+      unclass(mode_attrs),
+      auto_unbox = TRUE
+    )
   }
-
 
   # TODO default_cutoff: we can set Cutoff_[Impedance] to provide a per feature
   # cutoff value. How do we set this???
@@ -103,7 +104,10 @@ travel_cost_matrix <- function(
   impedance <- validate_impedance_value(impedance)
 
   # allow for multiple
-  accumulate_impedance <- validate_impedance_value(accumulate_impedance, multiple = TRUE)
+  accumulate_impedance <- validate_impedance_value(
+    accumulate_impedance,
+    multiple = TRUE
+  )
 
   # if this is not null, we collapse to a comma separated list
   if (!is.null(accumulate_impedance)) {
@@ -114,9 +118,12 @@ travel_cost_matrix <- function(
 
   meta <- arcgisutils::arc_self_meta(token = token)
   od_cost_url <- meta$helperServices$odCostMatrix$url
-  req <- arc_base_req(od_cost_url, token, "solveODCostMatrix", query = c(f = "json"))
-
-
+  req <- arc_base_req(
+    od_cost_url,
+    token,
+    "solveODCostMatrix",
+    query = c(f = "json")
+  )
 
   resp <- req |>
     httr2::req_body_form(
@@ -141,7 +148,7 @@ travel_cost_matrix <- function(
     httr2::req_error(is_error = function(e) FALSE) |>
     httr2::req_perform()
 
-  resp_str <- httr2::resp_body_string(resp) 
+  resp_str <- httr2::resp_body_string(resp)
   res <- yyjsonr::read_json_str(resp_str)
 
   # check for errors
@@ -155,12 +162,11 @@ travel_cost_matrix <- function(
   }
 
   # there's never more than 2,500 rows so speed isn't too important here...
-  # The column names aren't very clean or anything but it is what it is! 
-  res <- do.call(rbind.data.frame, res$odLines$features$attributes)
+  # The column names aren't very clean or anything but it is what it is!
+  res <- arcgisutils::rbind_results(res$odLines$features$attributes)
   colnames(res) <- heck::to_snek_case(colnames(res))
   res
 }
-
 
 
 #' @keywords internal
@@ -175,7 +181,13 @@ validate_time_of_day <- function(time_of_day) {
     time_of_day <- tryCatch(
       as.POSIXlt(time_of_day),
       error = function(e) {
-        cli::cli_abort(c("Failed to parse {.arg time_of_day} as a date time object", ">" = e[["message"]]), call = caller)
+        cli::cli_abort(
+          c(
+            "Failed to parse {.arg time_of_day} as a date time object",
+            ">" = e[["message"]]
+          ),
+          call = caller
+        )
       }
     )
   }
@@ -201,20 +213,32 @@ is_utc <- function(x, arg = rlang::caller_arg(x)) {
 
 
 validate_u_turns <- function(
-    x,
-    error_arg = rlang::caller_arg(),
-    error_call = rlang::caller_call()) {
+  x,
+  error_arg = rlang::caller_arg(),
+  error_call = rlang::caller_call()
+) {
   if (is.null(x)) {
     return(x)
   }
   x <- rlang::arg_match(
     x,
-    values = c("allow_backtrack", "deadend_intersection", "deadend", "no_backtrack"),
-    error_call = error_call, error_arg = error_arg
+    values = c(
+      "allow_backtrack",
+      "deadend_intersection",
+      "deadend",
+      "no_backtrack"
+    ),
+    error_call = error_call,
+    error_arg = error_arg
   )
 
   lu <- setNames(
-    c("esriNFSBAllowBacktrack", "esriNFSBAtDeadEndsAndIntersections", "esriNFSBAtDeadEndsOnly", "esriNFSBNoBacktrack"),
+    c(
+      "esriNFSBAllowBacktrack",
+      "esriNFSBAtDeadEndsAndIntersections",
+      "esriNFSBAtDeadEndsOnly",
+      "esriNFSBNoBacktrack"
+    ),
     c("allow_backtrack", "deadend_intersection", "deadend", "no_backtrack")
   )
 
@@ -223,16 +247,53 @@ validate_u_turns <- function(
 
 
 validate_restrictions <- function(
-    x,
-    error_arg = rlang::caller_arg(x),
-    error_call = rlang::caller_call()) {
+  x,
+  error_arg = rlang::caller_arg(x),
+  error_call = rlang::caller_call()
+) {
   # early return for NULL
   if (is.null(x)) {
     return(x)
   }
 
   # known restriction types
-  restrictions <- c("Any Hazmat Prohibited", "Avoid Carpool Roads", "Avoid Express Lanes", "Avoid Gates", "Avoid Limited Access Roads", "Avoid Private Roads", "Avoid Roads Unsuitable for Pedestrians", "Avoid Stairways", "Avoid Toll Roads", "Avoid Toll Roads for Trucks", "Avoid Truck Restricted Roads", "Avoid Unpaved Roads", "Axle Count Restriction", "Driving a Bus", "Driving a Taxi", "Driving a Truck", "Driving an Automobile", "Driving an Emergency Vehicle", "Height Restriction", "Kingpin to Rear Axle Length Restriction", "Length Restriction", "Preferred for Pedestrians", "Riding a Motorcycle", "Roads Under Construction Prohibited", "Semi or Tractor with One or More Trailers Prohibited", "Single Axle Vehicles Prohibited", "Tandem Axle Vehicles Prohibited", "Through Traffic Prohibited", "Truck with Trailers Restriction", "Use Preferred Hazmat Routes", "Use Preferred Truck Routes", "Walking", "Weight Restriction", "Weight per Axle Restriction", "Width Restriction")
+  restrictions <- c(
+    "Any Hazmat Prohibited",
+    "Avoid Carpool Roads",
+    "Avoid Express Lanes",
+    "Avoid Gates",
+    "Avoid Limited Access Roads",
+    "Avoid Private Roads",
+    "Avoid Roads Unsuitable for Pedestrians",
+    "Avoid Stairways",
+    "Avoid Toll Roads",
+    "Avoid Toll Roads for Trucks",
+    "Avoid Truck Restricted Roads",
+    "Avoid Unpaved Roads",
+    "Axle Count Restriction",
+    "Driving a Bus",
+    "Driving a Taxi",
+    "Driving a Truck",
+    "Driving an Automobile",
+    "Driving an Emergency Vehicle",
+    "Height Restriction",
+    "Kingpin to Rear Axle Length Restriction",
+    "Length Restriction",
+    "Preferred for Pedestrians",
+    "Riding a Motorcycle",
+    "Roads Under Construction Prohibited",
+    "Semi or Tractor with One or More Trailers Prohibited",
+    "Single Axle Vehicles Prohibited",
+    "Tandem Axle Vehicles Prohibited",
+    "Through Traffic Prohibited",
+    "Truck with Trailers Restriction",
+    "Use Preferred Hazmat Routes",
+    "Use Preferred Truck Routes",
+    "Walking",
+    "Weight Restriction",
+    "Weight per Axle Restriction",
+    "Width Restriction"
+  )
 
   # set to lowercase for standardized comparision
   restrictions_lower <- tolower(restrictions)

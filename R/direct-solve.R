@@ -256,7 +256,7 @@ find_routes <- function(
     token,
     path = "solve"
   ) |>
-    httr2::req_body_form(!!!params) |>
+    httr2::req_body_form(!!!params, .multi = c("comma")) |>
     httr2::req_perform() |>
     httr2::resp_body_string()
 

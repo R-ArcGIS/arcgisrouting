@@ -57,7 +57,9 @@
 #' @returns A list containing the routing resps. The elements returned depend
 #'   on the `return_geometry` parameter. Possible elements include:
 #'   - `routes`: Route features
-#'   - `directions`: Driving directions
+#'   - `directions`: Driving directions. Each element contains a `compress_geometry`
+#'     column with per-maneuver segment geometry in ArcGIS compressed format.
+#'     Use [decode_compressed_geometry()] to decode these into sf geometries.
 #'   - `stops`: Stop features
 #'   - `barriers`: Barrier features
 #'   - `polyline_barriers`: Polyline barrier features
@@ -299,16 +301,25 @@ find_routes <- function(
   res <- .process_attributes(x$attributes)
   res$compress_geometry <- x$compressedGeometry
   res$strings <- x$strings
+  res$ETA <- arcgisutils::from_esri_date(res$ETA)
+  res$arriveTimeUTC <- arcgisutils::from_esri_date(res$arriveTimeUTC)
   res
 }
 
 # process all directions
-.process_directions <- function(result) {
-  x <- RcppSimdJson::fparse(result, query = "/directions")
-  x$directions <- lapply(x$features, .process_feature)
-  x$features <- NULL
-  x$summary <- lapply(x$summary, .process_summary)
-  data_frame(x)
+.process_directions <- function(result, error_call = rlang::caller_call()) {
+  rlang::try_fetch(
+    {
+      x <- RcppSimdJson::fparse(result, query = "/directions")
+      x$directions <- lapply(x$features, .process_feature)
+      x$features <- NULL
+      x$summary <- lapply(x$summary, .process_summary)
+      data_frame(x)
+    },
+    error = function(e) {
+      arcgisutils::detect_errors(RcppSimdJson::fparse(result), error_call = error_call)
+    }
+  )
 }
 
 

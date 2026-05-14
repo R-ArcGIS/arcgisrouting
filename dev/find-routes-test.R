@@ -120,6 +120,9 @@ multi_route_stops <- sf::st_sf(
 )
 
 result <- find_routes(multi_route_stops)
+result$directions$directions
+result$routes$geometry
+
 
 dirs_raw <- RcppSimdJson::fparse(result, query = "/directions")
 str(dirs_raw, 2)

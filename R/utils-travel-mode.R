@@ -46,15 +46,14 @@
     )
   }
 
-  # extract id
   id <- na.omit(c(mode_idx, mode_name_idx))
-  mode_attrs <- supported_modes[["attributeParameterValues"]][[]]
+  mode_attrs <- supported_modes[id, ]
 
-  # convert to json
-  yyjsonr::write_json_str(
-    list("attributeParameterValues" = mode_attrs),
-    auto_unbox = TRUE
-  )
+  mode_list <- as.list(mode_attrs)
+  mode_list$attributeParameterValues <- mode_list$attributeParameterValues[[1]]
+  mode_list$restrictionAttributeNames <- mode_list$restrictionAttributeNames[[1]]
+
+  yyjsonr::write_json_str(mode_list, auto_unbox = TRUE, dataframe = "rows")
 }
 
 
@@ -69,7 +68,8 @@
 get_travel_modes <- memoise::memoise(.get_travel_modes)
 
 
-validate_travel_mode <- memoise::memoise(.validate_travel_mode)
+# validate_travel_mode <- memoise::memoise(.validate_travel_mode)
+validate_travel_mode <- .validate_travel_mode
 
 names_swap <- function(x, error_call = rlang::caller_call()) {
   if (!rlang::is_named(x)) {

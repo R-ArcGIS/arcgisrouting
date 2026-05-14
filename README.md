@@ -16,7 +16,7 @@ An interface to the ArcGIS Routing Service.
 - `/GetToolInfo`
 - ✅ `/GetTravelModes`
 - ✅ `/retrieveTravelModes`
-- `/SnapToRoads`
+- ✅ `/SnapToRoads`
 - `/Traffic`
 
 ### Async (Geoprocessing Job)

@@ -19,10 +19,9 @@ find_routes(
   barriers = NULL,
   polyline_barriers = NULL,
   polygon_barriers = NULL,
-  return_directions = TRUE,
   directions_language = "en",
-  return_routes = TRUE,
-  return_stops = FALSE,
+  directions_type = "standard",
+  return_geometry = c("routes", "directions"),
   ignore_invalid_locations = TRUE,
   token = arcgisutils::arc_token()
 )
@@ -70,23 +69,51 @@ Default: \code{NULL}.}
 
 \item{polygon_barriers}{Polygon barriers as \code{sf} or \code{sfc} object. Default: \code{NULL}.}
 
-\item{return_directions}{Logical. Whether to generate driving directions.
-Default: \code{TRUE}.}
-
 \item{directions_language}{Character. Language code for directions (e.g., \code{"en"}).
 Default: \code{"en"}.}
 
-\item{return_routes}{Logical. Whether to return route geometries. Default: \code{TRUE}.}
+\item{directions_type}{Character. Specifies the content and verbosity of driving
+directions (\code{directionsOutputType} in REST API). One of: \code{"complete"},
+\code{"complete_no_events"}, \code{"instructions_only"}, \code{"standard"}, \code{"summary_only"},
+\code{"feature_sets"}. Default: \code{"standard"}.}
 
-\item{return_stops}{Logical. Whether to return stops in output. Default: \code{FALSE}.}
+\item{return_geometry}{Character vector. Specifies which features to return
+in the output. Valid values: \code{"routes"}, \code{"directions"}, \code{"stops"},
+\code{"barriers"}, \code{"polyline_barriers"}, \code{"polygon_barriers"},
+\code{"traversed_edges"}, \code{"traversed_junctions"}, \code{"traversed_turns"}.
+Default: \code{c("routes", "directions")}.}
 
 \item{ignore_invalid_locations}{Logical. Whether to ignore invalid locations.
 Default: \code{TRUE}.}
 
 \item{token}{Authorization token. Default: \code{\link[arcgisutils:token]{arcgisutils::arc_token()}}.}
+
+\item{return_directions}{Logical. Whether to generate driving directions.
+Default: \code{TRUE}.}
 }
 \value{
-A list containing the routing results.
+A list containing the routing resps. The elements returned depend
+on the \code{return_geometry} parameter. Possible elements include:
+\itemize{
+\item \code{routes}: Route features
+\item \code{directions}: Driving directions. Each element contains a \code{compress_geometry}
+column with per-maneuver segment geometry in ArcGIS compressed format.
+Use \code{\link[=decode_compressed_geometry]{decode_compressed_geometry()}} to decode these into sf geometries.
+\item \code{stops}: Stop features
+\item \code{barriers}: Barrier features
+\item \code{polyline_barriers}: Polyline barrier features
+\item \code{polygon_barriers}: Polygon barrier features
+\item \code{traversed_edges}: Traversed edge features
+\item \code{traversed_junctions}: Traversed junction features
+\item \code{traversed_turns}: Traversed turn features
+\item \code{messages}: Status and warning messages from the service
+}
+
+When \code{directions_type = "feature_sets"}, the response includes:
+\itemize{
+\item \code{direction_points}: sf object with point features for direction maneuvers
+\item \code{direction_lines}: sf object with line features for route segments
+}
 }
 \description{
 Finds the best routes between multiple stops using the ArcGIS routing service.
@@ -106,7 +133,7 @@ stops <- st_sf(
   )
 )
 
-result <- find_routes(stops)
+resp <- find_routes(stops)
 
 # Route with time windows for deliveries
 delivery_stops <- st_sf(
@@ -177,4 +204,7 @@ multi_impedance_route <- find_routes(
 )
 }
 
+}
+\references{
+\href{https://developers.arcgis.com/rest/routing/route-service-direct/}{API Reference}
 }

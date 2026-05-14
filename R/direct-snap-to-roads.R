@@ -137,7 +137,7 @@ validate_snap_analysis_region <- function(
 #' Convert spatial objects to snap points for the SnapToRoads service
 #'
 #' Prepares point geometries and their optional tracking attributes for use
-#' with [snap_to_roads()]. An `sfc` input is accepted for geometry-only
+#' with `snap_to_roads()`. An `sfc` input is accepted for geometry-only
 #' snapping. An `sf` input allows specifying additional per-point attributes.
 #'
 #' Recognized attribute columns (matched case-insensitively):

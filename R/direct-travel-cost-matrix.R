@@ -1,171 +1,234 @@
-# Synchronous service
-#
-# https://developers.arcgis.com/rest/routing/origin-destination-cost-matrix-synchronous-service/#origins
-#
-# Required parameters
-#   origins - points comma separated or feature collection
-#   destinations - same as above
-#   token -
-#   f - json
-# Optional parameters
-#   travelMode - m
-#   defaultCutoff - numeric
-#   defaultTargetDestinationCount -
-#   outputType - I think this can be omitted
-#   timeOfDay - default uses the local time
-#   timeOfDayIsUTC - automatically set this is time of day is provided
-#   useHierarchy - easy
-#   restrictUTurns -
-#   impedanceAttributeName -
-#   accumulateAttributeNames -
-#   restrictionAttributeNames -
-#   attributeParameterValues -
-#   barriers - needs to be treated as points, max 250, can have a additional fields
-#   polylineBarriers - lines, max 500
-#   polygonBarriers - polygon,
-#   returnOrigins
-#   returnDestinations
-#   returnBarriers
-
-#' @param origins TODO
-#' @param destinations TODO
-#' @param travel_mode default `NULL`. A scalar character of the travel mode's ID.
-#' @param cutoff default `NULL`. Determines the maximum distance or time to stop searching.
-#' @param n_target_destinations a numeric scalar. By default all origins and destinations are matched.
-#' @param time_of_day default `NULL`. A character or `POSIXlt` scalar representing the time of day when the cost is to be calculated. If a character vector is provided, it as processed with `as.POSIXlt()` and uses the default time zone. If the time zone is `UTC` the parameter [`timeOfDayIsUTC`](https://developers.arcgis.com/rest/routing/origin-destination-cost-matrix-synchronous-service/#timeofdayisutc) is set to `true`.
-#' @param use_hierarchy default `NULL`. Prefer higher-order streets (e.g. freeways). Supressed by `travel_mode`. ([Reference](https://developers.arcgis.com/rest/routing/origin-destination-cost-matrix-synchronous-service/#usehierarchy))
-#' @param u_turns default `"allow_backtrack"`. Must be one of `"allow_backtrack"`, `"deadend_intersection"`, `"deadend"`, or `"no_backtrack"`. Determines the conditions when a U-turn is permitted.
-#' @param impedance default `"travel_time"`. Determines how travel distance is measured. Must be one of `"travel_time"`, `"minutes"`, `"truck_travel_time"`, `"truck_minutes"`, `"walk_time"`, `"miles"`, `"kilometers"`. Suppressed by `travel_mode`. ([Reference](https://developers.arcgis.com/rest/routing/origin-destination-cost-matrix-synchronous-service/#impedanceattributename))
-#' @param accumulate_impedance default `NULL`. Calculate additional impedance metrics. These will be reported, but not used in calculating the best route. Has same values as `impedance`. ([Reference](https://developers.arcgis.com/rest/routing/origin-destination-cost-matrix-synchronous-service/#accumulateattributenames))
+#' Travel Cost Matrix
 #'
-
+#' Creates an origin-destination cost matrix containing the travel cost between every origin and destination.
+#'
+#' @param origins an `sf` or `sfc` object containing point geometries representing the starting points.
+#' @param destinations default `origins`. An `sf` or `sfc` object containing point geometries representing the ending points.
+#' @param default_target_destination_count default `NULL`. An integer scalar. The maximum number of destinations to find per origin.
+#' @param output_type default `NULL`. A scalar character. One of `"no_lines"`, `"straight_lines"`, `"true_shape"`. Controls whether route geometry is returned.
+#' @param return_geometry default `character(0)`. A character vector. Valid values: `"origins"`, `"destinations"`, `"barriers"`, `"polyline_barriers"`, `"polygon_barriers"`.
+#' @inheritParams find_closest_facility
+#' @inheritParams find_service_areas
+#'
+#' @returns A named list. Elements present depend on `return_geometry` and `output_type`:
+#' - `od_lines`: OD cost matrix features
+#' - `origins`: origin features
+#' - `destinations`: destination features
+#' - `barriers`: point barrier features
+#' - `polyline_barriers`: polyline barrier features
+#' - `polygon_barriers`: polygon barrier features
+#' - `messages`: status and warning messages from the service
+#'
+#' @examples
+#' \dontrun{
+#' library(sf)
+#'
+#' origins <- st_sfc(
+#'   st_point(c(-122.4194, 37.7749)),
+#'   st_point(c(-122.4313, 37.7793)),
+#'   crs = 4326
+#' )
+#'
+#' destinations <- st_sfc(
+#'   st_point(c(-122.4083, 37.7858)),
+#'   st_point(c(-122.4000, 37.7900)),
+#'   st_point(c(-122.4561, 37.7513)),
+#'   crs = 4326
+#' )
+#'
+#' result <- travel_cost_matrix(
+#'   origins = origins,
+#'   destinations = destinations
+#' )
+#'
+#' result
+#' }
+#'
 #' @export
+#' @references [API Reference](https://developers.arcgis.com/rest/routing/od-cost-matrix-synchronous-service/)
 travel_cost_matrix <- function(
   origins,
   destinations = origins,
   travel_mode = NULL,
-  cutoff = NULL, # IGNORED
+  default_cutoff = NULL,
+  default_target_destination_count = NULL,
+  output_type = NULL,
   time_of_day = NULL,
-  use_hierarchy = NULL,
   u_turns = NULL,
+  use_hierarchy = NULL,
   impedance = NULL,
   accumulate_impedance = NULL,
   restrictions = NULL,
+  attribute_parameter_values = NULL,
   point_barriers = NULL,
   line_barriers = NULL,
   polygon_barriers = NULL,
+  return_geometry = character(0),
+  ignore_invalid_locations = TRUE,
+  return_empty_results = FALSE,
+  geometry_precision = NULL,
+  locate_settings = NULL,
+  crs = 4326,
   token = arcgisutils::arc_token()
 ) {
-  # TODO choose altrenative routing services
+  obj_check_token(token)
 
-  # handle travel mode if it is present
-  # travel_mode, if provided needs to be turned into JSON from
-  # retrieve_travel_modes() stored in the attributeParameterValues column
-  if (!is.null(travel_mode)) {
-    check_string(travel_mode)
-    available_modes <- retrieve_travel_modes(token)[["supportedTravelModes"]]
-    mode_idx <- which(available_modes[["id"]] == travel_mode)
-    if (length(mode_idx) == 0) {
-      cli::cli_abort(
-        c(
-          "{.arg travel_mode} ID is not found.",
-          "i" = "use {.fn retrieve_travel_modes} to identify available travel modes."
-        )
-      )
-    }
-
-    mode_attrs <- available_modes[["attributeParameterValues"]][[mode_idx]]
-    # convert to a json string
-    travel_mode <- yyjsonr::write_json_str(
-      unclass(mode_attrs),
-      auto_unbox = TRUE
-    )
-  }
-
-  # TODO default_cutoff: we can set Cutoff_[Impedance] to provide a per feature
-  # cutoff value. How do we set this???
-
-  # if time_of_day is a character try and parse it
-  time_of_day <- validate_time_of_day(time_of_day)
-
-  # set time of day is UTC parameter
-  if (!is.null(time_of_day)) {
-    time_of_day_is_utc <- is_utc(time_of_day)
-  } else {
-    time_of_day_is_utc <- FALSE
-  }
-
+  check_bool(ignore_invalid_locations)
+  check_bool(return_empty_results)
   check_bool(use_hierarchy, allow_null = TRUE)
+  check_number_decimal(default_cutoff, allow_null = TRUE)
+  check_number_whole(default_target_destination_count, allow_null = TRUE)
+  check_string(geometry_precision, allow_null = TRUE)
 
-  # validate the u-turns argument
+  origins <- as_stops(origins)
+  destinations <- as_stops(destinations)
+
+  time_of_day <- validate_time_of_day(time_of_day)
+  time_of_day_is_utc <- if (!is.null(time_of_day)) {
+    is_utc(time_of_day)
+  } else {
+    FALSE
+  }
+
   u_turns <- validate_u_turns(u_turns)
-
-  # the impedance value
   impedance <- validate_impedance_value(impedance)
-
-  # allow for multiple
   accumulate_impedance <- validate_impedance_value(
     accumulate_impedance,
     multiple = TRUE
   )
-
-  # if this is not null, we collapse to a comma separated list
-  if (!is.null(accumulate_impedance)) {
-    accumulate_impedance <- paste(accumulate_impedance, collapse = ",")
-  }
-
   restrictions <- validate_restrictions(restrictions)
+  travel_mode <- validate_travel_mode(travel_mode, token = token)
+  output_type <- validate_od_output_type(output_type)
+  return_geometry <- validate_return_geometry_od(return_geometry)
+
+  point_barriers <- as_point_barriers(point_barriers)
+  line_barriers <- as_polyline_barriers(line_barriers)
+  polygon_barriers <- as_polygon_barriers(polygon_barriers)
+
+  params <- compact(list(
+    origins = origins,
+    destinations = destinations,
+    travelMode = travel_mode,
+    defaultCutoff = default_cutoff,
+    defaultTargetDestinationCount = default_target_destination_count,
+    outputType = output_type,
+    timeOfDay = time_of_day,
+    timeOfDayIsUTC = time_of_day_is_utc,
+    restrictUTurns = u_turns,
+    useHierarchy = use_hierarchy,
+    impedanceAttributeName = impedance,
+    accumulateAttributeNames = accumulate_impedance,
+    restrictionAttributeNames = restrictions,
+    attributeParameterValues = attribute_parameter_values,
+    barriers = point_barriers,
+    polylineBarriers = line_barriers,
+    polygonBarriers = polygon_barriers,
+    returnOrigins = return_geometry$returnOrigins,
+    returnDestinations = return_geometry$returnDestinations,
+    returnBarriers = return_geometry$returnBarriers,
+    returnPolylineBarriers = return_geometry$returnPolylineBarriers,
+    returnPolygonBarriers = return_geometry$returnPolygonBarriers,
+    ignoreInvalidLocations = ignore_invalid_locations,
+    returnEmptyResults = return_empty_results,
+    geometryPrecision = geometry_precision,
+    locateSettings = locate_settings,
+    outSR = arcgisutils::as_spatial_reference(crs),
+    f = "json"
+  ))
 
   meta <- arcgisutils::arc_self_meta(token = token)
-  od_cost_url <- meta$helperServices$odCostMatrix$url
-  req <- arc_base_req(
-    od_cost_url,
-    token,
-    "solveODCostMatrix",
-    query = c(f = "json")
-  )
+  service_url <- meta$helperServices$odCostMatrix$url
 
-  resp <- req |>
-    httr2::req_body_form(
-      origins = as_od_points(origins),
-      destinations = as_od_points(destinations),
-      travelMode = travel_mode,
-      # defaultCutoff = cutoff ,
-      # defaultTargetDestinationCount (NOT IMPLEMENTED)
-      timeOfDay = time_of_day,
-      timeOfDayIsUTC = time_of_day_is_utc,
-      useHierarchy = use_hierarchy,
-      restrictUTurns = u_turns,
-      impedanceAttributeName = impedance,
-      accumulateAttributeNames = accumulate_impedance,
-      restrictionAttributeNames = restrictions,
-      # attributeParameterValues (NOT IMPLEMENTED)
-      barriers = as_point_barriers(point_barriers),
-      polylineBarriers = as_polyline_barriers(line_barriers),
-      polygonBarriers = as_polygon_barriers(polygon_barriers),
-      outputType = "esriNAODOutputNoLines"
-    ) |>
-    httr2::req_error(is_error = function(e) FALSE) |>
-    httr2::req_perform()
-
-  resp_str <- httr2::resp_body_string(resp)
-  res <- yyjsonr::read_json_str(resp_str)
-
-  # check for errors
-  # due to use of {yyjsonr} have to adjust....
-  if (!is.null(res[["error"]])) {
-    if (is.list(res$error$details)) {
-      res[["error"]][["details"]] <- NULL
-      detect_errors(res)
-    }
-    detect_errors(res)
+  if (is.null(service_url)) {
+    cli::cli_abort("Cannot find OD cost matrix URL for this token")
   }
 
-  # there's never more than 2,500 rows so speed isn't too important here...
-  # The column names aren't very clean or anything but it is what it is!
-  res <- arcgisutils::rbind_results(res$odLines$features$attributes)
-  colnames(res) <- heck::to_snek_case(colnames(res))
-  res
+  resp <- arcgisutils::arc_base_req(
+    service_url,
+    token,
+    path = "solveODCostMatrix",
+    query = c("f" = "json")
+  ) |>
+    httr2::req_body_form(!!!params, .multi = c("comma")) |>
+    httr2::req_perform() |>
+    httr2::resp_body_string()
+
+  if (grepl("err", substr(resp, 1, 5))) {
+    yyjsonr::read_json_str(resp) |>
+      detect_errors()
+  }
+
+  compact(list(
+    od_lines = try_parse(resp, query = "/odLines"),
+    origins = try_parse(resp, query = "/origins"),
+    destinations = try_parse(resp, query = "/destinations"),
+    barriers = try_parse(resp, query = "/barriers"),
+    polyline_barriers = try_parse(resp, query = "/polylineBarriers"),
+    polygon_barriers = try_parse(resp, query = "/polygonBarriers"),
+    messages = RcppSimdJson::fparse(resp, query = "/messages")
+  ))
+}
+
+validate_od_output_type <- function(
+  x,
+  error_arg = rlang::caller_arg(x),
+  error_call = rlang::caller_call()
+) {
+  if (is.null(x)) {
+    return(NULL)
+  }
+
+  check_string(x, arg = error_arg, call = error_call)
+
+  x <- rlang::arg_match0(
+    x,
+    values = c("no_lines", "straight_lines", "true_shape"),
+    arg_nm = error_arg,
+    error_call = error_call
+  )
+
+  lu <- c(
+    "no_lines" = "esriNAODOutputNoLines",
+    "straight_lines" = "esriNAODOutputStraightLines",
+    "true_shape" = "esriNAODOutputTrueShapeLines"
+  )
+
+  unname(lu[x])
+}
+
+validate_return_geometry_od <- function(
+  x,
+  error_arg = rlang::caller_arg(x),
+  error_call = rlang::caller_env()
+) {
+  check_character(x, arg = error_arg, call = error_call)
+
+  x <- rlang::arg_match(
+    x,
+    values = c(
+      "origins",
+      "destinations",
+      "barriers",
+      "polyline_barriers",
+      "polygon_barriers"
+    ),
+    multiple = TRUE,
+    error_arg = error_arg,
+    error_call = error_call
+  )
+
+  return_geometry_lu <- c(
+    "origins" = "returnOrigins",
+    "destinations" = "returnDestinations",
+    "barriers" = "returnBarriers",
+    "polyline_barriers" = "returnPolylineBarriers",
+    "polygon_barriers" = "returnPolygonBarriers"
+  )
+
+  api_params <- return_geometry_lu[x]
+  as.list(
+    setNames(rep(TRUE, length(api_params)), api_params)
+  )
 }
 
 

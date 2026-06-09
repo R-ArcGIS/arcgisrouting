@@ -136,7 +136,7 @@ travel_cost_matrix <- function(
     f = "json"
   ))
 
-  meta <- arcgisutils::arc_self_meta(token = token)
+  meta <- detect_errors(arcgisutils::arc_portal_self(token))
   service_url <- meta$helperServices$odCostMatrix$url
 
   if (is.null(service_url)) {

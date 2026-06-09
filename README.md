@@ -10,9 +10,9 @@ An interface to the ArcGIS Routing Service.
 
 - ✅ `/solve`
 - ✅ `/solveServiceArea`
-- `/EditVehicleRoutingProblem`
-- `/solveClosestFacility`
-- `/solveODCostMatrix`
+- ✅ `/EditVehicleRoutingProblem`
+- ✅ `/solveClosestFacility`
+- ✅ `/solveODCostMatrix`
 - `/GetToolInfo`
 - ✅ `/GetTravelModes`
 - ✅ `/retrieveTravelModes`

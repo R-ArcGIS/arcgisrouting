@@ -3,3 +3,6 @@
 ^LICENSE\.md$
 CLAUDE.md
 dev/
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

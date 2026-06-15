@@ -58,9 +58,20 @@
 <p><strong>Validation</strong>: every validated param gets a reusable function, never inline. Shared validators go in <code>utils-*.R</code>, function-specific stay in their file. Pattern: <code>NULL</code> early return → scalar type check → <code>arg_match</code> → lookup vector to API value. Never duplicate a validator that already exists.</p>
 <p><strong>Spatial vs tabular inputs</strong>: use <code>sf</code>/<code>sfc</code> whenever geometry is involved. Use plain <code>data.frame</code> for attribute-only tables. Both get a dedicated <code>as_*()</code> converter using <code>UseMethod</code> dispatch — recognizing snake_case column names, validating types, renaming to API names, serializing via <code><a href="https://rdrr.io/pkg/arcgisutils/man/featureset.html" class="external-link">arcgisutils::as_esri_featureset()</a></code>.</p>
 </div>
+<div class="section level2">
+<h2 id="writing-result-parsers-for-gp-jobs">Writing result parsers for GP jobs<a class="anchor" aria-label="anchor" href="#writing-result-parsers-for-gp-jobs"></a></h2>
+<p><strong>Never write the result parser before seeing actual results.</strong> The workflow is:</p>
+<ol style="list-style-type: decimal"><li>Implement the job constructor <em>without</em> a <code>result_fn</code> — the default <code><a href="https://rdrr.io/pkg/RcppSimdJson/man/fparse.html" class="external-link">RcppSimdJson::fparse()</a></code> runs and returns a data frame.</li>
+<li>Ask the user to run the job and share <code>job$results</code> so we can see the <code>paramName</code>, <code>dataType</code>, and <code>value</code> columns.</li>
+<li>Inspect <code>res$dataType</code> to identify which rows are <code>GPFeatureRecordSetLayer</code> (need <code>try_parse()</code>), which are scalar types like <code>GPBoolean</code>/<code>GPString</code> (use <code><a href="https://rdrr.io/pkg/RcppSimdJson/man/fparse.html" class="external-link">RcppSimdJson::fparse()</a></code>), and which are <code>GPDataFile</code> (skip — will be <code>NULL</code>).</li>
+<li>The raw results JSON is a <strong>0-indexed array</strong> — use numeric JSON Pointer paths (<code>"/0/value"</code>, <code>"/1/value"</code>, etc.) not name-based paths.</li>
+<li>Write <code>parse_&lt;endpoint&gt;_results(json)</code> using <code>try_parse(json, "/N/value")</code> for feature layers and <code>RcppSimdJson::fparse(json, query = "/N/value")</code> for scalars. Return a <code>compact()</code> named list with snake_case keys.</li>
+<li>Pass the function as the <code>result_fn</code> argument in the <code>$new()</code> call.</li>
+</ol></div>
 </div>
 
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">

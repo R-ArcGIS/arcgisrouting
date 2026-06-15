@@ -1,33 +1,39 @@
-service_area_job <- R6::R6Class("service_area_job", inherit = arcgisutils::arc_gp_job)
+service_area_job <- R6::R6Class(
+  "service_area_job",
+  inherit = arcgisutils::arc_gp_job
+)
 
-# TODO 
+# TODO
 # set output format / output type
 #' @export
 service_areas_async <- function(
   facilities,
-  travel_mode = NULL,  # 
+  travel_mode = NULL, #
   break_values = NULL,
   break_units = NULL,
-  travel_direction = c("away", "towards"), # 
-  time_of_day = NULL, # 
+  travel_direction = c("away", "towards"), #
+  time_of_day = NULL, #
   use_hierarchy = NULL, #
-  u_turns = NULL, # 
-  polygons_for_multiple_facilities = c("overlapping", "not overlapping", "merge"), # RENAME  # 
-  polygon_overlap_type = c("rings", "disks"), # RENAME # 
-  polygon_trim_distance = NULL, # 
-  polygon_simplification_tolerance = NULL, # 
-  polygon_detail = NULL, # 
-  impedance = NULL, # 
-  time_impedance = NULL, # 
-  distance_impedance = NULL, # 
-  analysis_region = NULL, # 
-  restrictions = NULL, # 
-  point_barriers = NULL, # 
-  line_barriers = NULL,# 
-  polygon_barriers = NULL,#  
+  u_turns = NULL, #
+  polygons_for_multiple_facilities = c(
+    "overlapping",
+    "not overlapping",
+    "merge"
+  ), # RENAME  #
+  polygon_overlap_type = c("rings", "disks"), # RENAME #
+  polygon_trim_distance = NULL, #
+  polygon_simplification_tolerance = NULL, #
+  polygon_detail = NULL, #
+  impedance = NULL, #
+  time_impedance = NULL, #
+  distance_impedance = NULL, #
+  analysis_region = NULL, #
+  restrictions = NULL, #
+  point_barriers = NULL, #
+  line_barriers = NULL, #
+  polygon_barriers = NULL, #
   token = arcgisutils::arc_token()
 ) {
-
   check_bool(use_hierarchy, allow_null = TRUE)
   travel_mode <- validate_travel_mode(travel_mode, token = token)
   break_units <- validate_break_units(break_units)
@@ -41,10 +47,14 @@ service_areas_async <- function(
   distance_impedance <- validate_distance_impedance(distance_impedance)
   time_of_day <- validate_time_of_day(time_of_day)
   time_zone_for_time_of_day <- validate_tz_for_time_of_day(time_of_day)
-  polygons_for_multiple_facilities <-  validate_multiple_facilities(polygons_for_multiple_facilities)
+  polygons_for_multiple_facilities <- validate_multiple_facilities(
+    polygons_for_multiple_facilities
+  )
   polygon_overlap_type <- validate_overlap_type(polygon_overlap_type)
   polygon_trim_distance <- validate_tolerance(polygon_trim_distance)
-  polygon_simplification_tolerance <- validate_tolerance(polygon_simplification_tolerance)
+  polygon_simplification_tolerance <- validate_tolerance(
+    polygon_simplification_tolerance
+  )
   polygon_detail <- validate_detail(polygon_detail)
 
   point_barriers <- as_point_barriers(point_barriers)
@@ -79,14 +89,17 @@ service_areas_async <- function(
     f = "json"
   )
 
-    # get service url 
-    meta <- arcgisutils::arc_self_meta(token)
-    
-    service_area_job$new(meta$helperServices$asyncServiceArea$url, params, token)
-  
+  # get service url
+  meta <- arcgisutils::arc_self_meta(token)
+
+  service_area_job$new(meta$helperServices$asyncServiceArea$url, params, token)
 }
 
-validate_travel_direction <- function(x, error_arg = rlang::caller_arg(x), error_call = rlang::caller_call()) {
+validate_travel_direction <- function(
+  x,
+  error_arg = rlang::caller_arg(x),
+  error_call = rlang::caller_call()
+) {
   if (is.null(x)) return(NULL)
   x <- rlang::arg_match(
     x,
@@ -110,59 +123,85 @@ validate_tz_for_time_of_day <- function(time_of_day) {
 
   .utc <- is_utc(time_of_day)
   ifelse(.utc, "UTC", "Geographically Local")
-
 }
 
-validate_multiple_facilities <- function(x, error_arg = rlang::caller_arg(x), error_call = rlang::caller_call()) {
+validate_multiple_facilities <- function(
+  x,
+  error_arg = rlang::caller_arg(x),
+  error_call = rlang::caller_call()
+) {
   if (is.null(x)) return(NULL)
-    x <- rlang::arg_match(
-      x,
-      c("overlapping", "not overlapping", "merge"),
-      error_arg = error_arg,
-      error_call = error_call
-    )
-  
-    lu <- setNames(
-      c("Overlapping", "Not Overlapping", "Merge by Break Value"),
-      c("overlapping", "not overlapping", "merge")
-    )
-  
-    unname(lu[x])
+  x <- rlang::arg_match(
+    x,
+    c("overlapping", "not overlapping", "merge"),
+    error_arg = error_arg,
+    error_call = error_call
+  )
+
+  lu <- setNames(
+    c("Overlapping", "Not Overlapping", "Merge by Break Value"),
+    c("overlapping", "not overlapping", "merge")
+  )
+
+  unname(lu[x])
 }
 
 validate_overlap_type <- function(
-    x,
-    error_arg = rlang::caller_arg(x),
-    error_call = rlang::caller_call()
+  x,
+  error_arg = rlang::caller_arg(x),
+  error_call = rlang::caller_call()
 ) {
   if (is.null(x)) return(NULL)
-    x <- rlang::arg_match(
-      x,
-      c("rings", "disks"),
-      error_arg = error_arg,
-      error_call = error_call
-    )
-  
-    lu <- setNames(
-      c("Rings", "Disks"),
-      c("rings", "disks")
-    )
-  
-    unname(lu[x])
+  x <- rlang::arg_match(
+    x,
+    c("rings", "disks"),
+    error_arg = error_arg,
+    error_call = error_call
+  )
+
+  lu <- setNames(
+    c("Rings", "Disks"),
+    c("rings", "disks")
+  )
+
+  unname(lu[x])
 }
 
 
 validate_units <- function(
-    units,
-    error_arg = rlang::caller_arg(units),
-    error_call = rlang::caller_call()
+  units,
+  error_arg = rlang::caller_arg(units),
+  error_call = rlang::caller_call()
 ) {
-  
-  esri_units <- c("esriCentimeters", "esriDecimalDegrees", "esriDecimeters", "esriFeet", "esriInches", "esriKilometers", "esriMeters", "esriMiles", "esriMillimeters", "esriNauticalMiles", "esriPoints", "esriYards")
+  esri_units <- c(
+    "esriCentimeters",
+    "esriDecimalDegrees",
+    "esriDecimeters",
+    "esriFeet",
+    "esriInches",
+    "esriKilometers",
+    "esriMeters",
+    "esriMiles",
+    "esriMillimeters",
+    "esriNauticalMiles",
+    "esriPoints",
+    "esriYards"
+  )
 
-  unit_names <- c("centimeters", "decimaldegrees", "decimeters", "feet", "inches", 
-  "kilometers", "meters", "miles", "millimeters", "nautical_miles", 
-  "points", "yards")
+  unit_names <- c(
+    "centimeters",
+    "decimaldegrees",
+    "decimeters",
+    "feet",
+    "inches",
+    "kilometers",
+    "meters",
+    "miles",
+    "millimeters",
+    "nautical_miles",
+    "points",
+    "yards"
+  )
 
   lu <- setNames(esri_units, unit_names)
 
@@ -178,9 +217,9 @@ validate_units <- function(
 
 
 validate_tolerance <- function(
-    x,
-    error_arg = rlang::caller_arg(x),
-    error_call = rlang::caller_call()
+  x,
+  error_arg = rlang::caller_arg(x),
+  error_call = rlang::caller_call()
 ) {
   if (is.null(x)) {
     return(NULL)
@@ -195,19 +234,27 @@ validate_tolerance <- function(
       call = error_call
     )
   }
-  # check that distance is a number 
-  check_number_decimal(x[["distance"]], min = 0, call = error_call, arg = error_arg)
-  x[["units"]] <- validate_units(x[["units"]], error_arg = error_arg, error_call = error_call)
+  # check that distance is a number
+  check_number_decimal(
+    x[["distance"]],
+    min = 0,
+    call = error_call,
+    arg = error_arg
+  )
+  x[["units"]] <- validate_units(
+    x[["units"]],
+    error_arg = error_arg,
+    error_call = error_call
+  )
 
   yyjsonr::write_json_str(x, auto_unbox = TRUE)
 }
 
 
-
 validate_detail <- function(
-    x,
-    error_arg = rlang::caller_arg(x),
-    error_call = rlang::caller_call()
+  x,
+  error_arg = rlang::caller_arg(x),
+  error_call = rlang::caller_call()
 ) {
   if (is.null(x)) {
     return(NULL)
@@ -229,12 +276,12 @@ validate_detail <- function(
 
 
 validate_break_units <- function(
-    x,
-    error_arg = rlang::caller_arg(x),
-    error_call = rlang::caller_call()
+  x,
+  error_arg = rlang::caller_arg(x),
+  error_call = rlang::caller_call()
 ) {
   if (is.null(x)) {
-  return(NULL)
+    return(NULL)
   }
 
   lu <- c(
@@ -251,7 +298,7 @@ validate_break_units <- function(
   )
 
   x <- rlang::arg_match(
-    distance_units,
+    x,
     names(lu),
     error_arg = error_arg,
     error_call = error_call
@@ -261,9 +308,9 @@ validate_break_units <- function(
 }
 
 validate_break_values <- function(
-    x,
-    error_arg = rlang::caller_arg(x),
-    error_call = rlang::caller_call()
+  x,
+  error_arg = rlang::caller_arg(x),
+  error_call = rlang::caller_call()
 ) {
   if (is.null(x)) {
     return(NULL)

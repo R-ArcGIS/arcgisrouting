@@ -51,7 +51,9 @@
 
   mode_list <- as.list(mode_attrs)
   mode_list$attributeParameterValues <- mode_list$attributeParameterValues[[1]]
-  mode_list$restrictionAttributeNames <- mode_list$restrictionAttributeNames[[1]]
+  mode_list$restrictionAttributeNames <- mode_list$restrictionAttributeNames[[
+    1
+  ]]
 
   yyjsonr::write_json_str(mode_list, auto_unbox = TRUE, dataframe = "rows")
 }

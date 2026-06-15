@@ -317,7 +317,10 @@ find_routes <- function(
       data_frame(x)
     },
     error = function(e) {
-      arcgisutils::detect_errors(RcppSimdJson::fparse(result), error_call = error_call)
+      arcgisutils::detect_errors(
+        RcppSimdJson::fparse(result),
+        error_call = error_call
+      )
     }
   )
 }

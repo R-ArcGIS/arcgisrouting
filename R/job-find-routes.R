@@ -226,6 +226,16 @@ parse_find_routes_results <- function(json) {
     route_edges = try_parse(json, "/2/value"),
     directions = try_parse(json, "/3/value"),
     stops = try_parse(json, "/4/value"),
+    output_network_analysis_layer = RcppSimdJson::fparse(
+      json,
+      query = "/5/value"
+    ),
+    output_route_data = RcppSimdJson::fparse(json, query = "/6/value"),
+    output_result_file = RcppSimdJson::fparse(json, query = "/7/value"),
+    output_network_analysis_layer_package = RcppSimdJson::fparse(
+      json,
+      query = "/8/value"
+    ),
     direction_points = try_parse(json, "/9/value"),
     direction_lines = try_parse(json, "/10/value"),
     usage_cost = RcppSimdJson::fparse(json, query = "/11/value")

@@ -13,3 +13,16 @@
 - `sapply()` is banned always use a stronger typed `apply()` or `lapply()`
 - Always use `compact()` to remove NULL elements from a list
 - Always use `#' @inheritParams` for documentation whenever possible. Never duplicate documentation manually
+- Never try to align arguments. Never add unecessary whitepace for stylistic reasons.
+
+## Function arguments
+
+**Naming**: snake_case R names mapping to API names internally. Reuse the same name whenever the concept is the same across functions.
+
+**Ordering**: required spatial inputs first, core behavioral params, optional feature inputs, output control params, `token` always last.
+
+**Defaults**: `NULL` for anything optional — dropped via `compact()`. Non-NULL defaults only when omitting would surprise the user.
+
+**Validation**: every validated param gets a reusable function, never inline. Shared validators go in `utils-*.R`, function-specific stay in their file. Pattern: `NULL` early return → scalar type check → `arg_match` → lookup vector to API value. Never duplicate a validator that already exists.
+
+**Spatial vs tabular inputs**: use `sf`/`sfc` whenever geometry is involved. Use plain `data.frame` for attribute-only tables. Both get a dedicated `as_*()` converter using `UseMethod` dispatch — recognizing snake_case column names, validating types, renaming to API names, serializing via `arcgisutils::as_esri_featureset()`.

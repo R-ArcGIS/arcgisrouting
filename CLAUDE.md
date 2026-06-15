@@ -25,6 +25,9 @@
   Never duplicate documentation manually
 - Never try to align arguments. Never add unecessary whitepace for
   stylistic reasons.
+- **Never modify code outside the file currently being implemented.** If
+  you spot a duplicate or improvement elsewhere, mention it once to the
+  user and move on. Do not touch it.
 
 ## Function arguments
 
@@ -50,6 +53,20 @@ snake_case column names, validating types, renaming to API names,
 serializing via
 [`arcgisutils::as_esri_featureset()`](https://rdrr.io/pkg/arcgisutils/man/featureset.html).
 
+## Async GP job URL construction
+
+The `helperServices` URL for each endpoint varies — some point to the GP
+server root, others point directly to the task:
+
+- `asyncRoute$url` → GP server root (e.g. `.../Route/GPServer`) — append
+  the task name with `httr2::req_url_path_append()$url`
+- `asyncServiceArea$url` → already points to the task
+  (e.g. `.../ServiceAreas/GPServer/GenerateServiceAreas`) — use directly
+  as `base_url`, do NOT append
+
+Always verify by printing `job$base_url` after constructing the job. If
+the task name appears twice in the URL, the URL was already a task URL.
+
 ## Writing result parsers for GP jobs
 
 **Never write the result parser before seeing actual results.** The
@@ -58,18 +75,19 @@ workflow is:
 1.  Implement the job constructor *without* a `result_fn` — the default
     [`RcppSimdJson::fparse()`](https://rdrr.io/pkg/RcppSimdJson/man/fparse.html)
     runs and returns a data frame.
-2.  Ask the user to run the job and share `job$results` so we can see
-    the `paramName`, `dataType`, and `value` columns.
-3.  Inspect `res$dataType` to identify which rows are
-    `GPFeatureRecordSetLayer` (need `try_parse()`), which are scalar
-    types like `GPBoolean`/`GPString` (use
-    [`RcppSimdJson::fparse()`](https://rdrr.io/pkg/RcppSimdJson/man/fparse.html)),
-    and which are `GPDataFile` (skip — will be `NULL`).
+2.  Ask the user to run the job and share `result$paramName` and
+    `result$dataType` (as vectors, not the full data frame).
+3.  Map each index (0-based) to its type:
+    - `GPFeatureRecordSetLayer` → `try_parse(json, "/N/value")`
+    - `GPRecordSet` → `try_parse(json, "/N/value")`
+    - `GPBoolean` / `GPString` →
+      `RcppSimdJson::fparse(json, query = "/N/value")`
+    - `GPDataFile` → `RcppSimdJson::fparse(json, query = "/N/value")` —
+      these return file URLs, include them, do NOT skip
 4.  The raw results JSON is a **0-indexed array** — use numeric JSON
     Pointer paths (`"/0/value"`, `"/1/value"`, etc.) not name-based
     paths.
-5.  Write `parse_<endpoint>_results(json)` using
-    `try_parse(json, "/N/value")` for feature layers and
-    `RcppSimdJson::fparse(json, query = "/N/value")` for scalars. Return
-    a `compact()` named list with snake_case keys.
-6.  Pass the function as the `result_fn` argument in the `$new()` call.
+5.  Write `parse_<endpoint>_results(json)` returning a `compact()` named
+    list with snake_case keys derived from `paramName`.
+6.  Pass the function as the `result_fn` positional argument (third arg)
+    in the `$new()` call. `token` must be passed as a named argument.

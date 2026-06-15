@@ -1,0 +1,20 @@
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>http://r.esri.com/arcgisrouting/404.html</loc></url>
+<url><loc>http://r.esri.com/arcgisrouting/CLAUDE.html</loc></url>
+<url><loc>http://r.esri.com/arcgisrouting/LICENSE.html</loc></url>
+<url><loc>http://r.esri.com/arcgisrouting/authors.html</loc></url>
+<url><loc>http://r.esri.com/arcgisrouting/index.html</loc></url>
+<url><loc>http://r.esri.com/arcgisrouting/reference/arcgisrouting-package.html</loc></url>
+<url><loc>http://r.esri.com/arcgisrouting/reference/as_point_barriers.html</loc></url>
+<url><loc>http://r.esri.com/arcgisrouting/reference/as_polygon_barriers.html</loc></url>
+<url><loc>http://r.esri.com/arcgisrouting/reference/as_polyline_barriers.html</loc></url>
+<url><loc>http://r.esri.com/arcgisrouting/reference/as_stops.html</loc></url>
+<url><loc>http://r.esri.com/arcgisrouting/reference/decode_compressed_geometry.html</loc></url>
+<url><loc>http://r.esri.com/arcgisrouting/reference/dot-retrieve_travel_modes.html</loc></url>
+<url><loc>http://r.esri.com/arcgisrouting/reference/find_closest_facility.html</loc></url>
+<url><loc>http://r.esri.com/arcgisrouting/reference/find_routes.html</loc></url>
+<url><loc>http://r.esri.com/arcgisrouting/reference/find_service_areas.html</loc></url>
+<url><loc>http://r.esri.com/arcgisrouting/reference/get_travel_modes.html</loc></url>
+<url><loc>http://r.esri.com/arcgisrouting/reference/index.html</loc></url>
+</urlset>
+

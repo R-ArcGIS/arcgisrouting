@@ -1,0 +1,63 @@
+# arcgisrouting
+
+An interface to the ArcGIS Routing Service.
+
+## Supported endpoints
+
+### Direct
+
+- ✅ `/solve`
+- ✅ `/solveServiceArea`
+- ✅ `/EditVehicleRoutingProblem`
+- ✅ `/solveClosestFacility`
+- ✅ `/solveODCostMatrix`
+- `/GetToolInfo`
+- ✅ `/GetTravelModes`
+- ✅ `/retrieveTravelModes`
+- ✅ `/SnapToRoads`
+- `/Traffic`
+
+### Async (Geoprocessing Job)
+
+- `/FindRoutes`
+- `/GenerateServiceAreas`
+- `/SolveVehicleRoutingProblem`
+- `/SolveLastMileDelivery`
+- `/FindClosestFacilities`
+- `/SolveLocationAllocation`
+- `/GenerateOriginDestinationCostMatrix`
+
+# Package index
+
+## All functions
+
+- [`as_point_barriers()`](http://r.esri.com/arcgisrouting/reference/as_point_barriers.md)
+  : BarrierType: 0 (restriction) 2 (added cost) Must have accompanying
+  attribute Valid attributes Attr_TravelTime , Attr_Miles ,
+  Attr_Kilometers , Attr_Minutes , Attr_WalkTime , Attr_TruckMinutes ,
+  or Attr_TruckTravelTime
+- [`as_polygon_barriers()`](http://r.esri.com/arcgisrouting/reference/as_polygon_barriers.md)
+  : BarrierType: 0 (restriction) 2 (added cost) Must have accompanying
+  attribute Valid attributes Attr_TravelTime , Attr_Miles ,
+  Attr_Kilometers , Attr_Minutes , Attr_WalkTime , Attr_TruckMinutes ,
+  or Attr_TruckTravelTime
+- [`as_polyline_barriers()`](http://r.esri.com/arcgisrouting/reference/as_polyline_barriers.md)
+  : BarrierType: 0 (restriction) 2 (added cost) Must have accompanying
+  attribute Valid attributes Attr_TravelTime , Attr_Miles ,
+  Attr_Kilometers , Attr_Minutes , Attr_WalkTime , Attr_TruckMinutes ,
+  or Attr_TruckTravelTime
+- [`as_stops()`](http://r.esri.com/arcgisrouting/reference/as_stops.md)
+  : Convert spatial objects to stops for routing
+- [`decode_compressed_geometry()`](http://r.esri.com/arcgisrouting/reference/decode_compressed_geometry.md)
+  : Decode Compressed Geometry
+- [`.retrieve_travel_modes()`](http://r.esri.com/arcgisrouting/reference/dot-retrieve_travel_modes.md)
+  : Retrieve Available Travel Modes
+- [`find_closest_facility()`](http://r.esri.com/arcgisrouting/reference/find_closest_facility.md)
+  : Find Closest Facility
+- [`find_routes()`](http://r.esri.com/arcgisrouting/reference/find_routes.md)
+  : Find Routes
+- [`find_service_areas()`](http://r.esri.com/arcgisrouting/reference/find_service_areas.md)
+  : Solve Service Area
+- [`get_travel_modes()`](http://r.esri.com/arcgisrouting/reference/get_travel_modes.md)
+  : Get available travel modes
+

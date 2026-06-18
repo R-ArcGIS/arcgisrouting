@@ -15,6 +15,7 @@ numbered_field_lu <- function(snake_prefix, api_prefix, n = 9L) {
 #' @param verbose Logical. Whether to message which recognized attributes are
 #'   used. Default: `TRUE`.
 #' @param ... Additional arguments passed to methods.
+#' @keywords internal
 #' @export
 as_lmd_orders <- function(x, ...) {
   UseMethod("as_lmd_orders")

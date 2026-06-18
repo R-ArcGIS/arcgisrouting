@@ -13,6 +13,11 @@
 # accept sfc_POINT object - all are restrictionss
 # sf object with
 
+#' Convert spatial objects to polygon barriers input
+#'
+#' @param x An `sf` or `sfc` object containing polygon geometries, or `NULL`.
+#' @param ... Additional arguments passed to methods.
+#' @keywords internal
 #' @export
 as_polygon_barriers <- function(x, ...) {
   UseMethod("as_polygon_barriers")

@@ -6,9 +6,15 @@
 0 (restriction)
 2 (added cost)
 Must have accompanying attribute
-Valid attributes Attr_TravelTime , Attr_Miles , Attr_Kilometers , Attr_Minutes , Attr_WalkTime , Attr_TruckMinutes , or Attr_TruckTravelTime}
+Valid attributes Attr_TravelTime , Attr_Miles , Attr_Kilometers , Attr_Minutes , Attr_WalkTime , Attr_TruckMinutes , or Attr_TruckTravelTime
+Convert spatial objects to polyline barriers input}
 \usage{
 as_polyline_barriers(x, ...)
+}
+\arguments{
+\item{x}{An \code{sf} or \code{sfc} object containing line geometries, or \code{NULL}.}
+
+\item{...}{Additional arguments passed to methods.}
 }
 \description{
 BarrierType:
@@ -16,4 +22,6 @@ BarrierType:
 2 (added cost)
 Must have accompanying attribute
 Valid attributes Attr_TravelTime , Attr_Miles , Attr_Kilometers , Attr_Minutes , Attr_WalkTime , Attr_TruckMinutes , or Attr_TruckTravelTime
+Convert spatial objects to polyline barriers input
 }
+\keyword{internal}

@@ -17,6 +17,11 @@
 # x <- od::od_data_network[1:200,]
 # x[["name"]] <- sample(letters, 200, TRUE)
 
+#' Convert spatial objects to polyline barriers input
+#'
+#' @param x An `sf` or `sfc` object containing line geometries, or `NULL`.
+#' @param ... Additional arguments passed to methods.
+#' @keywords internal
 #' @export
 as_polyline_barriers <- function(x, ...) {
   UseMethod("as_polyline_barriers")

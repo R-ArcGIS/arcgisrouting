@@ -13,6 +13,11 @@
 # accept sfc_POINT object - all are restrictionss
 # sf object with
 
+#' Convert spatial objects to point barriers input
+#'
+#' @param x An `sf` or `sfc` object containing point geometries, or `NULL`.
+#' @param ... Additional arguments passed to methods.
+#' @keywords internal
 #' @export
 as_point_barriers <- function(x, ...) {
   UseMethod("as_point_barriers")

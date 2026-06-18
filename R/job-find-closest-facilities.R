@@ -276,6 +276,7 @@ validate_cf_time_of_day_usage <- function(
 #'   used. Default: `TRUE`.
 #' @param ... Additional arguments passed to methods.
 #' @name as_cf_locations
+#' @keywords internal
 #' @export
 as_incidents <- function(x, ...) {
   UseMethod("as_incidents")

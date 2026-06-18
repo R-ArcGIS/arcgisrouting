@@ -2,6 +2,7 @@
 #'
 #' @param x An `sfc` or `sf` object containing point geometries.
 #' @param ... Additional arguments passed to methods.
+#' @keywords internal
 #' @export
 as_vrp_orders <- function(x, ...) {
   UseMethod("as_vrp_orders")

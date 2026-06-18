@@ -21,3 +21,4 @@ used. Default: \code{TRUE}.}
 \description{
 Convert spatial objects to incidents or facilities for closest facility
 }
+\keyword{internal}

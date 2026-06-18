@@ -15,15 +15,15 @@ template:
   light-switch: true
   bslib:
     # Esri brand palette
-    primary: "#0079C1"        # Esri blue
-    secondary: "#004874"      # Esri navy
-    success: "#35AC46"        # Esri green
-    info: "#00B6F1"           # Esri light blue
-    warning: "#FFB100"        # Esri amber
-    danger: "#E4002B"         # Esri red
-    base_font: {google: "Inter"}
-    heading_font: {google: "Inter"}
-    code_font: {google: "Source Code Pro"}
+    primary: "#0079C1" # Esri blue
+    secondary: "#004874" # Esri navy
+    success: "#35AC46" # Esri green
+    info: "#00B6F1" # Esri light blue
+    warning: "#FFB100" # Esri amber
+    danger: "#E4002B" # Esri red
+    base_font: { google: "Inter" }
+    heading_font: { google: "Inter" }
+    code_font: { google: "Source Code Pro" }
     navbar-bg: "#004874"
     bslib_spacer: "1rem"
     border-radius: "0.5rem"
@@ -35,7 +35,7 @@ navbar:
   bg: secondary
   type: dark
   structure:
-    left:  [reference]
+    left: [reference]
     right: [search, github, lightswitch]
   components:
     reference:
@@ -60,101 +60,78 @@ home:
     Solve routing, service area, vehicle routing, and origin-destination
     problems with the ArcGIS Routing REST API from R.
   links:
-  - text: ArcGIS Routing REST API
-    href: https://developers.arcgis.com/rest/routing/
-  - text: R-ArcGIS Bridge
-    href: https://r.esri.com
+    - text: ArcGIS Routing REST API
+      href: https://developers.arcgis.com/rest/routing/
+    - text: R-ArcGIS Bridge
+      href: https://r.esri.com
 
 reference:
-- title: Routing
-  desc: >
-    Find the best route between an ordered or optimized set of stops and
-    generate turn-by-turn directions.
-  contents:
-  - find_routes
-  - find_routes_job
+  - title: Routing
+    desc: >
+      Find the best route between an ordered or optimized set of stops and
+      generate turn-by-turn directions.
+    contents:
+      - find_routes
+      - find_routes_job
 
-- title: Service areas
-  desc: >
-    Generate polygons and lines describing the area reachable from a set of
-    facilities within a given travel time or distance.
-  contents:
-  - find_service_areas
-  - solve_service_areas_job
-  - download_service_area_results
+  - title: Service areas
+    desc: >
+      Generate polygons and lines describing the area reachable from a set of
+      facilities within a given travel time or distance.
+    contents:
+      - find_service_areas
+      - solve_service_areas_job
+      - download_service_area_results
 
-- title: Closest facility
-  desc: >
-    Find one or more nearby facilities from a set of incidents based on travel
-    time or distance.
-  contents:
-  - find_closest_facility
-  - find_closest_facilities_job
+  - title: Closest facility
+    desc: >
+      Find one or more nearby facilities from a set of incidents based on travel
+      time or distance.
+    contents:
+      - find_closest_facility
+      - find_closest_facilities_job
 
-- title: Origin-destination cost matrix
-  desc: >
-    Measure the travel time or distance between every origin and every
-    destination in a pair of point sets.
-  contents:
-  - travel_cost_matrix
-  - od_cost_matrix_job
+  - title: Origin-destination cost matrix
+    desc: >
+      Measure the travel time or distance between every origin and every
+      destination in a pair of point sets.
+    contents:
+      - travel_cost_matrix
+      - od_cost_matrix_job
+      - download_od_results
 
-- title: Vehicle routing & last mile delivery
-  desc: >
-    Plan efficient routes for a fleet of vehicles servicing a set of orders,
-    including clustered last mile delivery problems.
-  contents:
-  - route_vehicles
-  - solve_vrp_job
-  - last_mile_delivery
+  - title: Vehicle routing & last mile delivery
+    desc: >
+      Plan efficient routes for a fleet of vehicles servicing a set of orders,
+      including clustered last mile delivery problems.
+    contents:
+      - route_vehicles
+      - solve_vrp_job
+      - last_mile_delivery
 
-- title: Location-allocation
-  desc: >
-    Choose the set of facilities that best serves demand from surrounding
-    areas.
-  contents:
-  - location_allocation_job
+  - title: Location-allocation
+    desc: >
+      Choose the set of facilities that best serves demand from surrounding
+      areas.
+    contents:
+      - location_allocation_job
 
-- title: Snap to roads
-  desc: >
-    Snap a sequence of GPS points to the most likely roads traveled.
-  contents:
-  - snap_to_roads
+  - title: Snap to roads
+    desc: >
+      Snap a sequence of GPS points to the most likely roads traveled.
+    contents:
+      - snap_to_roads
 
-- title: Travel modes
-  desc: >
-    Discover the modes of transportation available to your organization.
-  contents:
-  - get_travel_modes
-  - retrieve_travel_modes
+  - title: Travel modes
+    desc: >
+      Discover the modes of transportation available to your organization.
+    contents:
+      - get_travel_modes
+      - retrieve_travel_modes
 
-- title: Geometry helpers
-  desc: >
-    Utilities for working with the geometries returned by the routing
-    services.
-  contents:
-  - decode_compressed_geometry
-  - st_count
-
-- title: Input conversion
-  desc: >
-    Lower-level converters that prepare `sf`, `sfc`, and `data.frame` inputs as
-    Esri feature sets. The endpoint functions above call these for you; reach
-    for them directly only when building requests by hand.
-  contents:
-  - as_stops
-  - as_od_points
-  - as_incidents
-  - as_facilities
-  - as_la_facilities
-  - as_demand_points
-  - as_vrp_orders
-  - as_routes
-  - as_lmd_orders
-  - as_lmd_routes
-  - as_lmd_zones
-  - as_order_specialties
-  - as_route_specialties
-  - as_point_barriers
-  - as_polyline_barriers
-  - as_polygon_barriers
+  - title: Geometry helpers
+    desc: >
+      Utilities for working with the geometries returned by the routing
+      services.
+    contents:
+      - decode_compressed_geometry

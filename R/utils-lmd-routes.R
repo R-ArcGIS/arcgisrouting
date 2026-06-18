@@ -33,6 +33,7 @@ validate_start_time <- function(x) {
 #' @param x A `data.frame` describing vehicle and driver characteristics,
 #'   or `NULL`.
 #' @param ... Additional arguments passed to methods.
+#' @keywords internal
 #' @export
 as_lmd_routes <- function(x, ...) {
   UseMethod("as_lmd_routes")

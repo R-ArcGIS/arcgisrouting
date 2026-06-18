@@ -23,3 +23,4 @@ Prepares \code{sf} or \code{sfc} point geometries as facilities or demand points
 \code{\link[=location_allocation_job]{location_allocation_job()}}, recognizing snake_case attribute columns and
 validating their types before serializing to an Esri feature set.
 }
+\keyword{internal}

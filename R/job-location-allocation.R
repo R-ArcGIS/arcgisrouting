@@ -346,6 +346,7 @@ validate_allocation_line_shape <- function(
 #'   used. Default: `TRUE`.
 #' @param ... Additional arguments passed to methods.
 #' @name as_la_locations
+#' @keywords internal
 #' @export
 as_la_facilities <- function(x, ...) {
   UseMethod("as_la_facilities")

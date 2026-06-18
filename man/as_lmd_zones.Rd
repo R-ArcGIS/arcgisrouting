@@ -17,3 +17,4 @@ Zones specify a work territory as polygon features. The only recognized
 attribute is \code{name}, which routes reference through their \code{zone_name}
 attribute.
 }
+\keyword{internal}

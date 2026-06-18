@@ -1,3 +1,8 @@
+#' Convert spatial objects to origin-destination points
+#'
+#' @param x An `sfc` or `sf` object containing point geometries.
+#' @param ... Additional arguments passed to methods.
+#' @keywords internal
 #' @export
 as_od_points <- function(x, ...) {
   UseMethod("as_od_points")

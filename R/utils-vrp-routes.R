@@ -3,6 +3,7 @@
 #' @param x A `data.frame` describing vehicle and driver characteristics,
 #'   or `NULL`.
 #' @param ... Additional arguments passed to methods.
+#' @keywords internal
 #' @export
 as_routes <- function(x, ...) {
   UseMethod("as_routes")

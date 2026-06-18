@@ -18,3 +18,4 @@ used. Default: \code{TRUE}.}
 \description{
 Convert spatial objects to Last Mile Delivery orders input
 }
+\keyword{internal}

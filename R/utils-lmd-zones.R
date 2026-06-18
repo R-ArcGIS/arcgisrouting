@@ -7,6 +7,7 @@
 #' @param x An `sf` or `sfc` polygon object delineating work territories,
 #'   or `NULL`.
 #' @param ... Additional arguments passed to methods.
+#' @keywords internal
 #' @export
 as_lmd_zones <- function(x, ...) {
   UseMethod("as_lmd_zones")

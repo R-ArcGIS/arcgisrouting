@@ -14,3 +14,4 @@ as_stops(x, ...)
 \description{
 Convert spatial objects to stops for routing
 }
+\keyword{internal}

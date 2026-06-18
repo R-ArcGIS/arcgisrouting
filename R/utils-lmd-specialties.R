@@ -32,6 +32,7 @@ as_specialties <- function(x, key_snake, key_api, arg) {
 #' @param x A `data.frame` with columns `order_name` and `specialty_name`,
 #'   or `NULL`.
 #' @param ... Additional arguments passed to methods.
+#' @keywords internal
 #' @export
 as_order_specialties <- function(x, ...) {
   UseMethod("as_order_specialties")
@@ -52,6 +53,7 @@ as_order_specialties.data.frame <- function(x, ...) {
 #' @param x A `data.frame` with columns `route_name` and `specialty_name`,
 #'   or `NULL`.
 #' @param ... Additional arguments passed to methods.
+#' @keywords internal
 #' @export
 as_route_specialties <- function(x, ...) {
   UseMethod("as_route_specialties")

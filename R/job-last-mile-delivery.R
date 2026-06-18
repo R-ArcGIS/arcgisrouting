@@ -215,10 +215,10 @@ last_mile_delivery <- function(
     time_zone_usage_for_time_fields
   )
   earliest_route_start_date <- validate_start_date(earliest_route_start_date)
-  earliest_route_start_time <- validate_start_time(earliest_route_start_time)
+  earliest_route_start_time <- validate_start_time_hms(earliest_route_start_time)
   time_units <- validate_time_units(time_units)
   distance_units <- validate_distance_units_vrp(distance_units)
-  route_shape <- validate_route_shape(route_shape)
+  route_shape <- validate_route_shape_lmd(route_shape)
   output_format <- validate_job_output_format(output_format)
 
   point_barriers <- as_point_barriers(point_barriers)
@@ -295,7 +295,7 @@ parse_last_mile_delivery_results <- function(json) {
   ))
 }
 
-validate_route_shape <- function(
+validate_route_shape_lmd <- function(
   x,
   error_arg = rlang::caller_arg(x),
   error_call = rlang::caller_call()

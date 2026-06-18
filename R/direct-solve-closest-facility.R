@@ -143,7 +143,7 @@ find_closest_facility <- function(
   restrictions <- validate_restrictions(restrictions)
   travel_mode <- validate_travel_mode(travel_mode, token = token)
   output_lines <- validate_output_lines(output_lines)
-  output_geometry_precision_units <- validate_distance_units(
+  output_geometry_precision_units <- validate_distance_units_esri(
     output_geometry_precision_units
   )
   directions_output_type <- validate_directions_output_type(

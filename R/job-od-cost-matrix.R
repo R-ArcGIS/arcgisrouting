@@ -196,34 +196,6 @@ parse_od_cost_matrix_results <- function(json) {
   ))
 }
 
-validate_time_units <- function(
-  x,
-  error_arg = rlang::caller_arg(x),
-  error_call = rlang::caller_call()
-) {
-  if (is.null(x)) {
-    return(NULL)
-  }
-
-  # time unit look up
-  tu_lu <- c(
-    "seconds" = "Seconds",
-    "minutes" = "Minutes",
-    "hours" = "Hours",
-    "days" = "Days"
-  )
-
-  # validate the provided value
-  x <- rlang::arg_match(
-    x,
-    names(tu_lu),
-    error_arg = error_arg,
-    error_call = error_call
-  )
-
-  unname(tu_lu[x])
-}
-
 validate_distance_units <- function(
   distance_units,
   error_arg = rlang::caller_arg(distance_units),

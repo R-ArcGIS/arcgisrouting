@@ -21,7 +21,7 @@ validate_start_date <- function(
 # Serializes a time-of-day vector to the "hh:mm:ss" strings the API expects.
 # Used for the EarliestStartTime route attribute and the
 # earliest_route_start_time top-level default.
-validate_start_time <- function(x) {
+validate_start_time_hms <- function(x) {
   if (is.null(x)) {
     return(NULL)
   }
@@ -106,7 +106,7 @@ as_lmd_routes.data.frame <- function(x, ...) {
     }
 
     if (target == "EarliestStartTime") {
-      x[[col]] <- validate_start_time(x[[col]])
+      x[[col]] <- validate_start_time_hms(x[[col]])
     }
 
     if (target == "IsHardZone") {

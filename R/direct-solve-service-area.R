@@ -109,10 +109,10 @@ find_service_areas <- function(
 
   output_polygons <- validate_output_polygons(output_polygons)
   output_lines <- validate_output_lines(output_lines)
-  trim_polygon_distance_units <- validate_distance_units(
+  trim_polygon_distance_units <- validate_distance_units_esri(
     trim_polygon_distance_units
   )
-  output_geometry_precision_units <- validate_distance_units(
+  output_geometry_precision_units <- validate_distance_units_esri(
     output_geometry_precision_units
   )
   return_geometry <- validate_return_geometry_sa(return_geometry)
@@ -314,7 +314,7 @@ validate_output_polygons <- function(
   unname(lu[x])
 }
 
-validate_distance_units <- function(
+validate_distance_units_esri <- function(
   x,
   error_arg = rlang::caller_arg(x),
   error_call = rlang::caller_call()

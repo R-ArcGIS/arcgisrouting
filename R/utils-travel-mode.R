@@ -77,13 +77,3 @@ get_travel_modes <- function(token = arc_token()) {
 
 
 validate_travel_mode <- .validate_travel_mode
-
-names_swap <- function(x, error_call = rlang::caller_call()) {
-  if (!rlang::is_named(x)) {
-    cli::cli_abort(
-      "Expected named list. This was unexpercted please create a GitHub issue {.url https://github.com/r-arcgis/arcgisrouting/issues/new}.",
-      call = error_call
-    )
-  }
-  setNames(names(x), x)
-}

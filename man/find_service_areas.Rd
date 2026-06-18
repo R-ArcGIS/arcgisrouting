@@ -46,8 +46,6 @@ find_service_areas(
 
 \item{travel_direction}{default \code{"away"}. A scalar character. One of \code{"away"} (away from facility) or \code{"towards"} (toward facility).}
 
-\item{time_of_day}{default \code{NULL}. A character or \code{POSIXlt} scalar representing the time of day when the cost is to be calculated. If a character vector is provided, it as processed with \code{as.POSIXlt()} and uses the default time zone. If the time zone is \code{UTC} the parameter \href{https://developers.arcgis.com/rest/routing/origin-destination-cost-matrix-synchronous-service/#timeofdayisutc}{\code{timeOfDayIsUTC}} is set to \code{true}.}
-
 \item{output_polygons}{default \code{"simplified"}. A scalar character or \code{NULL} (no polygons). One of \code{"simplified"} or \code{"detailed"}.}
 
 \item{split_polygons_at_breaks}{default \code{TRUE}. A logical scalar. When \code{TRUE}, service areas appear as rings between breaks. When \code{FALSE}, each area is a disk from the facility to the break.}
@@ -66,14 +64,8 @@ find_service_areas(
 
 \item{return_geometry}{default \code{"service_areas"}. A character vector. Valid values: \code{"service_areas"}, \code{"sa_lines"}, \code{"facilities"}, \code{"barriers"}, \code{"polyline_barriers"}, \code{"polygon_barriers"}.}
 
-\item{u_turns}{default \code{"allow_backtrack"}. Must be one of \code{"allow_backtrack"}, \code{"deadend_intersection"}, \code{"deadend"}, or \code{"no_backtrack"}. Determines the conditions when a U-turn is permitted.}
-
 \item{use_hierarchy}{Logical. Whether to use hierarchy when finding routes.
 Default: \code{TRUE}.}
-
-\item{impedance}{default \code{"travel_time"}. Determines how travel distance is measured. Must be one of \code{"travel_time"}, \code{"minutes"}, \code{"truck_travel_time"}, \code{"truck_minutes"}, \code{"walk_time"}, \code{"miles"}, \code{"kilometers"}. Suppressed by \code{travel_mode}. (\href{https://developers.arcgis.com/rest/routing/origin-destination-cost-matrix-synchronous-service/#impedanceattributename}{Reference})}
-
-\item{accumulate_impedance}{default \code{NULL}. Calculate additional impedance metrics. These will be reported, but not used in calculating the best route. Has same values as \code{impedance}. (\href{https://developers.arcgis.com/rest/routing/origin-destination-cost-matrix-synchronous-service/#accumulateattributenames}{Reference})}
 
 \item{restrictions}{Character vector. Restriction names to honor.
 Default: \code{NULL}.}

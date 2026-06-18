@@ -21,9 +21,9 @@ An interface to the ArcGIS Routing Service.
 
 ### Async (Geoprocessing Job)
 
-- `/FindRoutes`
-- `/GenerateServiceAreas`
-- `/SolveVehicleRoutingProblem`
+- ✅ `/FindRoutes`
+- ✅ `/GenerateServiceAreas`
+- ✅ `/SolveVehicleRoutingProblem`
 - `/SolveLastMileDelivery`
 - `/FindClosestFacilities`
 - `/SolveLocationAllocation`

@@ -55,18 +55,10 @@ find_closest_facility(
 
 \item{default_cutoff}{default \code{NULL}. A numeric scalar. The travel time or distance value at which to stop searching for facilities.}
 
-\item{time_of_day}{default \code{NULL}. A character or \code{POSIXlt} scalar representing the time of day when the cost is to be calculated. If a character vector is provided, it as processed with \code{as.POSIXlt()} and uses the default time zone. If the time zone is \code{UTC} the parameter \href{https://developers.arcgis.com/rest/routing/origin-destination-cost-matrix-synchronous-service/#timeofdayisutc}{\code{timeOfDayIsUTC}} is set to \code{true}.}
-
 \item{time_of_day_usage}{default \code{NULL}. A scalar character. One of \code{"start_time"} or \code{"end_time"}. Specifies whether \code{time_of_day} represents departure or arrival time.}
-
-\item{u_turns}{default \code{"allow_backtrack"}. Must be one of \code{"allow_backtrack"}, \code{"deadend_intersection"}, \code{"deadend"}, or \code{"no_backtrack"}. Determines the conditions when a U-turn is permitted.}
 
 \item{use_hierarchy}{Logical. Whether to use hierarchy when finding routes.
 Default: \code{TRUE}.}
-
-\item{impedance}{default \code{"travel_time"}. Determines how travel distance is measured. Must be one of \code{"travel_time"}, \code{"minutes"}, \code{"truck_travel_time"}, \code{"truck_minutes"}, \code{"walk_time"}, \code{"miles"}, \code{"kilometers"}. Suppressed by \code{travel_mode}. (\href{https://developers.arcgis.com/rest/routing/origin-destination-cost-matrix-synchronous-service/#impedanceattributename}{Reference})}
-
-\item{accumulate_impedance}{default \code{NULL}. Calculate additional impedance metrics. These will be reported, but not used in calculating the best route. Has same values as \code{impedance}. (\href{https://developers.arcgis.com/rest/routing/origin-destination-cost-matrix-synchronous-service/#accumulateattributenames}{Reference})}
 
 \item{restrictions}{Character vector. Restriction names to honor.
 Default: \code{NULL}.}

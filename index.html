@@ -5,24 +5,30 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>What the Package Does (One Line, Title Case) • arcgisrouting</title>
-<script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>ArcGIS Routing for R • arcgisrouting</title>
+<script src="lightswitch.js"></script><script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/Inter-0.4.10/font.css" rel="stylesheet">
+<link href="deps/Source_Code_Pro-0.4.10/font.css" rel="stylesheet">
+<link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="What the Package Does (One Line, Title Case)">
-<meta name="description" content="What the package does (one paragraph).">
-<meta property="og:description" content="What the package does (one paragraph).">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="ArcGIS Routing for R">
+<meta name="description" content="Solve routing, service area, vehicle routing, and origin-destination problems with the ArcGIS Routing REST API from R.
+">
+<meta property="og:description" content="Solve routing, service area, vehicle routing, and origin-destination problems with the ArcGIS Routing REST API from R.
+">
+<meta property="og:image" content="http://r.esri.com/arcgisrouting/logo.png">
+<meta name="theme-color" content="#004874">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top " aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="index.html">arcgisrouting</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,6 +43,15 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
 </form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/r-arcgis/arcgisrouting" aria-label="View source on GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch">
+<li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
+    <li><button class="dropdown-item" data-bs-theme-value="dark"><span class="fa fa-moon"></span> Dark</button></li>
+    <li><button class="dropdown-item" data-bs-theme-value="auto"><span class="fa fa-adjust"></span> Auto</button></li>
+  </ul>
+</li>
       </ul>
 </div>
 
@@ -45,55 +60,248 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="arcgisrouting">arcgisrouting<a class="anchor" aria-label="anchor" href="#arcgisrouting"></a>
-</h1></div>
-<p>An interface to the ArcGIS Routing Service.</p>
+<div class="page-header">
+<img src="logo.png" class="logo" alt=""><h1 id="arcgisrouting-">arcgisrouting 
+<a class="anchor" aria-label="anchor" href="#arcgisrouting-"></a>
+</h1>
+</div>
+<!-- badges: start -->
+
+<p><code>arcgisrouting</code> brings the <a href="https://developers.arcgis.com/rest/routing/" class="external-link">ArcGIS Routing REST API</a> to R. Plan routes, measure travel time and distance, build service areas, route fleets of vehicles, and snap GPS tracks to roads, all returning <a href="https://r-spatial.github.io/sf/" class="external-link"><code>sf</code></a> objects ready for analysis and mapping.</p>
+<p>It is part of the <a href="https://developers.arcgis.com/r-bridge/" class="external-link">R-ArcGIS Bridge</a>.</p>
 <div class="section level2">
-<h2 id="supported-endpoints">Supported endpoints<a class="anchor" aria-label="anchor" href="#supported-endpoints"></a>
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>Install the development version from GitHub:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"r-arcgis/arcgisrouting"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="authentication">Authentication<a class="anchor" aria-label="anchor" href="#authentication"></a>
+</h2>
+<p>Every request is authorized with an ArcGIS token. Authenticate once per session with <a href="https://github.com/r-arcgis/arcgisutils" class="external-link"><code>arcgisutils</code></a> and the package will pick the token up automatically.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/R-ArcGIS/arcgisutils" class="external-link">arcgisutils</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://r.esri.com/arcgisrouting/">arcgisrouting</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/arcgisutils/man/token.html" class="external-link">set_arc_token</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/arcgisutils/man/auth.html" class="external-link">auth_user</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>See the <a href="https://developers.arcgis.com/r-bridge/authentication/overview/" class="external-link">R-ArcGIS Bridge authentication guide</a> for client credentials, API keys, and other workflows.</p>
+</div>
+<div class="section level2">
+<h2 id="quick-start">Quick start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
+</h2>
+<p>Find the best route between an ordered set of stops:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/R-ArcGIS/arcgisutils" class="external-link">arcgisutils</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://r.esri.com/arcgisrouting/">arcgisrouting</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/arcgisutils/man/token.html" class="external-link">set_arc_token</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/arcgisutils/man/auth.html" class="external-link">auth_user</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">stops</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/sf.html" class="external-link">st_sf</a></span><span class="op">(</span></span>
+<span>  name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Ferry Building"</span>, <span class="st">"Coit Tower"</span>, <span class="st">"Painted Ladies"</span><span class="op">)</span>,</span>
+<span>  geometry <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/sfc.html" class="external-link">st_sfc</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html" class="external-link">st_point</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">122.3933</span>, <span class="fl">37.7955</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html" class="external-link">st_point</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">122.4058</span>, <span class="fl">37.8024</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html" class="external-link">st_point</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">122.4329</span>, <span class="fl">37.7762</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    crs <span class="op">=</span> <span class="fl">4326</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">route</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/find_routes.html">find_routes</a></span><span class="op">(</span><span class="va">stops</span><span class="op">)</span></span>
+<span><span class="va">route</span><span class="op">$</span><span class="va">routes</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="what-you-can-do">What you can do<a class="anchor" aria-label="anchor" href="#what-you-can-do"></a>
+</h2>
+<table class="table">
+<colgroup>
+<col width="33%">
+<col width="33%">
+<col width="33%">
+</colgroup>
+<thead><tr>
+<th>Capability</th>
+<th>Direct Requests</th>
+<th>Asynchronous Geoprocessing Job</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Routing and directions</td>
+<td><code><a href="reference/find_routes.html">find_routes()</a></code></td>
+<td><code><a href="reference/find_routes_job.html">find_routes_job()</a></code></td>
+</tr>
+<tr>
+<td>Service areas</td>
+<td><code><a href="reference/find_service_areas.html">find_service_areas()</a></code></td>
+<td><code><a href="reference/solve_service_areas_job.html">solve_service_areas_job()</a></code></td>
+</tr>
+<tr>
+<td>Closest facility</td>
+<td><code><a href="reference/find_closest_facility.html">find_closest_facility()</a></code></td>
+<td><code><a href="reference/find_closest_facilities_job.html">find_closest_facilities_job()</a></code></td>
+</tr>
+<tr>
+<td>Origin-destination cost matrix</td>
+<td><code><a href="reference/travel_cost_matrix.html">travel_cost_matrix()</a></code></td>
+<td><code><a href="reference/od_cost_matrix_job.html">od_cost_matrix_job()</a></code></td>
+</tr>
+<tr>
+<td>Vehicle routing problem</td>
+<td><code><a href="reference/route_vehicles.html">route_vehicles()</a></code></td>
+<td><code><a href="reference/solve_vrp_job.html">solve_vrp_job()</a></code></td>
+</tr>
+<tr>
+<td>Last mile delivery</td>
+<td></td>
+<td><code><a href="reference/last_mile_delivery.html">last_mile_delivery()</a></code></td>
+</tr>
+<tr>
+<td>Location-allocation</td>
+<td></td>
+<td><code><a href="reference/location_allocation_job.html">location_allocation_job()</a></code></td>
+</tr>
+<tr>
+<td>Snap GPS points to roads</td>
+<td><code><a href="reference/snap_to_roads.html">snap_to_roads()</a></code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The <strong>direct request</strong> functions return immediately and are best for interactive work and modest inputs. The <strong>asynchronous geoprocessing job</strong> functions queue a job on the server, which is ideal for large problems.</p>
+<p>Working with a job looks like this:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">job</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/find_routes_job.html">find_routes_job</a></span><span class="op">(</span><span class="va">stops</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">job</span><span class="op">$</span><span class="fu">start</span><span class="op">(</span><span class="op">)</span>      <span class="co"># submit the job to the server</span></span>
+<span><span class="va">job</span><span class="op">$</span><span class="fu">await</span><span class="op">(</span><span class="op">)</span>      <span class="co"># poll until the job completes</span></span>
+<span><span class="va">job</span><span class="op">$</span><span class="fu">messages</span><span class="op">(</span><span class="op">)</span>   <span class="co"># retrieve the geoprocessing job messages</span></span>
+<span><span class="va">job</span><span class="op">$</span><span class="va">results</span>      <span class="co"># read the results once the job has finished</span></span></code></pre></div>
+<p>Discover the travel modes available to your organization with <code><a href="reference/get_travel_modes.html">get_travel_modes()</a></code>.</p>
+</div>
+<div class="section level2">
+<h2 id="endpoint-coverage">Endpoint coverage<a class="anchor" aria-label="anchor" href="#endpoint-coverage"></a>
 </h2>
 <div class="section level3">
-<h3 id="direct">Direct<a class="anchor" aria-label="anchor" href="#direct"></a>
+<h3 id="direct-services">Direct services<a class="anchor" aria-label="anchor" href="#direct-services"></a>
 </h3>
-<ul>
-<li>✅ <code>/solve</code>
-</li>
-<li>✅ <code>/solveServiceArea</code>
-</li>
-<li>✅ <code>/EditVehicleRoutingProblem</code>
-</li>
-<li>✅ <code>/solveClosestFacility</code>
-</li>
-<li>✅ <code>/solveODCostMatrix</code>
-</li>
-<li><code>/GetToolInfo</code></li>
-<li>✅ <code>/GetTravelModes</code>
-</li>
-<li>✅ <code>/retrieveTravelModes</code>
-</li>
-<li>✅ <code>/SnapToRoads</code>
-</li>
-<li><code>/Traffic</code></li>
-</ul>
+<table class="table">
+<thead><tr>
+<th>Endpoint</th>
+<th>Status</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code>/solve</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>/solveServiceArea</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>/EditVehicleRoutingProblem</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>/solveClosestFacility</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>/solveODCostMatrix</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>/GetTravelModes</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>/retrieveTravelModes</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>/SnapToRoads</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>/GetToolInfo</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>/Traffic</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="section level3">
-<h3 id="async-geoprocessing-job">Async (Geoprocessing Job)<a class="anchor" aria-label="anchor" href="#async-geoprocessing-job"></a>
+<h3 id="asynchronous-services-geoprocessing-jobs">Asynchronous services (geoprocessing jobs)<a class="anchor" aria-label="anchor" href="#asynchronous-services-geoprocessing-jobs"></a>
 </h3>
+<table class="table">
+<thead><tr>
+<th>Endpoint</th>
+<th>Status</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code>/FindRoutes</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>/GenerateServiceAreas</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>/SolveVehicleRoutingProblem</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>/SolveLastMileDelivery</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>/FindClosestFacilities</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>/SolveLocationAllocation</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>/GenerateOriginDestinationCostMatrix</code></td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section level2">
+<h2 id="arcgis-online-and-enterprise">ArcGIS Online and Enterprise<a class="anchor" aria-label="anchor" href="#arcgis-online-and-enterprise"></a>
+</h2>
+<p>This package is built and tested against ArcGIS Online. It may not yet work with ArcGIS Enterprise. If you run into trouble using <code>arcgisrouting</code> with Enterprise, please <a href="https://github.com/r-arcgis/arcgisrouting/issues" class="external-link">open an issue</a> or, if you would rather reach us privately, email <a href="mailto:r_bridge@esri.com" class="email">r_bridge@esri.com</a>.</p>
+</div>
+<div class="section level2">
+<h2 id="learn-more">Learn more<a class="anchor" aria-label="anchor" href="#learn-more"></a>
+</h2>
 <ul>
-<li>✅ <code>/FindRoutes</code>
-</li>
-<li>✅ <code>/GenerateServiceAreas</code>
-</li>
-<li>✅ <code>/SolveVehicleRoutingProblem</code>
-</li>
-<li><code>/SolveLastMileDelivery</code></li>
-<li><code>/FindClosestFacilities</code></li>
-<li><code>/SolveLocationAllocation</code></li>
-<li><code>/GenerateOriginDestinationCostMatrix</code></li>
+<li><a href="https://r.esri.com/arcgisrouting/" class="external-link">Package website</a></li>
+<li><a href="https://developers.arcgis.com/rest/routing/" class="external-link">ArcGIS Routing REST API reference</a></li>
+<li><a href="https://developers.arcgis.com/r-bridge/" class="external-link">R-ArcGIS Bridge</a></li>
 </ul>
 </div>
 </div>
+  </main><aside class="col-md-3"><div class="links">
+<h2 data-toc-skip>Links</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/r-arcgis/arcgisrouting/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/r-arcgis/arcgisrouting/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://developers.arcgis.com/rest/routing/" class="external-link">ArcGIS Routing REST API</a></li>
+<li><a href="https://r.esri.com" class="external-link">R-ArcGIS Bridge</a></li>
+</ul>
 </div>
-  </main><aside class="col-md-3"><div class="license">
+
+<div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
@@ -116,18 +324,25 @@
 </ul>
 </div>
 
-
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/r-arcgis/arcgisrouting/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/r-arcgis/arcgisrouting/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+<li><a href="https://github.com/R-ArcGIS/arcgisrouting/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/R-ArcGIS/arcgisrouting/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+</ul>
+</div>
 
   </aside>
 </div>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Josiah Parry.</p>
+  <p>arcgisrouting NULL</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>list(text = “Part of the <a href="https://r.esri.com" class="external-link">R-ArcGIS Bridge</a>. Powered by the <a href="https://developers.arcgis.com/rest/routing/" class="external-link">ArcGIS Routing REST API</a>.”) Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

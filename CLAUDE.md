@@ -5,11 +5,20 @@
 - Never attempt to run bash commands
 - Never try to run git commands
 - Never try and search outside of this workspace
-- Never try to run any cargo commands whatsoever
-- Never use `.unwrap()` or `.expect()`
 - Never duplicate code unless you ask me for approval and get consent
 - Never search code to get an answer. Always ask me for help insteaad.
 - Never guess method implementations.
+- The API documentation is authoritative and complete. If the docs list
+  an attribute/parameter for one entity and not another, that
+  distinction is intentional — follow it literally. Never ask me to
+  confirm something the documentation already states unambiguously.
+- Ask more, act less when the implementation is genuinely undetermined —
+  but never re-ask what the docs or my prior answers already settle.
+- You may follow existing patterns in the codebase, but verify with me
+  that the pattern is correct before reusing it. Existing code is not
+  automatically correct.
+- When implementing a new function, only review files starting with
+  `direct-`, `job-`, and `utils-` in the `R/` directory.
 
 ## Style & Guide
 
@@ -65,6 +74,16 @@ dedicated `as_*()` converter using `UseMethod` dispatch — recognizing
 snake_case column names, validating types, renaming to API names,
 serializing via
 [`arcgisutils::as_esri_featureset()`](https://rdrr.io/pkg/arcgisutils/man/featureset.html).
+
+**Type-converter functions (`as_*()`) are STRICTLY INTERNAL.** Never
+mention them in documentation, `@param` descriptions, examples, or
+`@seealso` for the user-facing endpoint functions. They are called
+internally by the endpoint functions; instructing users to call them
+themselves (e.g. “Use
+[`as_stops()`](http://r.esri.com/arcgisrouting/reference/as_stops.md) to
+prepare stops”) produces broken code, because the endpoint already runs
+the conversion. Document the raw `sf`/`sfc`/`data.frame` input and the
+recognized snake_case columns directly instead.
 
 ## Async GP job URL construction
 

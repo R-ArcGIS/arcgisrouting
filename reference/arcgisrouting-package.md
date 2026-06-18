@@ -8,6 +8,10 @@ Useful links:
 
 - <http://r.esri.com/arcgisrouting/>
 
+- <https://github.com/r-arcgis/arcgisrouting>
+
+- Report bugs at <https://github.com/r-arcgis/arcgisrouting/issues>
+
 ## Author
 
 **Maintainer**: Josiah Parry <josiah.parry@gmail.com>

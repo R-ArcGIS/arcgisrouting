@@ -224,16 +224,30 @@ A named list. Elements present depend on `return_geometry`:
 [API
 Reference](https://developers.arcgis.com/rest/routing/closest-facility-service-direct/)
 
+## See also
+
+Other direct:
+[`find_routes()`](http://r.esri.com/arcgisrouting/reference/find_routes.md),
+[`find_service_areas()`](http://r.esri.com/arcgisrouting/reference/find_service_areas.md),
+[`route_vehicles()`](http://r.esri.com/arcgisrouting/reference/route_vehicles.md),
+[`snap_to_roads()`](http://r.esri.com/arcgisrouting/reference/snap_to_roads.md),
+[`travel_cost_matrix()`](http://r.esri.com/arcgisrouting/reference/travel_cost_matrix.md)
+
+Other closest facility:
+[`find_closest_facilities_job()`](http://r.esri.com/arcgisrouting/reference/find_closest_facilities_job.md)
+
 ## Examples
 
 ``` r
 if (FALSE) { # \dontrun{
 library(sf)
+library(arcgisutils)
+set_arc_token(auth_user())
 
 incidents <- st_sfc(st_point(c(-122.4496, 37.7467)), crs = 4326)
 
 facilities <- st_sf(
-  Name = c("Station 11", "Station 20", "Station 24", "Station 39"),
+  name = c("Station 11", "Station 20", "Station 24", "Station 39"),
   geometry = st_sfc(
     st_point(c(-122.4267, 37.7486)),
     st_point(c(-122.4561, 37.7513)),

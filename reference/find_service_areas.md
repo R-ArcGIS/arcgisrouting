@@ -170,11 +170,26 @@ A list containing the service area results.
 [API
 Reference](https://developers.arcgis.com/rest/routing/service-area-service-direct/)
 
+## See also
+
+Other direct:
+[`find_closest_facility()`](http://r.esri.com/arcgisrouting/reference/find_closest_facility.md),
+[`find_routes()`](http://r.esri.com/arcgisrouting/reference/find_routes.md),
+[`route_vehicles()`](http://r.esri.com/arcgisrouting/reference/route_vehicles.md),
+[`snap_to_roads()`](http://r.esri.com/arcgisrouting/reference/snap_to_roads.md),
+[`travel_cost_matrix()`](http://r.esri.com/arcgisrouting/reference/travel_cost_matrix.md)
+
+Other service area:
+[`download_service_area_results()`](http://r.esri.com/arcgisrouting/reference/download_service_area_results.md),
+[`solve_service_areas_job()`](http://r.esri.com/arcgisrouting/reference/solve_service_areas_job.md)
+
 ## Examples
 
 ``` r
 if (FALSE) { # \dontrun{
 library(sf)
+library(arcgisutils)
+set_arc_token(auth_user())
 
 facility <- st_sfc(st_point(c(-122.253, 37.757)), crs = 4326)
 find_service_areas(facility)

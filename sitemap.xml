@@ -5,9 +5,12 @@
 <url><loc>http://r.esri.com/arcgisrouting/authors.html</loc></url>
 <url><loc>http://r.esri.com/arcgisrouting/index.html</loc></url>
 <url><loc>http://r.esri.com/arcgisrouting/reference/arcgisrouting-package.html</loc></url>
+<url><loc>http://r.esri.com/arcgisrouting/reference/as_cf_locations.html</loc></url>
+<url><loc>http://r.esri.com/arcgisrouting/reference/as_la_locations.html</loc></url>
 <url><loc>http://r.esri.com/arcgisrouting/reference/as_lmd_orders.html</loc></url>
 <url><loc>http://r.esri.com/arcgisrouting/reference/as_lmd_routes.html</loc></url>
 <url><loc>http://r.esri.com/arcgisrouting/reference/as_lmd_zones.html</loc></url>
+<url><loc>http://r.esri.com/arcgisrouting/reference/as_od_points.html</loc></url>
 <url><loc>http://r.esri.com/arcgisrouting/reference/as_order_specialties.html</loc></url>
 <url><loc>http://r.esri.com/arcgisrouting/reference/as_point_barriers.html</loc></url>
 <url><loc>http://r.esri.com/arcgisrouting/reference/as_polygon_barriers.html</loc></url>
@@ -17,7 +20,9 @@
 <url><loc>http://r.esri.com/arcgisrouting/reference/as_stops.html</loc></url>
 <url><loc>http://r.esri.com/arcgisrouting/reference/as_vrp_orders.html</loc></url>
 <url><loc>http://r.esri.com/arcgisrouting/reference/decode_compressed_geometry.html</loc></url>
-<url><loc>http://r.esri.com/arcgisrouting/reference/dot-retrieve_travel_modes.html</loc></url>
+<url><loc>http://r.esri.com/arcgisrouting/reference/download_od_results.html</loc></url>
+<url><loc>http://r.esri.com/arcgisrouting/reference/download_service_area_results.html</loc></url>
+<url><loc>http://r.esri.com/arcgisrouting/reference/find_closest_facilities_job.html</loc></url>
 <url><loc>http://r.esri.com/arcgisrouting/reference/find_closest_facility.html</loc></url>
 <url><loc>http://r.esri.com/arcgisrouting/reference/find_routes.html</loc></url>
 <url><loc>http://r.esri.com/arcgisrouting/reference/find_routes_job.html</loc></url>
@@ -25,7 +30,11 @@
 <url><loc>http://r.esri.com/arcgisrouting/reference/get_travel_modes.html</loc></url>
 <url><loc>http://r.esri.com/arcgisrouting/reference/index.html</loc></url>
 <url><loc>http://r.esri.com/arcgisrouting/reference/last_mile_delivery.html</loc></url>
+<url><loc>http://r.esri.com/arcgisrouting/reference/location_allocation_job.html</loc></url>
+<url><loc>http://r.esri.com/arcgisrouting/reference/od_cost_matrix_job.html</loc></url>
+<url><loc>http://r.esri.com/arcgisrouting/reference/retrieve_travel_modes.html</loc></url>
 <url><loc>http://r.esri.com/arcgisrouting/reference/route_vehicles.html</loc></url>
+<url><loc>http://r.esri.com/arcgisrouting/reference/snap_to_roads.html</loc></url>
 <url><loc>http://r.esri.com/arcgisrouting/reference/solve_service_areas_job.html</loc></url>
 <url><loc>http://r.esri.com/arcgisrouting/reference/solve_vrp_job.html</loc></url>
 <url><loc>http://r.esri.com/arcgisrouting/reference/travel_cost_matrix.html</loc></url>

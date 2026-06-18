@@ -60,9 +60,8 @@ solve_vrp_job(
 
 - routes:
 
-  A `data.frame` describing vehicle and driver characteristics. Use
-  [`as_routes()`](http://r.esri.com/arcgisrouting/reference/as_routes.md)
-  to prepare with validated attributes. Default: `NULL`.
+  A `data.frame` describing vehicle and driver characteristics. Default:
+  `NULL`.
 
 - breaks:
 
@@ -242,11 +241,29 @@ Call `$start()` to submit and `$results` to retrieve output.
 [API
 Reference](https://developers.arcgis.com/rest/routing/vrp-service-job/)
 
+## See also
+
+Other async:
+[`download_od_results()`](http://r.esri.com/arcgisrouting/reference/download_od_results.md),
+[`download_service_area_results()`](http://r.esri.com/arcgisrouting/reference/download_service_area_results.md),
+[`find_closest_facilities_job()`](http://r.esri.com/arcgisrouting/reference/find_closest_facilities_job.md),
+[`find_routes_job()`](http://r.esri.com/arcgisrouting/reference/find_routes_job.md),
+[`last_mile_delivery()`](http://r.esri.com/arcgisrouting/reference/last_mile_delivery.md),
+[`location_allocation_job()`](http://r.esri.com/arcgisrouting/reference/location_allocation_job.md),
+[`od_cost_matrix_job()`](http://r.esri.com/arcgisrouting/reference/od_cost_matrix_job.md),
+[`solve_service_areas_job()`](http://r.esri.com/arcgisrouting/reference/solve_service_areas_job.md)
+
+Other vrp:
+[`last_mile_delivery()`](http://r.esri.com/arcgisrouting/reference/last_mile_delivery.md),
+[`route_vehicles()`](http://r.esri.com/arcgisrouting/reference/route_vehicles.md)
+
 ## Examples
 
 ``` r
 if (FALSE) { # \dontrun{
 library(sf)
+library(arcgisutils)
+set_arc_token(auth_user())
 
 orders <- st_sf(
   name = c("Order 1", "Order 2"),

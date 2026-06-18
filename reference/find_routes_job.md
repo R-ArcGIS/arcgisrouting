@@ -41,10 +41,9 @@ find_routes_job(
 
 - stops:
 
-  An `sf` or `sfc` object containing point geometries. Use
-  [`as_stops()`](http://r.esri.com/arcgisrouting/reference/as_stops.md)
-  to prepare stops with attributes such as `route_name`,
-  `time_window_start`, and `time_window_end`.
+  An `sf` or `sfc` object containing point geometries. Recognized
+  attribute columns such as `route_name`, `time_window_start`, and
+  `time_window_end` are used when present.
 
 - travel_mode:
 
@@ -187,17 +186,34 @@ find_routes_job(
 
 A `find_routes_job` R6 object inheriting from
 [`arcgisutils::arc_gp_job`](https://rdrr.io/pkg/arcgisutils/man/gp_job.html).
-Call `$run()` to execute and `$result()` to retrieve output.
+Call `$start()` to submit and `$results` to retrieve output.
 
 ## References
 
 [API Reference](https://developers.arcgis.com/rest/routing/find-routes/)
+
+## See also
+
+Other async:
+[`download_od_results()`](http://r.esri.com/arcgisrouting/reference/download_od_results.md),
+[`download_service_area_results()`](http://r.esri.com/arcgisrouting/reference/download_service_area_results.md),
+[`find_closest_facilities_job()`](http://r.esri.com/arcgisrouting/reference/find_closest_facilities_job.md),
+[`last_mile_delivery()`](http://r.esri.com/arcgisrouting/reference/last_mile_delivery.md),
+[`location_allocation_job()`](http://r.esri.com/arcgisrouting/reference/location_allocation_job.md),
+[`od_cost_matrix_job()`](http://r.esri.com/arcgisrouting/reference/od_cost_matrix_job.md),
+[`solve_service_areas_job()`](http://r.esri.com/arcgisrouting/reference/solve_service_areas_job.md),
+[`solve_vrp_job()`](http://r.esri.com/arcgisrouting/reference/solve_vrp_job.md)
+
+Other routing:
+[`find_routes()`](http://r.esri.com/arcgisrouting/reference/find_routes.md)
 
 ## Examples
 
 ``` r
 if (FALSE) { # \dontrun{
 library(sf)
+library(arcgisutils)
+set_arc_token(auth_user())
 
 stops <- st_sf(
   name = c("Stop 1", "Stop 2", "Stop 3"),

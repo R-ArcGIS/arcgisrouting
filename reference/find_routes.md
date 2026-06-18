@@ -34,9 +34,7 @@ find_routes(
 - stops:
 
   An `sf` or `sfc` object containing point geometries representing the
-  stops to visit. Use
-  [`as_stops()`](http://r.esri.com/arcgisrouting/reference/as_stops.md)
-  to prepare stops with attributes.
+  stops to visit.
 
 - travel_mode:
 
@@ -177,11 +175,25 @@ When `directions_type = "feature_sets"`, the response includes:
 [API
 Reference](https://developers.arcgis.com/rest/routing/route-service-direct/)
 
+## See also
+
+Other direct:
+[`find_closest_facility()`](http://r.esri.com/arcgisrouting/reference/find_closest_facility.md),
+[`find_service_areas()`](http://r.esri.com/arcgisrouting/reference/find_service_areas.md),
+[`route_vehicles()`](http://r.esri.com/arcgisrouting/reference/route_vehicles.md),
+[`snap_to_roads()`](http://r.esri.com/arcgisrouting/reference/snap_to_roads.md),
+[`travel_cost_matrix()`](http://r.esri.com/arcgisrouting/reference/travel_cost_matrix.md)
+
+Other routing:
+[`find_routes_job()`](http://r.esri.com/arcgisrouting/reference/find_routes_job.md)
+
 ## Examples
 
 ``` r
 if (FALSE) { # \dontrun{
 library(sf)
+library(arcgisutils)
+set_arc_token(auth_user())
 
 # Simple route between 3 stops
 stops <- st_sf(

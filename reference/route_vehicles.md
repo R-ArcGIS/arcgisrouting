@@ -62,9 +62,7 @@ route_vehicles(
 - routes:
 
   default `NULL`. A `data.frame` describing vehicle and driver
-  characteristics. Use
-  [`as_routes()`](http://r.esri.com/arcgisrouting/reference/as_routes.md)
-  to prepare with validated attributes.
+  characteristics.
 
 - travel_mode:
 
@@ -253,11 +251,26 @@ A named list:
 [API
 Reference](https://developers.arcgis.com/rest/routing/vehicle-routing-problem-service-direct/)
 
+## See also
+
+Other direct:
+[`find_closest_facility()`](http://r.esri.com/arcgisrouting/reference/find_closest_facility.md),
+[`find_routes()`](http://r.esri.com/arcgisrouting/reference/find_routes.md),
+[`find_service_areas()`](http://r.esri.com/arcgisrouting/reference/find_service_areas.md),
+[`snap_to_roads()`](http://r.esri.com/arcgisrouting/reference/snap_to_roads.md),
+[`travel_cost_matrix()`](http://r.esri.com/arcgisrouting/reference/travel_cost_matrix.md)
+
+Other vrp:
+[`last_mile_delivery()`](http://r.esri.com/arcgisrouting/reference/last_mile_delivery.md),
+[`solve_vrp_job()`](http://r.esri.com/arcgisrouting/reference/solve_vrp_job.md)
+
 ## Examples
 
 ``` r
 if (FALSE) { # \dontrun{
 library(sf)
+library(arcgisutils)
+set_arc_token(auth_user())
 
 orders <- st_sf(
   name = c("Order 1", "Order 2"),

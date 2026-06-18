@@ -117,11 +117,26 @@ A named list. Elements present depend on `return_geometry` and
 [API
 Reference](https://developers.arcgis.com/rest/routing/od-cost-matrix-synchronous-service/)
 
+## See also
+
+Other direct:
+[`find_closest_facility()`](http://r.esri.com/arcgisrouting/reference/find_closest_facility.md),
+[`find_routes()`](http://r.esri.com/arcgisrouting/reference/find_routes.md),
+[`find_service_areas()`](http://r.esri.com/arcgisrouting/reference/find_service_areas.md),
+[`route_vehicles()`](http://r.esri.com/arcgisrouting/reference/route_vehicles.md),
+[`snap_to_roads()`](http://r.esri.com/arcgisrouting/reference/snap_to_roads.md)
+
+Other od:
+[`download_od_results()`](http://r.esri.com/arcgisrouting/reference/download_od_results.md),
+[`od_cost_matrix_job()`](http://r.esri.com/arcgisrouting/reference/od_cost_matrix_job.md)
+
 ## Examples
 
 ``` r
 if (FALSE) { # \dontrun{
 library(sf)
+library(arcgisutils)
+set_arc_token(auth_user())
 
 origins <- st_sfc(
   st_point(c(-122.4194, 37.7749)),

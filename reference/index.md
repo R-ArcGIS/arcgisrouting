@@ -1,59 +1,89 @@
 # Package index
 
-## All functions
+## Routing
 
-- [`as_lmd_orders()`](http://r.esri.com/arcgisrouting/reference/as_lmd_orders.md)
-  : Convert spatial objects to Last Mile Delivery orders input
-- [`as_lmd_routes()`](http://r.esri.com/arcgisrouting/reference/as_lmd_routes.md)
-  : Convert a data.frame to Last Mile Delivery routes input
-- [`as_lmd_zones()`](http://r.esri.com/arcgisrouting/reference/as_lmd_zones.md)
-  : Convert spatial objects to Last Mile Delivery zones input
-- [`as_order_specialties()`](http://r.esri.com/arcgisrouting/reference/as_order_specialties.md)
-  : Convert a data.frame to Last Mile Delivery order specialties input
-- [`as_point_barriers()`](http://r.esri.com/arcgisrouting/reference/as_point_barriers.md)
-  : BarrierType: 0 (restriction) 2 (added cost) Must have accompanying
-  attribute Valid attributes Attr_TravelTime , Attr_Miles ,
-  Attr_Kilometers , Attr_Minutes , Attr_WalkTime , Attr_TruckMinutes ,
-  or Attr_TruckTravelTime
-- [`as_polygon_barriers()`](http://r.esri.com/arcgisrouting/reference/as_polygon_barriers.md)
-  : BarrierType: 0 (restriction) 2 (added cost) Must have accompanying
-  attribute Valid attributes Attr_TravelTime , Attr_Miles ,
-  Attr_Kilometers , Attr_Minutes , Attr_WalkTime , Attr_TruckMinutes ,
-  or Attr_TruckTravelTime
-- [`as_polyline_barriers()`](http://r.esri.com/arcgisrouting/reference/as_polyline_barriers.md)
-  : BarrierType: 0 (restriction) 2 (added cost) Must have accompanying
-  attribute Valid attributes Attr_TravelTime , Attr_Miles ,
-  Attr_Kilometers , Attr_Minutes , Attr_WalkTime , Attr_TruckMinutes ,
-  or Attr_TruckTravelTime
-- [`as_route_specialties()`](http://r.esri.com/arcgisrouting/reference/as_route_specialties.md)
-  : Convert a data.frame to Last Mile Delivery route specialties input
-- [`as_routes()`](http://r.esri.com/arcgisrouting/reference/as_routes.md)
-  : Convert a data.frame to VRP routes input
-- [`as_stops()`](http://r.esri.com/arcgisrouting/reference/as_stops.md)
-  : Convert spatial objects to stops for routing
-- [`as_vrp_orders()`](http://r.esri.com/arcgisrouting/reference/as_vrp_orders.md)
-  : Convert spatial objects to VRP orders input
-- [`decode_compressed_geometry()`](http://r.esri.com/arcgisrouting/reference/decode_compressed_geometry.md)
-  : Decode Compressed Geometry
-- [`.retrieve_travel_modes()`](http://r.esri.com/arcgisrouting/reference/dot-retrieve_travel_modes.md)
-  : Retrieve Available Travel Modes
-- [`find_closest_facility()`](http://r.esri.com/arcgisrouting/reference/find_closest_facility.md)
-  : Find Closest Facility
+Find the best route between an ordered or optimized set of stops and
+generate turn-by-turn directions.
+
 - [`find_routes()`](http://r.esri.com/arcgisrouting/reference/find_routes.md)
   : Find Routes
 - [`find_routes_job()`](http://r.esri.com/arcgisrouting/reference/find_routes_job.md)
   : Find Routes (Async)
+
+## Service areas
+
+Generate polygons and lines describing the area reachable from a set of
+facilities within a given travel time or distance.
+
 - [`find_service_areas()`](http://r.esri.com/arcgisrouting/reference/find_service_areas.md)
   : Solve Service Area
-- [`get_travel_modes()`](http://r.esri.com/arcgisrouting/reference/get_travel_modes.md)
-  : Get available travel modes
-- [`last_mile_delivery()`](http://r.esri.com/arcgisrouting/reference/last_mile_delivery.md)
-  : Solve Last Mile Delivery (Async)
-- [`route_vehicles()`](http://r.esri.com/arcgisrouting/reference/route_vehicles.md)
-  : Route Vehicles
 - [`solve_service_areas_job()`](http://r.esri.com/arcgisrouting/reference/solve_service_areas_job.md)
   : Generate Service Areas (Async)
-- [`solve_vrp_job()`](http://r.esri.com/arcgisrouting/reference/solve_vrp_job.md)
-  : Solve Vehicle Routing Problem (Async)
+- [`download_service_area_results()`](http://r.esri.com/arcgisrouting/reference/download_service_area_results.md)
+  : Download Service Area Results
+
+## Closest facility
+
+Find one or more nearby facilities from a set of incidents based on
+travel time or distance.
+
+- [`find_closest_facility()`](http://r.esri.com/arcgisrouting/reference/find_closest_facility.md)
+  : Find Closest Facility
+- [`find_closest_facilities_job()`](http://r.esri.com/arcgisrouting/reference/find_closest_facilities_job.md)
+  : Find Closest Facilities (Async)
+
+## Origin-destination cost matrix
+
+Measure the travel time or distance between every origin and every
+destination in a pair of point sets.
+
 - [`travel_cost_matrix()`](http://r.esri.com/arcgisrouting/reference/travel_cost_matrix.md)
   : Travel Cost Matrix
+- [`od_cost_matrix_job()`](http://r.esri.com/arcgisrouting/reference/od_cost_matrix_job.md)
+  : Generate Origin-Destination Cost Matrix (Async)
+- [`download_od_results()`](http://r.esri.com/arcgisrouting/reference/download_od_results.md)
+  : Download Origin-Destination Cost Matrix Results
+
+## Vehicle routing & last mile delivery
+
+Plan efficient routes for a fleet of vehicles servicing a set of orders,
+including clustered last mile delivery problems.
+
+- [`route_vehicles()`](http://r.esri.com/arcgisrouting/reference/route_vehicles.md)
+  : Route Vehicles
+- [`solve_vrp_job()`](http://r.esri.com/arcgisrouting/reference/solve_vrp_job.md)
+  : Solve Vehicle Routing Problem (Async)
+- [`last_mile_delivery()`](http://r.esri.com/arcgisrouting/reference/last_mile_delivery.md)
+  : Solve Last Mile Delivery (Async)
+
+## Location-allocation
+
+Choose the set of facilities that best serves demand from surrounding
+areas.
+
+- [`location_allocation_job()`](http://r.esri.com/arcgisrouting/reference/location_allocation_job.md)
+  : Solve Location-Allocation (Async)
+
+## Snap to roads
+
+Snap a sequence of GPS points to the most likely roads traveled.
+
+- [`snap_to_roads()`](http://r.esri.com/arcgisrouting/reference/snap_to_roads.md)
+  : Snap Points to Roads
+
+## Travel modes
+
+Discover the modes of transportation available to your organization.
+
+- [`get_travel_modes()`](http://r.esri.com/arcgisrouting/reference/get_travel_modes.md)
+  : Get available travel modes
+- [`retrieve_travel_modes()`](http://r.esri.com/arcgisrouting/reference/retrieve_travel_modes.md)
+  : Retrieve Available Travel Modes
+
+## Geometry helpers
+
+Utilities for working with the geometries returned by the routing
+services.
+
+- [`decode_compressed_geometry()`](http://r.esri.com/arcgisrouting/reference/decode_compressed_geometry.md)
+  : Decode Compressed Geometry

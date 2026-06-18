@@ -7,6 +7,9 @@
 
 ## Citation
 
+Source:
+[`DESCRIPTION`](https://github.com/r-arcgis/arcgisrouting/blob/HEAD/DESCRIPTION)
+
 Parry J (2026). *arcgisrouting: What the Package Does (One Line, Title
 Case)*. R package version 0.0.0.9000,
 <http://r.esri.com/arcgisrouting/>.

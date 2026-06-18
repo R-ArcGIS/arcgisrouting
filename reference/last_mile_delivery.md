@@ -45,21 +45,17 @@ last_mile_delivery(
 - orders:
 
   An `sf` object containing point geometries representing delivery and
-  pickup locations. Use
-  [`as_lmd_orders()`](http://r.esri.com/arcgisrouting/reference/as_lmd_orders.md)
-  to prepare with validated attributes.
+  pickup locations.
 
 - depots:
 
   An `sf` or `sfc` object containing point geometries representing depot
-  locations. Prepared with
-  [`as_stops()`](http://r.esri.com/arcgisrouting/reference/as_stops.md).
+  locations.
 
 - routes:
 
-  A `data.frame` describing vehicle and driver characteristics. Use
-  [`as_lmd_routes()`](http://r.esri.com/arcgisrouting/reference/as_lmd_routes.md)
-  to prepare with validated attributes. Default: `NULL`.
+  A `data.frame` describing vehicle and driver characteristics. Default:
+  `NULL`.
 
 - order_specialties:
 
@@ -74,9 +70,7 @@ last_mile_delivery(
 - zones:
 
   An `sf` or `sfc` polygon object delineating work territories, each
-  carrying a `name` attribute. Use
-  [`as_lmd_zones()`](http://r.esri.com/arcgisrouting/reference/as_lmd_zones.md)
-  to prepare. Default: `NULL`.
+  carrying a `name` attribute. Default: `NULL`.
 
 - travel_mode:
 
@@ -199,3 +193,131 @@ Call `$start()` to submit and `$results` to retrieve output.
 
 [API
 Reference](https://developers.arcgis.com/rest/routing/last-mile-delivery-service/)
+
+## See also
+
+Other async:
+[`download_od_results()`](http://r.esri.com/arcgisrouting/reference/download_od_results.md),
+[`download_service_area_results()`](http://r.esri.com/arcgisrouting/reference/download_service_area_results.md),
+[`find_closest_facilities_job()`](http://r.esri.com/arcgisrouting/reference/find_closest_facilities_job.md),
+[`find_routes_job()`](http://r.esri.com/arcgisrouting/reference/find_routes_job.md),
+[`location_allocation_job()`](http://r.esri.com/arcgisrouting/reference/location_allocation_job.md),
+[`od_cost_matrix_job()`](http://r.esri.com/arcgisrouting/reference/od_cost_matrix_job.md),
+[`solve_service_areas_job()`](http://r.esri.com/arcgisrouting/reference/solve_service_areas_job.md),
+[`solve_vrp_job()`](http://r.esri.com/arcgisrouting/reference/solve_vrp_job.md)
+
+Other vrp:
+[`route_vehicles()`](http://r.esri.com/arcgisrouting/reference/route_vehicles.md),
+[`solve_vrp_job()`](http://r.esri.com/arcgisrouting/reference/solve_vrp_job.md)
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+library(sf)
+library(arcgisutils)
+set_arc_token(auth_user())
+
+orders <- st_as_sf(
+  data.frame(
+    name = c("Order 1", "Order 2"),
+    service_time = c(5, 5),
+    time_window_start = as.POSIXct(
+      c(NA, 1706860800),
+      origin = "1970-01-01",
+      tz = "UTC"
+    ),
+    time_window_end = as.POSIXct(
+      c(1706868000, 1706868000),
+      origin = "1970-01-01",
+      tz = "UTC"
+    ),
+    max_violation_time = c(0, 30),
+    delivery_quantity_1 = c(2000, 1500),
+    delivery_quantity_2 = c(100, 75),
+    x = c(-117, -117.5),
+    y = c(34, 34.5)
+  ),
+  coords = c("x", "y"),
+  crs = 4326
+)
+
+depots <- st_as_sf(
+  data.frame(name = "Depot 1", x = -117.2, y = 34.2),
+  coords = c("x", "y"),
+  crs = 4326
+)
+
+routes <- data.frame(
+  name = c("Truck 1", "Truck 2"),
+  start_depot_name = c("Depot 1", "Depot 1"),
+  end_depot_name = c("Depot 1", "Depot 1"),
+  earliest_start_time = c("6:00:00", "6:00:00"),
+  capacity_1 = c(40000, 30000),
+  capacity_2 = c(2000, 2500),
+  cost_per_unit_time = c(0.5, 0.5),
+  cost_per_unit_distance = c(1.5, 1.5)
+)
+
+order_specialties <- data.frame(
+  order_name = c("Order 1", "Order 2"),
+  specialty_name = c("Refrigerated", "Hazmat")
+)
+
+route_specialties <- data.frame(
+  route_name = c("Truck 1", "Truck 2"),
+  specialty_name = c("Refrigerated", "Hazmat")
+)
+
+zone1 <- st_polygon(list(rbind(
+  c(-97.0634, 32.8442),
+  c(-97.0554, 32.84),
+  c(-97.0558, 32.8327),
+  c(-97.0638, 32.83),
+  c(-97.0634, 32.8442)
+)))
+
+zone2 <- st_multipolygon(list(
+  list(rbind(
+    c(-97.0803, 32.8235),
+    c(-97.0776, 32.8277),
+    c(-97.074, 32.8254),
+    c(-97.0767, 32.8227),
+    c(-97.0803, 32.8235)
+  )),
+  list(rbind(
+    c(-97.0871, 32.8311),
+    c(-97.0831, 32.8292),
+    c(-97.0853, 32.8259),
+    c(-97.0892, 32.8279),
+    c(-97.0871, 32.8311)
+  ))
+))
+
+zones <- st_cast(
+  st_sf(
+    name = c("Zone 1", "Zone 2"),
+    geometry = st_sfc(zone1, zone2, crs = 4326)
+  ),
+  "MULTIPOLYGON"
+)
+
+job <- last_mile_delivery(
+  orders = orders,
+  depots = depots,
+  routes = routes,
+  order_specialties = order_specialties,
+  route_specialties = route_specialties,
+  zones = zones,
+  earliest_route_start_date = as.Date("2024-02-02"),
+  max_route_total_time = 480,
+  sequence_gap = 3,
+  time_units = "minutes",
+  route_shape = "true_shape_with_measures",
+  populate_directions = TRUE
+)
+
+job$start()
+job$results
+} # }
+```

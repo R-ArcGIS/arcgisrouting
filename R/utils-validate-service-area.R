@@ -1,106 +1,11 @@
-service_area_job <- R6::R6Class(
-  "service_area_job",
-  inherit = arcgisutils::arc_gp_job
-)
-
-# TODO
-# set output format / output type
-#' @export
-service_areas_async <- function(
-  facilities,
-  travel_mode = NULL, #
-  break_values = NULL,
-  break_units = NULL,
-  travel_direction = c("away", "towards"), #
-  time_of_day = NULL, #
-  use_hierarchy = NULL, #
-  u_turns = NULL, #
-  polygons_for_multiple_facilities = c(
-    "overlapping",
-    "not overlapping",
-    "merge"
-  ), # RENAME  #
-  polygon_overlap_type = c("rings", "disks"), # RENAME #
-  polygon_trim_distance = NULL, #
-  polygon_simplification_tolerance = NULL, #
-  polygon_detail = NULL, #
-  impedance = NULL, #
-  time_impedance = NULL, #
-  distance_impedance = NULL, #
-  analysis_region = NULL, #
-  restrictions = NULL, #
-  point_barriers = NULL, #
-  line_barriers = NULL, #
-  polygon_barriers = NULL, #
-  token = arcgisutils::arc_token()
-) {
-  check_bool(use_hierarchy, allow_null = TRUE)
-  travel_mode <- validate_travel_mode(travel_mode, token = token)
-  break_units <- validate_break_units(break_units)
-  break_values <- validate_break_values(break_values)
-  travel_direction <- validate_travel_direction(travel_direction)
-  analysis_region <- validate_analysis_region(analysis_region)
-  u_turns <- validate_u_turns_async(u_turns)
-  restrictions <- validate_restrictions(restrictions)
-  impedance <- validate_impedance_value(impedance)
-  time_impedance <- validate_time_impedance(time_impedance)
-  distance_impedance <- validate_distance_impedance(distance_impedance)
-  time_of_day <- validate_time_of_day(time_of_day)
-  time_zone_for_time_of_day <- validate_tz_for_time_of_day(time_of_day)
-  polygons_for_multiple_facilities <- validate_multiple_facilities(
-    polygons_for_multiple_facilities
-  )
-  polygon_overlap_type <- validate_overlap_type(polygon_overlap_type)
-  polygon_trim_distance <- validate_tolerance(polygon_trim_distance)
-  polygon_simplification_tolerance <- validate_tolerance(
-    polygon_simplification_tolerance
-  )
-  polygon_detail <- validate_detail(polygon_detail)
-
-  point_barriers <- as_point_barriers(point_barriers)
-  line_barriers <- as_polyline_barriers(line_barriers)
-  polygon_barriers <- as_polygon_barriers(polygon_barriers)
-
-  params <- list(
-    facilities = as_od_points(facilities),
-    travel_mode = travel_mode,
-    break_values = break_values,
-    break_units = break_units,
-    travel_direction = travel_direction,
-    time_of_day = time_of_day,
-    time_zone_for_time_of_day = time_zone_for_time_of_day,
-    use_hierarchy = use_hierarchy,
-    uturn_at_junctions = u_turns,
-    polygons_for_multiple_facilities = polygons_for_multiple_facilities,
-    polygon_overlap_type = polygon_overlap_type,
-    polygon_trim_distance = polygon_trim_distance,
-    polygon_simplification_tolerance = polygon_simplification_tolerance,
-    point_barriers = point_barriers,
-    line_barriers = line_barriers,
-    polygon_barriers = polygon_barriers,
-    restrictions = restrictions,
-    impedance = impedance,
-    analysis_region = analysis_region,
-    time_impedance = time_impedance,
-    distance_impedance = distance_impedance,
-    polygon_detail = polygon_detail,
-    output_type = "Polygons",
-    output_format = "JSON File",
-    f = "json"
-  )
-
-  # get service url
-  meta <- arcgisutils::arc_self_meta(token)
-
-  service_area_job$new(meta$helperServices$asyncServiceArea$url, params, token)
-}
-
 validate_travel_direction <- function(
   x,
   error_arg = rlang::caller_arg(x),
   error_call = rlang::caller_call()
 ) {
-  if (is.null(x)) return(NULL)
+  if (is.null(x)) {
+    return(NULL)
+  }
   x <- rlang::arg_match(
     x,
     c("away", "towards"),
@@ -130,7 +35,9 @@ validate_multiple_facilities <- function(
   error_arg = rlang::caller_arg(x),
   error_call = rlang::caller_call()
 ) {
-  if (is.null(x)) return(NULL)
+  if (is.null(x)) {
+    return(NULL)
+  }
   x <- rlang::arg_match(
     x,
     c("overlapping", "not overlapping", "merge"),
@@ -151,7 +58,9 @@ validate_overlap_type <- function(
   error_arg = rlang::caller_arg(x),
   error_call = rlang::caller_call()
 ) {
-  if (is.null(x)) return(NULL)
+  if (is.null(x)) {
+    return(NULL)
+  }
   x <- rlang::arg_match(
     x,
     c("rings", "disks"),

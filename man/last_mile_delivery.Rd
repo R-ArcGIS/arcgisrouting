@@ -36,15 +36,13 @@ last_mile_delivery(
 }
 \arguments{
 \item{orders}{An \code{sf} object containing point geometries representing
-delivery and pickup locations. Use \code{\link[=as_lmd_orders]{as_lmd_orders()}} to prepare with
-validated attributes.}
+delivery and pickup locations.}
 
 \item{depots}{An \code{sf} or \code{sfc} object containing point geometries
-representing depot locations. Prepared with \code{\link[=as_stops]{as_stops()}}.}
+representing depot locations.}
 
 \item{routes}{A \code{data.frame} describing vehicle and driver characteristics.
-Use \code{\link[=as_lmd_routes]{as_lmd_routes()}} to prepare with validated attributes. Default:
-\code{NULL}.}
+Default: \code{NULL}.}
 
 \item{order_specialties}{A \code{data.frame} mapping orders to the specialties
 they require, with columns \code{order_name} and \code{specialty_name}. Default:
@@ -55,8 +53,7 @@ they support, with columns \code{route_name} and \code{specialty_name}. Default:
 \code{NULL}.}
 
 \item{zones}{An \code{sf} or \code{sfc} polygon object delineating work territories,
-each carrying a \code{name} attribute. Use \code{\link[=as_lmd_zones]{as_lmd_zones()}} to prepare. Default:
-\code{NULL}.}
+each carrying a \code{name} attribute. Default: \code{NULL}.}
 
 \item{travel_mode}{Character. The name or ID of the travel mode to use.
 See \code{\link[=get_travel_modes]{get_travel_modes()}} for available options. Default: \code{NULL}.}
@@ -141,6 +138,114 @@ Submits an asynchronous geoprocessing job to solve a last-mile delivery
 problem using the ArcGIS \verb{/SolveLastMileDelivery} GP service. Last Mile
 Delivery is a specialized vehicle routing problem that creates
 geographically clustered delivery routes to minimize fleet operating costs.
+}
+\examples{
+\dontrun{
+library(sf)
+
+orders <- st_as_sf(
+  data.frame(
+    name = c("Order 1", "Order 2"),
+    service_time = c(5, 5),
+    time_window_start = as.POSIXct(
+      c(NA, 1706860800),
+      origin = "1970-01-01",
+      tz = "UTC"
+    ),
+    time_window_end = as.POSIXct(
+      c(1706868000, 1706868000),
+      origin = "1970-01-01",
+      tz = "UTC"
+    ),
+    max_violation_time = c(0, 30),
+    delivery_quantity_1 = c(2000, 1500),
+    delivery_quantity_2 = c(100, 75),
+    x = c(-117, -117.5),
+    y = c(34, 34.5)
+  ),
+  coords = c("x", "y"),
+  crs = 4326
+)
+
+depots <- st_as_sf(
+  data.frame(name = "Depot 1", x = -117.2, y = 34.2),
+  coords = c("x", "y"),
+  crs = 4326
+)
+
+routes <- data.frame(
+  name = c("Truck 1", "Truck 2"),
+  start_depot_name = c("Depot 1", "Depot 1"),
+  end_depot_name = c("Depot 1", "Depot 1"),
+  earliest_start_time = c("6:00:00", "6:00:00"),
+  capacity_1 = c(40000, 30000),
+  capacity_2 = c(2000, 2500),
+  cost_per_unit_time = c(0.5, 0.5),
+  cost_per_unit_distance = c(1.5, 1.5)
+)
+
+order_specialties <- data.frame(
+  order_name = c("Order 1", "Order 2"),
+  specialty_name = c("Refrigerated", "Hazmat")
+)
+
+route_specialties <- data.frame(
+  route_name = c("Truck 1", "Truck 2"),
+  specialty_name = c("Refrigerated", "Hazmat")
+)
+
+zone1 <- st_polygon(list(rbind(
+  c(-97.0634, 32.8442),
+  c(-97.0554, 32.84),
+  c(-97.0558, 32.8327),
+  c(-97.0638, 32.83),
+  c(-97.0634, 32.8442)
+)))
+
+zone2 <- st_multipolygon(list(
+  list(rbind(
+    c(-97.0803, 32.8235),
+    c(-97.0776, 32.8277),
+    c(-97.074, 32.8254),
+    c(-97.0767, 32.8227),
+    c(-97.0803, 32.8235)
+  )),
+  list(rbind(
+    c(-97.0871, 32.8311),
+    c(-97.0831, 32.8292),
+    c(-97.0853, 32.8259),
+    c(-97.0892, 32.8279),
+    c(-97.0871, 32.8311)
+  ))
+))
+
+zones <- st_cast(
+  st_sf(
+    name = c("Zone 1", "Zone 2"),
+    geometry = st_sfc(zone1, zone2, crs = 4326)
+  ),
+  "MULTIPOLYGON"
+)
+
+job <- last_mile_delivery(
+  orders = orders,
+  depots = depots,
+  routes = routes,
+  order_specialties = order_specialties,
+  route_specialties = route_specialties,
+  zones = zones,
+  earliest_route_start_date = as.Date("2024-02-02"),
+  max_route_total_time = 480,
+  sequence_gap = 3,
+  time_units = "minutes",
+  route_shape = "true_shape_with_measures",
+  populate_directions = TRUE
+)
+
+job$start()
+job$results
+}
+
 }
 \references{
 \href{https://developers.arcgis.com/rest/routing/last-mile-delivery-service/}{API Reference}

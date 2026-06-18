@@ -49,8 +49,7 @@ route_vehicles(
 
 \item{depots}{an \code{sf} or \code{sfc} object containing point geometries representing depot locations.}
 
-\item{routes}{default \code{NULL}. A \code{data.frame} describing vehicle and driver characteristics.
-Use \code{\link[=as_routes]{as_routes()}} to prepare with validated attributes.}
+\item{routes}{default \code{NULL}. A \code{data.frame} describing vehicle and driver characteristics.}
 
 \item{travel_mode}{Character. The name of the travel mode to use. See
 \code{\link[=get_travel_modes]{get_travel_modes()}} for available options. Default: \code{NULL}.}

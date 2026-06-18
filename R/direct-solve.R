@@ -10,7 +10,7 @@
 #' Finds the best routes between multiple stops using the ArcGIS routing service.
 #'
 #' @param stops An `sf` or `sfc` object containing point geometries representing
-#'   the stops to visit. Use [as_stops()] to prepare stops with attributes.
+#'   the stops to visit.
 #' @param travel_mode Character. The name of the travel mode to use. See
 #'   [get_travel_modes()] for available options. Default: `NULL`.
 #' @param start_time POSIXct or character. The time at which travel begins.

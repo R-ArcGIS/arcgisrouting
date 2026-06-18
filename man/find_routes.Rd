@@ -28,7 +28,7 @@ find_routes(
 }
 \arguments{
 \item{stops}{An \code{sf} or \code{sfc} object containing point geometries representing
-the stops to visit. Use \code{\link[=as_stops]{as_stops()}} to prepare stops with attributes.}
+the stops to visit.}
 
 \item{travel_mode}{Character. The name of the travel mode to use. See
 \code{\link[=get_travel_modes]{get_travel_modes()}} for available options. Default: \code{NULL}.}

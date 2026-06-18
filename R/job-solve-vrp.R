@@ -13,7 +13,7 @@
 #' @param depots An `sf` or `sfc` object containing point geometries
 #'   representing depot locations.
 #' @param routes A `data.frame` describing vehicle and driver characteristics.
-#'   Use [as_routes()] to prepare with validated attributes. Default: `NULL`.
+#'   Default: `NULL`.
 #' @param breaks A `data.frame` of rest period definitions for routes.
 #'   Default: `NULL`.
 #' @param time_units Character. Units for all time-based attribute values. One

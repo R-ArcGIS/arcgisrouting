@@ -51,7 +51,7 @@ representing locations to visit.}
 representing depot locations.}
 
 \item{routes}{A \code{data.frame} describing vehicle and driver characteristics.
-Use \code{\link[=as_routes]{as_routes()}} to prepare with validated attributes. Default: \code{NULL}.}
+Default: \code{NULL}.}
 
 \item{breaks}{A \code{data.frame} of rest period definitions for routes.
 Default: \code{NULL}.}

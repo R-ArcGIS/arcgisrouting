@@ -6,7 +6,6 @@
 #' @param orders an `sf` or `sfc` object containing point geometries representing locations to visit.
 #' @param depots an `sf` or `sfc` object containing point geometries representing depot locations.
 #' @param routes default `NULL`. A `data.frame` describing vehicle and driver characteristics.
-#'   Use [as_routes()] to prepare with validated attributes.
 #' @param locate_settings default `NULL`. A list controlling how inputs are located on the network.
 #' @param analysis_region default `NULL`. A scalar character. One of `"europe"`, `"japan"`,
 #'   `"korea"`, `"middle_east_and_africa"`, `"north_america"`, `"south_america"`,

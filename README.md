@@ -24,8 +24,8 @@ An interface to the ArcGIS Routing Service.
 - ✅ `/FindRoutes`
 - ✅ `/GenerateServiceAreas`
 - ✅ `/SolveVehicleRoutingProblem`
-- `/SolveLastMileDelivery`
-- `/FindClosestFacilities`
+- ✅ `/SolveLastMileDelivery`
+- ✅ `/FindClosestFacilities`
 - `/SolveLocationAllocation`
 - `/GenerateOriginDestinationCostMatrix`
 

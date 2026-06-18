@@ -337,16 +337,7 @@ validate_allocation_line_shape <- function(
 
 #' Convert spatial objects to facilities or demand points
 #'
-#' Prepares `sf` or `sfc` point geometries as facilities or demand points for
-#' [location_allocation_job()], recognizing snake_case attribute columns and
-#' validating their types before serializing to an Esri feature set.
-#'
-#' @param x An `sf` or `sfc` object containing point geometries.
-#' @param verbose Logical. Whether to message which recognized attributes are
-#'   used. Default: `TRUE`.
-#' @param ... Additional arguments passed to methods.
-#' @name as_la_locations
-#' @keywords internal
+#' @noRd
 #' @export
 as_la_facilities <- function(x, ...) {
   UseMethod("as_la_facilities")
@@ -377,7 +368,7 @@ as_la_facilities.sf <- function(x, verbose = TRUE, ...) {
   as_la_featureset(x, lu, verbose, as_la_facilities)
 }
 
-#' @rdname as_la_locations
+#' @noRd
 #' @export
 as_demand_points <- function(x, ...) {
   UseMethod("as_demand_points")

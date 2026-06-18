@@ -281,7 +281,7 @@ is_utc <- function(x, arg = rlang::caller_arg(x)) {
 
 validate_u_turns <- function(
   x,
-  error_arg = rlang::caller_arg(),
+  error_arg = rlang::caller_arg(x),
   error_call = rlang::caller_call()
 ) {
   if (is.null(x)) {
@@ -387,14 +387,3 @@ validate_restrictions <- function(
     unname(lu[restrictions])
   }
 }
-
-
-#' @export
-st_count <- function(x) {
-  UseMethod("st_count")
-}
-
-#' @export
-st_count.sf <- function(x) nrow(x)
-#' @export
-st_count.sfc <- function(x) length(x)

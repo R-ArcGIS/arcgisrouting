@@ -70,11 +70,11 @@ find_service_areas <- function(
 ) {
   obj_check_token(token)
 
-  if (st_count(facilities) > 100) {
+  if (vctrs::vec_size(facilities) > 100) {
     cli::cli_abort("The maximum number of facilities is 100.")
   }
 
-  if (!is.null(point_barriers) && st_count(point_barriers) > 250) {
+  if (!is.null(point_barriers) && vctrs::vec_size(point_barriers) > 250) {
     cli::cli_abort("The maximum number of point barriers is 250.")
   }
 

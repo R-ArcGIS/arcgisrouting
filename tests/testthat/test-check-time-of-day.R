@@ -1,11 +1,11 @@
 test_that("time of day checks", {
-  expect_no_error(check_time_of_day(NULL))
-  expect_no_error(check_time_of_day(Sys.time()))
+  expect_no_error(validate_time_of_day(NULL))
+  expect_no_error(validate_time_of_day(Sys.time()))
 
   # these are invalid
-  expect_error(check_time_of_day(rep(Sys.time(), 2)))
-  expect_error(check_time_of_day("3245"))
-  expect_error(check_time_of_day(list()))
+  expect_error(validate_time_of_day(rep(Sys.time(), 2)))
+  expect_error(validate_time_of_day("3245"))
+  expect_error(validate_time_of_day(list()))
 })
 
 test_that("validate u turn arguments", {

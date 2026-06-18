@@ -25,6 +25,8 @@ Depends:
 Suggests:
     readr,
     heck,
+    brio,
+    wk,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 URL: http://r.esri.com/arcgisrouting/, https://github.com/r-arcgis/arcgisrouting

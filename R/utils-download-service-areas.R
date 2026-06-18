@@ -14,6 +14,7 @@
 #' @export
 download_service_area_results <- function(job) {
   rlang::check_installed("heck")
+  rlang::check_installed("brio")
 
   # check that the object is an esri job
   if (!inherits(job, "service_area_job")) {

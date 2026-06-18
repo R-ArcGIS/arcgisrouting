@@ -8,3 +8,6 @@ dev/
 ^pkgdown$
 ^\.github$
 .claude/
+README.qmd
+README.md
+justfile

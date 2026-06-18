@@ -36,7 +36,7 @@ check_od_points <- function(x, error_call = rlang::caller_call()) {
     cli::cli_abort(c("!" = "`crs` is not set. Please set the crs."))
   }
 
-  if (st_count(x) > 1000L) {
+  if (vctrs::vec_size(x) > 1000L) {
     cli::cli_abort(
       c(
         "The maximum number of points supported is {.val {1000L}}",

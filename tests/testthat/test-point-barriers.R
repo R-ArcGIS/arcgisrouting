@@ -7,7 +7,7 @@ test_that("multiplication works", {
     sf::st_as_sf() 
 
   # single column sf should dispatch to sfc
-  expect_no_errors(as_point_barriers(sf::st_as_sf(x)))
+  expect_no_error(as_point_barriers(sf::st_as_sf(x)))
 
   # add impedance 
   x[["travel_time"]] <- rnorm(10)

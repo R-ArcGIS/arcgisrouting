@@ -269,14 +269,7 @@ validate_cf_time_of_day_usage <- function(
 }
 
 
-#' Convert spatial objects to incidents or facilities for closest facility
-#'
-#' @param x An `sf` or `sfc` object containing point geometries.
-#' @param verbose Logical. Whether to message which recognized attributes are
-#'   used. Default: `TRUE`.
-#' @param ... Additional arguments passed to methods.
-#' @name as_cf_locations
-#' @keywords internal
+#' @noRd
 #' @export
 as_incidents <- function(x, ...) {
   UseMethod("as_incidents")
@@ -333,7 +326,7 @@ as_incidents.sf <- function(x, verbose = TRUE, ...) {
   as_cf_featureset(x, lu, verbose, as_incidents)
 }
 
-#' @rdname as_cf_locations
+#' @noRd
 #' @export
 as_facilities <- function(x, ...) {
   UseMethod("as_facilities")

@@ -61,13 +61,10 @@ as_od_points.sf <- function(x, verbose = TRUE, ...) {
     "curb_approach" = "CurbApproach"
   )
 
-  # valid columns
-  common_cols <- intersect(
-    names(od_point_colname_lu),
-    colnames(x)
-  )
-
+  # valid columns. derive both from the same source so the column order used to
+  # subset matches the order used to rename
   common_lu_vals <- na.omit(od_point_colname_lu[colnames(x)])
+  common_cols <- names(common_lu_vals)
   n_common <- length(common_lu_vals)
 
   # inform
@@ -138,7 +135,7 @@ as_od_points.sf <- function(x, verbose = TRUE, ...) {
 
   # subset and reorder and rename
   x <- x[common_cols]
-  colnames(x) <- c(na.omit(common_lu_vals), "geometry")
+  colnames(x) <- c(unname(common_lu_vals), "geometry")
   sf::st_geometry(x) <- "geometry"
   arcgisutils::as_esri_featureset(x)
 }

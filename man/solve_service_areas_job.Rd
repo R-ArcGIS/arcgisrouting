@@ -138,6 +138,8 @@ facilities using the ArcGIS \verb{/GenerateServiceAreas} GP service.
 \examples{
 \dontrun{
 library(sf)
+library(arcgisutils)
+set_arc_token(auth_user())
 
 facilities <- st_sfc(
   st_point(c(-122.4194, 37.7749)),
@@ -154,3 +156,20 @@ result <- job$results
 \references{
 \href{https://developers.arcgis.com/rest/routing/serviceArea-service-job/}{API Reference}
 }
+\seealso{
+Other async: 
+\code{\link{download_od_results}()},
+\code{\link{download_service_area_results}()},
+\code{\link{find_closest_facilities_job}()},
+\code{\link{find_routes_job}()},
+\code{\link{last_mile_delivery}()},
+\code{\link{location_allocation_job}()},
+\code{\link{od_cost_matrix_job}()},
+\code{\link{solve_vrp_job}()}
+
+Other service area: 
+\code{\link{download_service_area_results}()},
+\code{\link{find_service_areas}()}
+}
+\concept{async}
+\concept{service area}

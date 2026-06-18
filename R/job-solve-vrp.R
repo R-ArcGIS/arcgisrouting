@@ -73,6 +73,8 @@
 #' @examples
 #' \dontrun{
 #' library(sf)
+#' library(arcgisutils)
+#' set_arc_token(auth_user())
 #'
 #' orders <- st_sf(
 #'   name = c("Order 1", "Order 2"),
@@ -93,6 +95,8 @@
 #' result <- job$results
 #' }
 #'
+#' @family async
+#' @family vrp
 #' @export
 #' @references [API Reference](https://developers.arcgis.com/rest/routing/vrp-service-job/)
 solve_vrp_job <- function(

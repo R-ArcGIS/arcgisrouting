@@ -12,6 +12,8 @@ What the package does (one paragraph).
 Useful links:
 \itemize{
   \item \url{http://r.esri.com/arcgisrouting/}
+  \item \url{https://github.com/r-arcgis/arcgisrouting}
+  \item Report bugs at \url{https://github.com/r-arcgis/arcgisrouting/issues}
 }
 
 }

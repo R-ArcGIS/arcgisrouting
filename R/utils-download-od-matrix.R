@@ -1,4 +1,20 @@
+#' Download Origin-Destination Cost Matrix Results
+#'
+#' Downloads and unzips the result file produced by a completed
+#' origin-destination cost matrix geoprocessing job, reading each CSV output
+#' into a named list of data frames with snake_case column names.
+#'
+#' @param job A completed origin-destination cost matrix job object.
+#'
+#' @returns A named list of data frames, one per CSV output, with snake_case
+#'   names derived from the output file names.
+#'
+#' @family async
+#' @family od
+#' @export
 download_od_results <- function(job) {
+  rlang::check_installed(c("readr", "heck"))
+
   # check that the object is an esri job
   if (!inherits(job, "gp_job")) {
     cli::cli_abort("Expected {.cls gp_job} found {obj_type_friendly(job)}.")

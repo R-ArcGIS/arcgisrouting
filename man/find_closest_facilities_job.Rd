@@ -154,6 +154,8 @@ ArcGIS \verb{/FindClosestFacilities} GP service.
 \examples{
 \dontrun{
 library(sf)
+library(arcgisutils)
+set_arc_token(auth_user())
 
 incidents <- st_sfc(st_point(c(-122.4496, 37.7467)), crs = 4326)
 
@@ -185,3 +187,19 @@ result <- job$results
 \references{
 \href{https://developers.arcgis.com/rest/routing/find-closest-facilities/}{API Reference}
 }
+\seealso{
+Other async: 
+\code{\link{download_od_results}()},
+\code{\link{download_service_area_results}()},
+\code{\link{find_routes_job}()},
+\code{\link{last_mile_delivery}()},
+\code{\link{location_allocation_job}()},
+\code{\link{od_cost_matrix_job}()},
+\code{\link{solve_service_areas_job}()},
+\code{\link{solve_vrp_job}()}
+
+Other closest facility: 
+\code{\link{find_closest_facility}()}
+}
+\concept{async}
+\concept{closest facility}

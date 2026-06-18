@@ -126,11 +126,13 @@ Finds one or more nearby facilities from incidents based on travel time or dista
 \examples{
 \dontrun{
 library(sf)
+library(arcgisutils)
+set_arc_token(auth_user())
 
 incidents <- st_sfc(st_point(c(-122.4496, 37.7467)), crs = 4326)
 
 facilities <- st_sf(
-  Name = c("Station 11", "Station 20", "Station 24", "Station 39"),
+  name = c("Station 11", "Station 20", "Station 24", "Station 39"),
   geometry = st_sfc(
     st_point(c(-122.4267, 37.7486)),
     st_point(c(-122.4561, 37.7513)),
@@ -158,3 +160,16 @@ result
 \references{
 \href{https://developers.arcgis.com/rest/routing/closest-facility-service-direct/}{API Reference}
 }
+\seealso{
+Other direct: 
+\code{\link{find_routes}()},
+\code{\link{find_service_areas}()},
+\code{\link{route_vehicles}()},
+\code{\link{snap_to_roads}()},
+\code{\link{travel_cost_matrix}()}
+
+Other closest facility: 
+\code{\link{find_closest_facilities_job}()}
+}
+\concept{closest facility}
+\concept{direct}

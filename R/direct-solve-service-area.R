@@ -26,11 +26,15 @@
 #' @examples
 #' \dontrun{
 #' library(sf)
+#' library(arcgisutils)
+#' set_arc_token(auth_user())
 #'
 #' facility <- st_sfc(st_point(c(-122.253, 37.757)), crs = 4326)
 #' find_service_areas(facility)
 #' }
 #'
+#' @family direct
+#' @family service area
 #' @export
 #' @references [API Reference](https://developers.arcgis.com/rest/routing/service-area-service-direct/)
 find_service_areas <- function(

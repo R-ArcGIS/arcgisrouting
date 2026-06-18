@@ -6,6 +6,18 @@
 \usage{
 get_travel_modes(token = arc_token())
 }
-\description{
-Get available travel modes
+\arguments{
+\item{token}{Authorization token. Default: \code{\link[arcgisutils:token]{arcgisutils::arc_token()}}.}
 }
+\value{
+A character vector of supported travel mode names.
+}
+\description{
+Returns the names of the travel modes supported by the routing services
+associated with the provided token.
+}
+\seealso{
+Other travel modes: 
+\code{\link{retrieve_travel_modes}()}
+}
+\concept{travel modes}

@@ -4,7 +4,17 @@
 
 #' Retrieve Available Travel Modes
 #'
-.retrieve_travel_modes <- function(
+#' Retrieves the travel modes supported by the routing services associated with
+#' the provided token.
+#'
+#' @inheritParams find_routes
+#'
+#' @returns A list describing the supported travel modes, including a
+#'   `supportedTravelModes` data frame.
+#'
+#' @family travel modes
+#' @export
+retrieve_travel_modes <- function(
   token = arcgisutils::arc_token(),
   error_call = rlang::caller_call()
 ) {
@@ -59,5 +69,3 @@
   travel_modes
 }
 
-#' @export
-retrieve_travel_modes <- memoise::memoise(.retrieve_travel_modes)

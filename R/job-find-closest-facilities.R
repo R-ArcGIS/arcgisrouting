@@ -41,6 +41,8 @@
 #' @examples
 #' \dontrun{
 #' library(sf)
+#' library(arcgisutils)
+#' set_arc_token(auth_user())
 #'
 #' incidents <- st_sfc(st_point(c(-122.4496, 37.7467)), crs = 4326)
 #'
@@ -68,6 +70,8 @@
 #' result <- job$results
 #' }
 #'
+#' @family async
+#' @family closest facility
 #' @export
 #' @references [API Reference](https://developers.arcgis.com/rest/routing/find-closest-facilities/)
 find_closest_facilities_job <- function(

@@ -52,6 +52,8 @@
 #' @examples
 #' \dontrun{
 #' library(sf)
+#' library(arcgisutils)
+#' set_arc_token(auth_user())
 #'
 #' orders <- st_as_sf(
 #'   data.frame(
@@ -156,6 +158,8 @@
 #' job$results
 #' }
 #'
+#' @family async
+#' @family vrp
 #' @export
 #' @references [API Reference](https://developers.arcgis.com/rest/routing/last-mile-delivery-service/)
 last_mile_delivery <- function(

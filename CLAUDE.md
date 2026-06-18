@@ -43,6 +43,8 @@
 
 **Spatial vs tabular inputs**: use `sf`/`sfc` whenever geometry is involved. Use plain `data.frame` for attribute-only tables. Both get a dedicated `as_*()` converter using `UseMethod` dispatch — recognizing snake_case column names, validating types, renaming to API names, serializing via `arcgisutils::as_esri_featureset()`.
 
+**Type-converter functions (`as_*()`) are STRICTLY INTERNAL.** Never mention them in documentation, `@param` descriptions, examples, or `@seealso` for the user-facing endpoint functions. They are called internally by the endpoint functions; instructing users to call them themselves (e.g. "Use `as_stops()` to prepare stops") produces broken code, because the endpoint already runs the conversion. Document the raw `sf`/`sfc`/`data.frame` input and the recognized snake_case columns directly instead.
+
 ## Async GP job URL construction
 
 The `helperServices` URL for each endpoint varies — some point to the GP server root, others point directly to the task:

@@ -1,5 +1,20 @@
+#' Download Service Area Results
+#'
+#' Downloads and unzips the result file produced by a completed service area
+#' geoprocessing job, parsing each JSON output into a named list of data frames
+#' with snake_case column names.
+#'
+#' @param job A completed service area job object.
+#'
+#' @returns A named list of data frames, one per JSON output, with snake_case
+#'   names derived from the output file names.
+#'
+#' @family async
+#' @family service area
 #' @export
 download_service_area_results <- function(job) {
+  rlang::check_installed("heck")
+
   # check that the object is an esri job
   if (!inherits(job, "service_area_job")) {
     cli::cli_abort(

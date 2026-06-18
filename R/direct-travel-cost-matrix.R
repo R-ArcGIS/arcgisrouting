@@ -22,6 +22,8 @@
 #' @examples
 #' \dontrun{
 #' library(sf)
+#' library(arcgisutils)
+#' set_arc_token(auth_user())
 #'
 #' origins <- st_sfc(
 #'   st_point(c(-122.4194, 37.7749)),
@@ -44,6 +46,8 @@
 #' result
 #' }
 #'
+#' @family direct
+#' @family od
 #' @export
 #' @references [API Reference](https://developers.arcgis.com/rest/routing/od-cost-matrix-synchronous-service/)
 travel_cost_matrix <- function(

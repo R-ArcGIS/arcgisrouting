@@ -8,9 +8,9 @@
 #' Submits an asynchronous geoprocessing job to find the best routes between
 #' stops using the ArcGIS `/FindRoutes` GP service.
 #'
-#' @param stops An `sf` or `sfc` object containing point geometries. Use
-#'   [as_stops()] to prepare stops with attributes such as `route_name`,
-#'   `time_window_start`, and `time_window_end`.
+#' @param stops An `sf` or `sfc` object containing point geometries.
+#'   Recognized attribute columns such as `route_name`, `time_window_start`,
+#'   and `time_window_end` are used when present.
 #' @param travel_mode Character. The name or ID of the travel mode to use.
 #'   See [get_travel_modes()] for available options. Default: `NULL`.
 #' @param measurement_units Character. Units for reporting total travel time or
@@ -75,12 +75,14 @@
 #' @param token Authorization token. Default: [arcgisutils::arc_token()].
 #'
 #' @returns A `find_routes_job` R6 object inheriting from
-#'   `arcgisutils::arc_gp_job`. Call `$run()` to execute and `$result()` to
+#'   `arcgisutils::arc_gp_job`. Call `$start()` to submit and `$results` to
 #'   retrieve output.
 #'
 #' @examples
 #' \dontrun{
 #' library(sf)
+#' library(arcgisutils)
+#' set_arc_token(auth_user())
 #'
 #' stops <- st_sf(
 #'   name = c("Stop 1", "Stop 2", "Stop 3"),
@@ -97,6 +99,8 @@
 #' result <- job$results
 #' }
 #'
+#' @family async
+#' @family routing
 #' @export
 #' @references [API Reference](https://developers.arcgis.com/rest/routing/find-routes/)
 find_routes_job <- function(

@@ -154,7 +154,9 @@ facilities and allocating demand points to them, using the ArcGIS
 \examples{
 \dontrun{
 library(sf)
+library(arcgisutils)
 set_arc_token(auth_user())
+
 facilities <- st_sf(
   name = c("Facility A", "Facility B"),
   facility_type = c(0L, 0L),
@@ -189,3 +191,16 @@ result <- job$results
 \references{
 \href{https://developers.arcgis.com/rest/routing/solve-location-allocation/}{API Reference}
 }
+\seealso{
+Other async: 
+\code{\link{download_od_results}()},
+\code{\link{download_service_area_results}()},
+\code{\link{find_closest_facilities_job}()},
+\code{\link{find_routes_job}()},
+\code{\link{last_mile_delivery}()},
+\code{\link{od_cost_matrix_job}()},
+\code{\link{solve_service_areas_job}()},
+\code{\link{solve_vrp_job}()}
+}
+\concept{async}
+\concept{location-allocation}

@@ -96,6 +96,8 @@ Solve Service Area
 \examples{
 \dontrun{
 library(sf)
+library(arcgisutils)
+set_arc_token(auth_user())
 
 facility <- st_sfc(st_point(c(-122.253, 37.757)), crs = 4326)
 find_service_areas(facility)
@@ -105,3 +107,17 @@ find_service_areas(facility)
 \references{
 \href{https://developers.arcgis.com/rest/routing/service-area-service-direct/}{API Reference}
 }
+\seealso{
+Other direct: 
+\code{\link{find_closest_facility}()},
+\code{\link{find_routes}()},
+\code{\link{route_vehicles}()},
+\code{\link{snap_to_roads}()},
+\code{\link{travel_cost_matrix}()}
+
+Other service area: 
+\code{\link{download_service_area_results}()},
+\code{\link{solve_service_areas_job}()}
+}
+\concept{direct}
+\concept{service area}

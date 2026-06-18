@@ -78,6 +78,8 @@
 #' @examples
 #' \dontrun{
 #' library(sf)
+#' library(arcgisutils)
+#' set_arc_token(auth_user())
 #'
 #' orders <- st_sf(
 #'   name = c("Order 1", "Order 2"),
@@ -103,6 +105,8 @@
 #' result <- route_vehicles(orders, depots, routes)
 #' }
 #'
+#' @family direct
+#' @family vrp
 #' @export
 #' @references [API Reference](https://developers.arcgis.com/rest/routing/vehicle-routing-problem-service-direct/)
 route_vehicles <- function(
@@ -264,10 +268,12 @@ as_route_zones <- function(x, ...) {
   UseMethod("as_route_zones")
 }
 
+#' @exportS3Method arcgisrouting::as_route_zones
 as_route_zones.NULL <- function(x, ...) {
   NULL
 }
 
+#' @exportS3Method arcgisrouting::as_route_zones
 as_route_zones.sfc <- function(x, ...) {
   if (!inherits(x, c("sfc_POLYGON", "sfc_MULTIPOLYGON"))) {
     cli::cli_abort(
@@ -280,6 +286,7 @@ as_route_zones.sfc <- function(x, ...) {
   arcgisutils::as_esri_features(x)
 }
 
+#' @exportS3Method arcgisrouting::as_route_zones
 as_route_zones.sf <- function(x, ...) {
   geom <- sf::st_geometry(x)
   if (!inherits(geom, c("sfc_POLYGON", "sfc_MULTIPOLYGON"))) {

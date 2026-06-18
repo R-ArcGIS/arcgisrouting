@@ -55,7 +55,9 @@
 #' @examples
 #' \dontrun{
 #' library(sf)
+#' library(arcgisutils)
 #' set_arc_token(auth_user())
+#'
 #' facilities <- st_sf(
 #'   name = c("Facility A", "Facility B"),
 #'   facility_type = c(0L, 0L),
@@ -86,6 +88,8 @@
 #' result <- job$results
 #' }
 #'
+#' @family async
+#' @family location-allocation
 #' @export
 #' @references [API Reference](https://developers.arcgis.com/rest/routing/solve-location-allocation/)
 location_allocation_job <- function(

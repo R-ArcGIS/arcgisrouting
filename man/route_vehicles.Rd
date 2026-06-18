@@ -165,6 +165,8 @@ for a fleet of vehicles visiting a set of orders.
 \examples{
 \dontrun{
 library(sf)
+library(arcgisutils)
+set_arc_token(auth_user())
 
 orders <- st_sf(
   name = c("Order 1", "Order 2"),
@@ -194,3 +196,17 @@ result <- route_vehicles(orders, depots, routes)
 \references{
 \href{https://developers.arcgis.com/rest/routing/vehicle-routing-problem-service-direct/}{API Reference}
 }
+\seealso{
+Other direct: 
+\code{\link{find_closest_facility}()},
+\code{\link{find_routes}()},
+\code{\link{find_service_areas}()},
+\code{\link{snap_to_roads}()},
+\code{\link{travel_cost_matrix}()}
+
+Other vrp: 
+\code{\link{last_mile_delivery}()},
+\code{\link{solve_vrp_job}()}
+}
+\concept{direct}
+\concept{vrp}

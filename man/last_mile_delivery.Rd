@@ -142,6 +142,8 @@ geographically clustered delivery routes to minimize fleet operating costs.
 \examples{
 \dontrun{
 library(sf)
+library(arcgisutils)
+set_arc_token(auth_user())
 
 orders <- st_as_sf(
   data.frame(
@@ -250,3 +252,20 @@ job$results
 \references{
 \href{https://developers.arcgis.com/rest/routing/last-mile-delivery-service/}{API Reference}
 }
+\seealso{
+Other async: 
+\code{\link{download_od_results}()},
+\code{\link{download_service_area_results}()},
+\code{\link{find_closest_facilities_job}()},
+\code{\link{find_routes_job}()},
+\code{\link{location_allocation_job}()},
+\code{\link{od_cost_matrix_job}()},
+\code{\link{solve_service_areas_job}()},
+\code{\link{solve_vrp_job}()}
+
+Other vrp: 
+\code{\link{route_vehicles}()},
+\code{\link{solve_vrp_job}()}
+}
+\concept{async}
+\concept{vrp}

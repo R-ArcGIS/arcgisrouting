@@ -174,6 +174,8 @@ using the ArcGIS \verb{/SolveVehicleRoutingProblem} GP service.
 \examples{
 \dontrun{
 library(sf)
+library(arcgisutils)
+set_arc_token(auth_user())
 
 orders <- st_sf(
   name = c("Order 1", "Order 2"),
@@ -198,3 +200,20 @@ result <- job$results
 \references{
 \href{https://developers.arcgis.com/rest/routing/vrp-service-job/}{API Reference}
 }
+\seealso{
+Other async: 
+\code{\link{download_od_results}()},
+\code{\link{download_service_area_results}()},
+\code{\link{find_closest_facilities_job}()},
+\code{\link{find_routes_job}()},
+\code{\link{last_mile_delivery}()},
+\code{\link{location_allocation_job}()},
+\code{\link{od_cost_matrix_job}()},
+\code{\link{solve_service_areas_job}()}
+
+Other vrp: 
+\code{\link{last_mile_delivery}()},
+\code{\link{route_vehicles}()}
+}
+\concept{async}
+\concept{vrp}

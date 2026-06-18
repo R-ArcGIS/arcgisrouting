@@ -59,18 +59,23 @@
 }
 
 
-.get_travel_modes <- function(token = arc_token()) {
+#' Get available travel modes
+#'
+#' Returns the names of the travel modes supported by the routing services
+#' associated with the provided token.
+#'
+#' @inheritParams find_routes
+#'
+#' @returns A character vector of supported travel mode names.
+#'
+#' @family travel modes
+#' @export
+get_travel_modes <- function(token = arc_token()) {
   modes <- retrieve_travel_modes(token, rlang::caller_call())
   modes[["supportedTravelModes"]][["name"]]
 }
 
 
-#' Get available travel modes
-#' @export
-get_travel_modes <- memoise::memoise(.get_travel_modes)
-
-
-# validate_travel_mode <- memoise::memoise(.validate_travel_mode)
 validate_travel_mode <- .validate_travel_mode
 
 names_swap <- function(x, error_call = rlang::caller_call()) {

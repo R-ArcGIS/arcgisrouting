@@ -121,6 +121,8 @@ Finds the best routes between multiple stops using the ArcGIS routing service.
 \examples{
 \dontrun{
 library(sf)
+library(arcgisutils)
+set_arc_token(auth_user())
 
 # Simple route between 3 stops
 stops <- st_sf(
@@ -208,3 +210,16 @@ multi_impedance_route <- find_routes(
 \references{
 \href{https://developers.arcgis.com/rest/routing/route-service-direct/}{API Reference}
 }
+\seealso{
+Other direct: 
+\code{\link{find_closest_facility}()},
+\code{\link{find_service_areas}()},
+\code{\link{route_vehicles}()},
+\code{\link{snap_to_roads}()},
+\code{\link{travel_cost_matrix}()}
+
+Other routing: 
+\code{\link{find_routes_job}()}
+}
+\concept{direct}
+\concept{routing}

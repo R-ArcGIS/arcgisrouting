@@ -13,18 +13,19 @@ RoxygenNote: 7.3.3
 Imports: 
     arcgisutils,
     cli,
-    heck,
     httr2,
     sf,
-    readr,
     yyjsonr,
     S7,
     R6,
-    memoise,
-    vctrs
-Depends: 
+    vctrs,
+    hms
+Depends:
     R (>= 4.3)
-Suggests: 
+Suggests:
+    readr,
+    heck,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-URL: http://r.esri.com/arcgisrouting/
+URL: http://r.esri.com/arcgisrouting/, https://github.com/r-arcgis/arcgisrouting
+BugReports: https://github.com/r-arcgis/arcgisrouting/issues

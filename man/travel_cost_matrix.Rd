@@ -71,6 +71,8 @@ Creates an origin-destination cost matrix containing the travel cost between eve
 \examples{
 \dontrun{
 library(sf)
+library(arcgisutils)
+set_arc_token(auth_user())
 
 origins <- st_sfc(
   st_point(c(-122.4194, 37.7749)),
@@ -97,3 +99,17 @@ result
 \references{
 \href{https://developers.arcgis.com/rest/routing/od-cost-matrix-synchronous-service/}{API Reference}
 }
+\seealso{
+Other direct: 
+\code{\link{find_closest_facility}()},
+\code{\link{find_routes}()},
+\code{\link{find_service_areas}()},
+\code{\link{route_vehicles}()},
+\code{\link{snap_to_roads}()}
+
+Other od: 
+\code{\link{download_od_results}()},
+\code{\link{od_cost_matrix_job}()}
+}
+\concept{direct}
+\concept{od}

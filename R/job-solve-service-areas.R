@@ -53,6 +53,8 @@
 #' @examples
 #' \dontrun{
 #' library(sf)
+#' library(arcgisutils)
+#' set_arc_token(auth_user())
 #'
 #' facilities <- st_sfc(
 #'   st_point(c(-122.4194, 37.7749)),
@@ -65,6 +67,8 @@
 #' result <- job$results
 #' }
 #'
+#' @family async
+#' @family service area
 #' @export
 #' @references [API Reference](https://developers.arcgis.com/rest/routing/serviceArea-service-job/)
 solve_service_areas_job <- function(

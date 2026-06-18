@@ -39,6 +39,7 @@
 #' @examples
 #' \dontrun{
 #' library(sf)
+#' library(arcgisutils)
 #' set_arc_token(auth_user())
 #'
 #' origins <- st_sf(
@@ -68,6 +69,8 @@
 #' result <- job$results
 #' }
 #'
+#' @family async
+#' @family od
 #' @export
 #' @references [API Reference](https://developers.arcgis.com/rest/routing/origin-destination-cost-matrix-service-job/)
 od_cost_matrix_job <- function(

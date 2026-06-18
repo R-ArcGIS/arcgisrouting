@@ -35,9 +35,9 @@ find_routes_job(
 )
 }
 \arguments{
-\item{stops}{An \code{sf} or \code{sfc} object containing point geometries. Use
-\code{\link[=as_stops]{as_stops()}} to prepare stops with attributes such as \code{route_name},
-\code{time_window_start}, and \code{time_window_end}.}
+\item{stops}{An \code{sf} or \code{sfc} object containing point geometries.
+Recognized attribute columns such as \code{route_name}, \code{time_window_start},
+and \code{time_window_end} are used when present.}
 
 \item{travel_mode}{Character. The name or ID of the travel mode to use.
 See \code{\link[=get_travel_modes]{get_travel_modes()}} for available options. Default: \code{NULL}.}
@@ -129,7 +129,7 @@ Default: \code{NULL}.}
 }
 \value{
 A \code{find_routes_job} R6 object inheriting from
-\code{arcgisutils::arc_gp_job}. Call \verb{$run()} to execute and \verb{$result()} to
+\code{arcgisutils::arc_gp_job}. Call \verb{$start()} to submit and \verb{$results} to
 retrieve output.
 }
 \description{
@@ -139,6 +139,8 @@ stops using the ArcGIS \verb{/FindRoutes} GP service.
 \examples{
 \dontrun{
 library(sf)
+library(arcgisutils)
+set_arc_token(auth_user())
 
 stops <- st_sf(
   name = c("Stop 1", "Stop 2", "Stop 3"),
@@ -159,3 +161,19 @@ result <- job$results
 \references{
 \href{https://developers.arcgis.com/rest/routing/find-routes/}{API Reference}
 }
+\seealso{
+Other async: 
+\code{\link{download_od_results}()},
+\code{\link{download_service_area_results}()},
+\code{\link{find_closest_facilities_job}()},
+\code{\link{last_mile_delivery}()},
+\code{\link{location_allocation_job}()},
+\code{\link{od_cost_matrix_job}()},
+\code{\link{solve_service_areas_job}()},
+\code{\link{solve_vrp_job}()}
+
+Other routing: 
+\code{\link{find_routes}()}
+}
+\concept{async}
+\concept{routing}

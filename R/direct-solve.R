@@ -76,6 +76,8 @@
 #' @examples
 #' \dontrun{
 #' library(sf)
+#' library(arcgisutils)
+#' set_arc_token(auth_user())
 #'
 #' # Simple route between 3 stops
 #' stops <- st_sf(
@@ -159,6 +161,8 @@
 #' )
 #' }
 #'
+#' @family direct
+#' @family routing
 #' @export
 #' @references [API Reference](https://developers.arcgis.com/rest/routing/route-service-direct/)
 find_routes <- function(

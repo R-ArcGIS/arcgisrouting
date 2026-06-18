@@ -1,3 +1,56 @@
+#' Snap Points to Roads
+#'
+#' Snaps a set of GPS points to the most likely roads traveled and optionally
+#' returns the traversed road segments as lines using the ArcGIS `/SnapToRoads`
+#' service.
+#'
+#' @param points An `sf` or `sfc` object containing the point geometries to snap
+#'   to the road network. Recognized attribute columns such as `track_id` and
+#'   `location_timestamp` are used when present.
+#' @param point_properties Character vector. Road properties returned on the
+#'   snapped points output. One or more of: `"oid_routing_streets"`,
+#'   `"posted_speed_limit_kph"`, `"posted_speed_limit_mph"`,
+#'   `"posted_speed_limit_mps"`, `"posted_truck_speed_limit_kph"`,
+#'   `"posted_truck_speed_limit_mph"`, `"posted_truck_speed_limit_mps"`.
+#' @param line_properties Character vector. Road properties returned on the
+#'   output lines. One or more of: `"oid_routing_streets"`,
+#'   `"length_kilometers"`, `"length_miles"`, `"posted_speed_limit_kph"`,
+#'   `"posted_speed_limit_mph"`, `"posted_speed_limit_mps"`,
+#'   `"posted_truck_speed_limit_kph"`, `"posted_truck_speed_limit_mph"`,
+#'   `"posted_truck_speed_limit_mps"`. Ignored unless `return_lines = TRUE`.
+#' @param analysis_region Character. Region in which to perform the analysis. One
+#'   of: `"europe"`, `"japan"`, `"korea"`, `"middleastandafrica"`,
+#'   `"northamerica"`, `"southamerica"`, `"southasia"`, `"thailand"`. Default:
+#'   auto-detected from the location of `points`.
+#' @param return_lines Logical. Whether to return output lines representing the
+#'   roads traversed. Default: `TRUE`.
+#' @inheritParams find_routes
+#'
+#' @returns A named list:
+#' - `snapped_points`: the input points snapped to the road network
+#' - `snap_lines`: the traversed road segments (only when `return_lines = TRUE`)
+#' - `usage_cost`: list with `numObjects` and `credits` used
+#' - `messages`: status and warning messages from the service
+#'
+#' @examples
+#' \dontrun{
+#' library(sf)
+#' library(arcgisutils)
+#' set_arc_token(auth_user())
+#'
+#' pts <- st_sfc(
+#'   st_point(c(-122.43410, 37.80016)),
+#'   st_point(c(-122.43460, 37.80074)),
+#'   st_point(c(-122.43539, 37.80096)),
+#'   crs = 4326
+#' )
+#'
+#' snap_to_roads(pts)
+#' }
+#'
+#' @family direct
+#' @export
+#' @references [API Reference](https://developers.arcgis.com/rest/routing/snap-to-roads-service-direct/)
 snap_to_roads <- function(
   points,
   travel_mode = NULL,

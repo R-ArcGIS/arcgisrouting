@@ -2,6 +2,12 @@
 
 What the package does (one paragraph).
 
+## See also
+
+Useful links:
+
+- <http://r.esri.com/arcgisrouting/>
+
 ## Author
 
 **Maintainer**: Josiah Parry <josiah.parry@gmail.com>

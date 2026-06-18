@@ -32,6 +32,20 @@
 
 <div id="claudemd" class="section level1">
 
+<div class="section level2">
+<h2 id="imperatives">Imperatives<a class="anchor" aria-label="anchor" href="#imperatives"></a></h2>
+<ul><li>Never attempt to run bash commands</li>
+<li>Never try to run git commands</li>
+<li>Never try and search outside of this workspace</li>
+<li>Never try to run any cargo commands whatsoever</li>
+<li>Never use <code>.unwrap()</code> or <code>.expect()</code>
+</li>
+<li>Never duplicate code unless you ask me for approval and get consent</li>
+<li>Never search code to get an answer. Always ask me for help insteaad.</li>
+<li>Never guess method implementations.</li>
+</ul></div>
+<div class="section level2">
+<h2 id="style--guide">Style &amp; Guide<a class="anchor" aria-label="anchor" href="#style--guide"></a></h2>
 <ul><li>This is the repository for the R package <a href="http://r.esri.com/arcgisrouting/">arcgisrouting</a> which is a part of the R-ArcGIS Bridge.</li>
 <li>It provides bindings to the ArcGIS Routing REST API documented at <a href="https://developers.arcgis.com/rest/routing/" class="external-link uri">https://developers.arcgis.com/rest/routing/</a>.</li>
 <li>It uses <a href="https://github.com/R-ArcGIS/arcgisutils" class="external-link">arcgisutils</a> for Esri JSON handling including date conversions and geoprocessing parameters.</li>
@@ -52,7 +66,8 @@
 <li>Never try to align arguments. Never add unecessary whitepace for stylistic reasons.</li>
 <li>
 <strong>Never modify code outside the file currently being implemented.</strong> If you spot a duplicate or improvement elsewhere, mention it once to the user and move on. Do not touch it.</li>
-</ul><div class="section level2">
+</ul></div>
+<div class="section level2">
 <h2 id="function-arguments">Function arguments<a class="anchor" aria-label="anchor" href="#function-arguments"></a></h2>
 <p><strong>Naming</strong>: snake_case R names mapping to API names internally. Reuse the same name whenever the concept is the same across functions.</p>
 <p><strong>Ordering</strong>: required spatial inputs first, core behavioral params, optional feature inputs, output control params, <code>token</code> always last.</p>

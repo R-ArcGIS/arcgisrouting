@@ -104,29 +104,13 @@
 <dd><p>default <code>NULL</code>. A numeric scalar. The travel time or distance value at which to stop searching for facilities.</p></dd>
 
 
-<dt id="arg-time-of-day">time_of_day<a class="anchor" aria-label="anchor" href="#arg-time-of-day"></a></dt>
-<dd><p>default <code>NULL</code>. A character or <code>POSIXlt</code> scalar representing the time of day when the cost is to be calculated. If a character vector is provided, it as processed with <code><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXlt()</a></code> and uses the default time zone. If the time zone is <code>UTC</code> the parameter <a href="https://developers.arcgis.com/rest/routing/origin-destination-cost-matrix-synchronous-service/#timeofdayisutc" class="external-link"><code>timeOfDayIsUTC</code></a> is set to <code>true</code>.</p></dd>
-
-
 <dt id="arg-time-of-day-usage">time_of_day_usage<a class="anchor" aria-label="anchor" href="#arg-time-of-day-usage"></a></dt>
 <dd><p>default <code>NULL</code>. A scalar character. One of <code>"start_time"</code> or <code>"end_time"</code>. Specifies whether <code>time_of_day</code> represents departure or arrival time.</p></dd>
-
-
-<dt id="arg-u-turns">u_turns<a class="anchor" aria-label="anchor" href="#arg-u-turns"></a></dt>
-<dd><p>default <code>"allow_backtrack"</code>. Must be one of <code>"allow_backtrack"</code>, <code>"deadend_intersection"</code>, <code>"deadend"</code>, or <code>"no_backtrack"</code>. Determines the conditions when a U-turn is permitted.</p></dd>
 
 
 <dt id="arg-use-hierarchy">use_hierarchy<a class="anchor" aria-label="anchor" href="#arg-use-hierarchy"></a></dt>
 <dd><p>Logical. Whether to use hierarchy when finding routes.
 Default: <code>TRUE</code>.</p></dd>
-
-
-<dt id="arg-impedance">impedance<a class="anchor" aria-label="anchor" href="#arg-impedance"></a></dt>
-<dd><p>default <code>"travel_time"</code>. Determines how travel distance is measured. Must be one of <code>"travel_time"</code>, <code>"minutes"</code>, <code>"truck_travel_time"</code>, <code>"truck_minutes"</code>, <code>"walk_time"</code>, <code>"miles"</code>, <code>"kilometers"</code>. Suppressed by <code>travel_mode</code>. (<a href="https://developers.arcgis.com/rest/routing/origin-destination-cost-matrix-synchronous-service/#impedanceattributename" class="external-link">Reference</a>)</p></dd>
-
-
-<dt id="arg-accumulate-impedance">accumulate_impedance<a class="anchor" aria-label="anchor" href="#arg-accumulate-impedance"></a></dt>
-<dd><p>default <code>NULL</code>. Calculate additional impedance metrics. These will be reported, but not used in calculating the best route. Has same values as <code>impedance</code>. (<a href="https://developers.arcgis.com/rest/routing/origin-destination-cost-matrix-synchronous-service/#accumulateattributenames" class="external-link">Reference</a>)</p></dd>
 
 
 <dt id="arg-restrictions">restrictions<a class="anchor" aria-label="anchor" href="#arg-restrictions"></a></dt>

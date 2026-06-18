@@ -62,16 +62,6 @@ find_service_areas(
   default `"away"`. A scalar character. One of `"away"` (away from
   facility) or `"towards"` (toward facility).
 
-- time_of_day:
-
-  default `NULL`. A character or `POSIXlt` scalar representing the time
-  of day when the cost is to be calculated. If a character vector is
-  provided, it as processed with
-  [`as.POSIXlt()`](https://rdrr.io/r/base/as.POSIXlt.html) and uses the
-  default time zone. If the time zone is `UTC` the parameter
-  [`timeOfDayIsUTC`](https://developers.arcgis.com/rest/routing/origin-destination-cost-matrix-synchronous-service/#timeofdayisutc)
-  is set to `true`.
-
 - output_polygons:
 
   default `"simplified"`. A scalar character or `NULL` (no polygons).
@@ -121,31 +111,10 @@ find_service_areas(
   `"service_areas"`, `"sa_lines"`, `"facilities"`, `"barriers"`,
   `"polyline_barriers"`, `"polygon_barriers"`.
 
-- u_turns:
-
-  default `"allow_backtrack"`. Must be one of `"allow_backtrack"`,
-  `"deadend_intersection"`, `"deadend"`, or `"no_backtrack"`. Determines
-  the conditions when a U-turn is permitted.
-
 - use_hierarchy:
 
   Logical. Whether to use hierarchy when finding routes. Default:
   `TRUE`.
-
-- impedance:
-
-  default `"travel_time"`. Determines how travel distance is measured.
-  Must be one of `"travel_time"`, `"minutes"`, `"truck_travel_time"`,
-  `"truck_minutes"`, `"walk_time"`, `"miles"`, `"kilometers"`.
-  Suppressed by `travel_mode`.
-  ([Reference](https://developers.arcgis.com/rest/routing/origin-destination-cost-matrix-synchronous-service/#impedanceattributename))
-
-- accumulate_impedance:
-
-  default `NULL`. Calculate additional impedance metrics. These will be
-  reported, but not used in calculating the best route. Has same values
-  as `impedance`.
-  ([Reference](https://developers.arcgis.com/rest/routing/origin-destination-cost-matrix-synchronous-service/#accumulateattributenames))
 
 - restrictions:
 

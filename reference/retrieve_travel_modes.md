@@ -19,6 +19,11 @@ retrieve_travel_modes(
   Authorization token. Default:
   [`arcgisutils::arc_token()`](https://rdrr.io/pkg/arcgisutils/man/token.html).
 
+- error_call:
+
+  The calling environment used for error reporting. Default:
+  [`rlang::caller_call()`](https://rlang.r-lib.org/reference/stack.html).
+
 ## Value
 
 A list describing the supported travel modes, including a

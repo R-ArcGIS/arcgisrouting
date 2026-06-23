@@ -5,17 +5,8 @@
 <url><loc>http://r.esri.com/arcgisrouting/authors.html</loc></url>
 <url><loc>http://r.esri.com/arcgisrouting/index.html</loc></url>
 <url><loc>http://r.esri.com/arcgisrouting/reference/arcgisrouting-package.html</loc></url>
-<url><loc>http://r.esri.com/arcgisrouting/reference/as_lmd_routes.html</loc></url>
-<url><loc>http://r.esri.com/arcgisrouting/reference/as_lmd_zones.html</loc></url>
-<url><loc>http://r.esri.com/arcgisrouting/reference/as_od_points.html</loc></url>
 <url><loc>http://r.esri.com/arcgisrouting/reference/as_order_specialties.html</loc></url>
-<url><loc>http://r.esri.com/arcgisrouting/reference/as_point_barriers.html</loc></url>
-<url><loc>http://r.esri.com/arcgisrouting/reference/as_polygon_barriers.html</loc></url>
-<url><loc>http://r.esri.com/arcgisrouting/reference/as_polyline_barriers.html</loc></url>
 <url><loc>http://r.esri.com/arcgisrouting/reference/as_route_specialties.html</loc></url>
-<url><loc>http://r.esri.com/arcgisrouting/reference/as_routes.html</loc></url>
-<url><loc>http://r.esri.com/arcgisrouting/reference/as_stops.html</loc></url>
-<url><loc>http://r.esri.com/arcgisrouting/reference/as_vrp_orders.html</loc></url>
 <url><loc>http://r.esri.com/arcgisrouting/reference/decode_compressed_geometry.html</loc></url>
 <url><loc>http://r.esri.com/arcgisrouting/reference/download_od_results.html</loc></url>
 <url><loc>http://r.esri.com/arcgisrouting/reference/download_service_area_results.html</loc></url>

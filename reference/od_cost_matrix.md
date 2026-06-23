@@ -45,6 +45,12 @@ od_cost_matrix(
   default `origins`. An `sf` or `sfc` object containing point geometries
   representing the ending points.
 
+- travel_mode:
+
+  Character. The name of the travel mode to use. See
+  [`get_travel_modes()`](http://r.esri.com/arcgisrouting/reference/get_travel_modes.md)
+  for available options. Default: `NULL`.
+
 - default_cutoff:
 
   default `NULL`. A numeric scalar. The travel time or distance value at
@@ -61,16 +67,67 @@ od_cost_matrix(
   `"straight_lines"`, `"sparse_matrix"`. Controls whether route geometry
   is returned.
 
+- time_of_day:
+
+  default `NULL`. A scalar date-time. Either a `POSIXt` scalar or a
+  character string parseable by
+  [`as.POSIXlt()`](https://rdrr.io/r/base/as.POSIXlt.html). The time and
+  date at which travel begins.
+
+- u_turns:
+
+  default `NULL`. A scalar character. U-turn policy at junctions. One of
+  `"allow_backtrack"`, `"deadend_intersection"`, `"deadend"`,
+  `"no_backtrack"`.
+
+- use_hierarchy:
+
+  Logical. Whether to use hierarchy when finding routes. Default:
+  `NULL`.
+
+- impedance:
+
+  default `NULL`. A scalar character. The impedance to minimize. One of
+  `"travel_time"`, `"minutes"`, `"truck_travel_time"`,
+  `"truck_minutes"`, `"walk_time"`, `"miles"`, `"kilometers"`.
+
+- accumulate_impedance:
+
+  default `NULL`. A character vector. Additional impedance values to
+  accumulate.
+
+- restrictions:
+
+  Character vector. Restriction names to honor. Default: `NULL`.
+
 - attribute_parameter_values:
 
   default `NULL`. A list of objects. Additional values required by an
   attribute or restriction.
+
+- point_barriers:
+
+  default `NULL`. An `sf` or `sfc` object of point geometries
+  representing barriers to restrict or add cost to travel.
+
+- line_barriers:
+
+  default `NULL`. An `sf` or `sfc` object of line geometries
+  representing barriers to restrict or add cost to travel.
+
+- polygon_barriers:
+
+  Polygon barriers as `sf` or `sfc` object. Default: `NULL`.
 
 - return_geometry:
 
   default `character(0)`. A character vector. Valid values: `"origins"`,
   `"destinations"`, `"barriers"`, `"polyline_barriers"`,
   `"polygon_barriers"`.
+
+- ignore_invalid_locations:
+
+  Logical. Whether to ignore invalid locations. Default: `TRUE`.
 
 - return_empty_results:
 
@@ -92,6 +149,11 @@ od_cost_matrix(
   default `4326`. The coordinate reference system of the output
   geometries. Passed to
   [`arcgisutils::as_spatial_reference()`](https://rdrr.io/pkg/arcgisutils/man/gp_params.html).
+
+- token:
+
+  Authorization token. Default:
+  [`arcgisutils::arc_token()`](https://rdrr.io/pkg/arcgisutils/man/token.html).
 
 ## Value
 

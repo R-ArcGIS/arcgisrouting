@@ -142,6 +142,16 @@ route_vehicles(
   `"allow_dead_ends_and_intersections_only"`, `"allow_dead_ends_only"`,
   `"no_uturns"`.
 
+- point_barriers:
+
+  default `NULL`. An `sf` or `sfc` object of point geometries
+  representing barriers to restrict or add cost to travel.
+
+- line_barriers:
+
+  default `NULL`. An `sf` or `sfc` object of line geometries
+  representing barriers to restrict or add cost to travel.
+
 - polygon_barriers:
 
   Polygon barriers as `sf` or `sfc` object. Default: `NULL`.

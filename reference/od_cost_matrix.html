@@ -82,6 +82,11 @@
 <dd><p>default <code>origins</code>. An <code>sf</code> or <code>sfc</code> object containing point geometries representing the ending points.</p></dd>
 
 
+<dt id="arg-travel-mode">travel_mode<a class="anchor" aria-label="anchor" href="#arg-travel-mode"></a></dt>
+<dd><p>Character. The name of the travel mode to use. See
+<code><a href="get_travel_modes.html">get_travel_modes()</a></code> for available options. Default: <code>NULL</code>.</p></dd>
+
+
 <dt id="arg-default-cutoff">default_cutoff<a class="anchor" aria-label="anchor" href="#arg-default-cutoff"></a></dt>
 <dd><p>default <code>NULL</code>. A numeric scalar. The travel time or distance value at which to stop searching for facilities.</p></dd>
 
@@ -94,12 +99,55 @@
 <dd><p>default <code>NULL</code>. A scalar character. One of <code>"no_lines"</code>, <code>"straight_lines"</code>, <code>"sparse_matrix"</code>. Controls whether route geometry is returned.</p></dd>
 
 
+<dt id="arg-time-of-day">time_of_day<a class="anchor" aria-label="anchor" href="#arg-time-of-day"></a></dt>
+<dd><p>default <code>NULL</code>. A scalar date-time. Either a <code>POSIXt</code> scalar or a character string parseable by <code><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXlt()</a></code>. The time and date at which travel begins.</p></dd>
+
+
+<dt id="arg-u-turns">u_turns<a class="anchor" aria-label="anchor" href="#arg-u-turns"></a></dt>
+<dd><p>default <code>NULL</code>. A scalar character. U-turn policy at junctions. One of <code>"allow_backtrack"</code>, <code>"deadend_intersection"</code>, <code>"deadend"</code>, <code>"no_backtrack"</code>.</p></dd>
+
+
+<dt id="arg-use-hierarchy">use_hierarchy<a class="anchor" aria-label="anchor" href="#arg-use-hierarchy"></a></dt>
+<dd><p>Logical. Whether to use hierarchy when finding routes.
+Default: <code>NULL</code>.</p></dd>
+
+
+<dt id="arg-impedance">impedance<a class="anchor" aria-label="anchor" href="#arg-impedance"></a></dt>
+<dd><p>default <code>NULL</code>. A scalar character. The impedance to minimize. One of <code>"travel_time"</code>, <code>"minutes"</code>, <code>"truck_travel_time"</code>, <code>"truck_minutes"</code>, <code>"walk_time"</code>, <code>"miles"</code>, <code>"kilometers"</code>.</p></dd>
+
+
+<dt id="arg-accumulate-impedance">accumulate_impedance<a class="anchor" aria-label="anchor" href="#arg-accumulate-impedance"></a></dt>
+<dd><p>default <code>NULL</code>. A character vector. Additional impedance values to accumulate.</p></dd>
+
+
+<dt id="arg-restrictions">restrictions<a class="anchor" aria-label="anchor" href="#arg-restrictions"></a></dt>
+<dd><p>Character vector. Restriction names to honor.
+Default: <code>NULL</code>.</p></dd>
+
+
 <dt id="arg-attribute-parameter-values">attribute_parameter_values<a class="anchor" aria-label="anchor" href="#arg-attribute-parameter-values"></a></dt>
 <dd><p>default <code>NULL</code>. A list of objects. Additional values required by an attribute or restriction.</p></dd>
 
 
+<dt id="arg-point-barriers">point_barriers<a class="anchor" aria-label="anchor" href="#arg-point-barriers"></a></dt>
+<dd><p>default <code>NULL</code>. An <code>sf</code> or <code>sfc</code> object of point geometries representing barriers to restrict or add cost to travel.</p></dd>
+
+
+<dt id="arg-line-barriers">line_barriers<a class="anchor" aria-label="anchor" href="#arg-line-barriers"></a></dt>
+<dd><p>default <code>NULL</code>. An <code>sf</code> or <code>sfc</code> object of line geometries representing barriers to restrict or add cost to travel.</p></dd>
+
+
+<dt id="arg-polygon-barriers">polygon_barriers<a class="anchor" aria-label="anchor" href="#arg-polygon-barriers"></a></dt>
+<dd><p>Polygon barriers as <code>sf</code> or <code>sfc</code> object. Default: <code>NULL</code>.</p></dd>
+
+
 <dt id="arg-return-geometry">return_geometry<a class="anchor" aria-label="anchor" href="#arg-return-geometry"></a></dt>
 <dd><p>default <code>character(0)</code>. A character vector. Valid values: <code>"origins"</code>, <code>"destinations"</code>, <code>"barriers"</code>, <code>"polyline_barriers"</code>, <code>"polygon_barriers"</code>.</p></dd>
+
+
+<dt id="arg-ignore-invalid-locations">ignore_invalid_locations<a class="anchor" aria-label="anchor" href="#arg-ignore-invalid-locations"></a></dt>
+<dd><p>Logical. Whether to ignore invalid locations.
+Default: <code>TRUE</code>.</p></dd>
 
 
 <dt id="arg-return-empty-results">return_empty_results<a class="anchor" aria-label="anchor" href="#arg-return-empty-results"></a></dt>
@@ -116,6 +164,10 @@
 
 <dt id="arg-crs">crs<a class="anchor" aria-label="anchor" href="#arg-crs"></a></dt>
 <dd><p>default <code>4326</code>. The coordinate reference system of the output geometries. Passed to <code><a href="https://rdrr.io/pkg/arcgisutils/man/gp_params.html" class="external-link">arcgisutils::as_spatial_reference()</a></code>.</p></dd>
+
+
+<dt id="arg-token">token<a class="anchor" aria-label="anchor" href="#arg-token"></a></dt>
+<dd><p>Authorization token. Default: <code><a href="https://rdrr.io/pkg/arcgisutils/man/token.html" class="external-link">arcgisutils::arc_token()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

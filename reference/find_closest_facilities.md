@@ -77,16 +77,40 @@ find_closest_facilities(
   default `NULL`. A numeric scalar. The travel time or distance value at
   which to stop searching for facilities.
 
+- time_of_day:
+
+  default `NULL`. A scalar date-time. Either a `POSIXt` scalar or a
+  character string parseable by
+  [`as.POSIXlt()`](https://rdrr.io/r/base/as.POSIXlt.html). The time and
+  date at which travel begins.
+
 - time_of_day_usage:
 
   default `NULL`. A scalar character. One of `"start_time"` or
   `"end_time"`. Specifies whether `time_of_day` represents departure or
   arrival time.
 
+- u_turns:
+
+  default `NULL`. A scalar character. U-turn policy at junctions. One of
+  `"allow_backtrack"`, `"deadend_intersection"`, `"deadend"`,
+  `"no_backtrack"`.
+
 - use_hierarchy:
 
   Logical. Whether to use hierarchy when finding routes. Default:
   `NULL`.
+
+- impedance:
+
+  default `NULL`. A scalar character. The impedance to minimize. One of
+  `"travel_time"`, `"minutes"`, `"truck_travel_time"`,
+  `"truck_minutes"`, `"walk_time"`, `"miles"`, `"kilometers"`.
+
+- accumulate_impedance:
+
+  default `NULL`. A character vector. Additional impedance values to
+  accumulate.
 
 - restrictions:
 
@@ -96,6 +120,16 @@ find_closest_facilities(
 
   default `NULL`. A list of objects. Additional values required by an
   attribute or restriction.
+
+- point_barriers:
+
+  default `NULL`. An `sf` or `sfc` object of point geometries
+  representing barriers to restrict or add cost to travel.
+
+- line_barriers:
+
+  default `NULL`. An `sf` or `sfc` object of line geometries
+  representing barriers to restrict or add cost to travel.
 
 - polygon_barriers:
 

@@ -110,13 +110,29 @@
 <dd><p>default <code>NULL</code>. A numeric scalar. The travel time or distance value at which to stop searching for facilities.</p></dd>
 
 
+<dt id="arg-time-of-day">time_of_day<a class="anchor" aria-label="anchor" href="#arg-time-of-day"></a></dt>
+<dd><p>default <code>NULL</code>. A scalar date-time. Either a <code>POSIXt</code> scalar or a character string parseable by <code><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXlt()</a></code>. The time and date at which travel begins.</p></dd>
+
+
 <dt id="arg-time-of-day-usage">time_of_day_usage<a class="anchor" aria-label="anchor" href="#arg-time-of-day-usage"></a></dt>
 <dd><p>default <code>NULL</code>. A scalar character. One of <code>"start_time"</code> or <code>"end_time"</code>. Specifies whether <code>time_of_day</code> represents departure or arrival time.</p></dd>
+
+
+<dt id="arg-u-turns">u_turns<a class="anchor" aria-label="anchor" href="#arg-u-turns"></a></dt>
+<dd><p>default <code>NULL</code>. A scalar character. U-turn policy at junctions. One of <code>"allow_backtrack"</code>, <code>"deadend_intersection"</code>, <code>"deadend"</code>, <code>"no_backtrack"</code>.</p></dd>
 
 
 <dt id="arg-use-hierarchy">use_hierarchy<a class="anchor" aria-label="anchor" href="#arg-use-hierarchy"></a></dt>
 <dd><p>Logical. Whether to use hierarchy when finding routes.
 Default: <code>NULL</code>.</p></dd>
+
+
+<dt id="arg-impedance">impedance<a class="anchor" aria-label="anchor" href="#arg-impedance"></a></dt>
+<dd><p>default <code>NULL</code>. A scalar character. The impedance to minimize. One of <code>"travel_time"</code>, <code>"minutes"</code>, <code>"truck_travel_time"</code>, <code>"truck_minutes"</code>, <code>"walk_time"</code>, <code>"miles"</code>, <code>"kilometers"</code>.</p></dd>
+
+
+<dt id="arg-accumulate-impedance">accumulate_impedance<a class="anchor" aria-label="anchor" href="#arg-accumulate-impedance"></a></dt>
+<dd><p>default <code>NULL</code>. A character vector. Additional impedance values to accumulate.</p></dd>
 
 
 <dt id="arg-restrictions">restrictions<a class="anchor" aria-label="anchor" href="#arg-restrictions"></a></dt>
@@ -126,6 +142,14 @@ Default: <code>NULL</code>.</p></dd>
 
 <dt id="arg-attribute-parameter-values">attribute_parameter_values<a class="anchor" aria-label="anchor" href="#arg-attribute-parameter-values"></a></dt>
 <dd><p>default <code>NULL</code>. A list of objects. Additional values required by an attribute or restriction.</p></dd>
+
+
+<dt id="arg-point-barriers">point_barriers<a class="anchor" aria-label="anchor" href="#arg-point-barriers"></a></dt>
+<dd><p>default <code>NULL</code>. An <code>sf</code> or <code>sfc</code> object of point geometries representing barriers to restrict or add cost to travel.</p></dd>
+
+
+<dt id="arg-line-barriers">line_barriers<a class="anchor" aria-label="anchor" href="#arg-line-barriers"></a></dt>
+<dd><p>default <code>NULL</code>. An <code>sf</code> or <code>sfc</code> object of line geometries representing barriers to restrict or add cost to travel.</p></dd>
 
 
 <dt id="arg-polygon-barriers">polygon_barriers<a class="anchor" aria-label="anchor" href="#arg-polygon-barriers"></a></dt>

@@ -117,6 +117,11 @@ find_closest_facilities_job(
 
   Character vector. Restriction names to apply. Default: `NULL`.
 
+- attribute_parameter_values:
+
+  List. Additional values for attributes or restrictions, passed through
+  as a JSON object. Default: `NULL`.
+
 - time_impedance:
 
   Character. Time-based impedance. One of: `"minutes"`, `"travel_time"`,
@@ -183,6 +188,11 @@ find_closest_facilities_job(
 
   Logical. Whether the route data is saved as a `.zip` file. Default:
   `NULL` (API default: `FALSE`).
+
+- save_output_network_analysis_layer:
+
+  Logical. Whether to save the analysis as a network analysis layer
+  package file. Default: `NULL` (API default: `FALSE`).
 
 - output_format:
 

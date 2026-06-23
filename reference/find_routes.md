@@ -130,10 +130,6 @@ find_routes(
   Authorization token. Default:
   [`arcgisutils::arc_token()`](https://rdrr.io/pkg/arcgisutils/man/token.html).
 
-- return_directions:
-
-  Logical. Whether to generate driving directions. Default: `TRUE`.
-
 ## Value
 
 A list containing the routing resps. The elements returned depend on the

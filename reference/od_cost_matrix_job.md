@@ -106,6 +106,11 @@ od_cost_matrix_job(
 
   Character vector. Restriction names to apply. Default: `NULL`.
 
+- attribute_parameter_values:
+
+  List. Additional values for attributes or restrictions, passed through
+  as a JSON object. Default: `NULL`.
+
 - origin_destination_line_shape:
 
   Character. Shape of the line feature connecting each
@@ -141,6 +146,11 @@ od_cost_matrix_job(
 - polygon_barriers:
 
   Polygon barriers as `sf` or `sfc` object. Default: `NULL`.
+
+- save_output_network_analysis_layer:
+
+  Logical. Whether to save the analysis as a network analysis layer
+  package file. Default: `NULL` (API default: `FALSE`).
 
 - output_format:
 

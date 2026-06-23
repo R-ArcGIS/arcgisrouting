@@ -79,11 +79,10 @@ serializing via
 mention them in documentation, `@param` descriptions, examples, or
 `@seealso` for the user-facing endpoint functions. They are called
 internally by the endpoint functions; instructing users to call them
-themselves (e.g. “Use
-[`as_stops()`](http://r.esri.com/arcgisrouting/reference/as_stops.md) to
-prepare stops”) produces broken code, because the endpoint already runs
-the conversion. Document the raw `sf`/`sfc`/`data.frame` input and the
-recognized snake_case columns directly instead.
+themselves (e.g. “Use `as_stops()` to prepare stops”) produces broken
+code, because the endpoint already runs the conversion. Document the raw
+`sf`/`sfc`/`data.frame` input and the recognized snake_case columns
+directly instead.
 
 ## Async GP job URL construction
 

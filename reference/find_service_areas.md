@@ -62,6 +62,13 @@ find_service_areas(
   default `"away"`. A scalar character. One of `"away"` (away from
   facility) or `"towards"` (toward facility).
 
+- time_of_day:
+
+  default `NULL`. A scalar date-time. Either a `POSIXt` scalar or a
+  character string parseable by
+  [`as.POSIXlt()`](https://rdrr.io/r/base/as.POSIXlt.html). The time and
+  date at which travel begins.
+
 - output_polygons:
 
   default `"simplified"`. A scalar character or `NULL` (no polygons).
@@ -111,10 +118,27 @@ find_service_areas(
   `"service_areas"`, `"sa_lines"`, `"facilities"`, `"barriers"`,
   `"polyline_barriers"`, `"polygon_barriers"`.
 
+- u_turns:
+
+  default `NULL`. A scalar character. U-turn policy at junctions. One of
+  `"allow_backtrack"`, `"deadend_intersection"`, `"deadend"`,
+  `"no_backtrack"`.
+
 - use_hierarchy:
 
   Logical. Whether to use hierarchy when finding routes. Default:
   `NULL`.
+
+- impedance:
+
+  default `NULL`. A scalar character. The impedance to minimize. One of
+  `"travel_time"`, `"minutes"`, `"truck_travel_time"`,
+  `"truck_minutes"`, `"walk_time"`, `"miles"`, `"kilometers"`.
+
+- accumulate_impedance:
+
+  default `NULL`. A character vector. Additional impedance values to
+  accumulate.
 
 - restrictions:
 
@@ -130,6 +154,16 @@ find_service_areas(
   default `"meters"`. A scalar character. Units for
   `trim_polygon_distance`. One of `"meters"`, `"kilometers"`, `"feet"`,
   `"miles"`, `"nautical_miles"`, `"yards"`.
+
+- point_barriers:
+
+  default `NULL`. An `sf` or `sfc` object of point geometries
+  representing barriers to restrict or add cost to travel.
+
+- line_barriers:
+
+  default `NULL`. An `sf` or `sfc` object of line geometries
+  representing barriers to restrict or add cost to travel.
 
 - polygon_barriers:
 

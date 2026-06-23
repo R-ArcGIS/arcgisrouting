@@ -159,18 +159,18 @@ result <- job$results
 
 }
 \references{
-\href{https://developers.arcgis.com/rest/routing/find-routes/}{API Reference}
+\href{https://developers.arcgis.com/rest/routing/route-service-job/}{API Reference}
 }
 \seealso{
 Other async: 
 \code{\link{download_od_results}()},
 \code{\link{download_service_area_results}()},
 \code{\link{find_closest_facilities_job}()},
+\code{\link{find_service_areas_job}()},
 \code{\link{last_mile_delivery}()},
 \code{\link{location_allocation_job}()},
 \code{\link{od_cost_matrix_job}()},
-\code{\link{solve_service_areas_job}()},
-\code{\link{solve_vrp_job}()}
+\code{\link{route_vehicles_job}()}
 
 Other routing: 
 \code{\link{find_routes}()}

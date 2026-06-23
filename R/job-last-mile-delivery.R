@@ -43,7 +43,7 @@
 #' @param save_output_network_analysis_layer Logical. Whether the analysis
 #'   settings are saved as a network analysis layer package file. Default:
 #'   `FALSE`.
-#' @inheritParams solve_vrp_job
+#' @inheritParams route_vehicles_job
 #'
 #' @returns A `last_mile_delivery_job` R6 object inheriting from
 #'   `arcgisutils::arc_gp_job`. Call `$start()` to submit and `$results` to

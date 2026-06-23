@@ -1,16 +1,17 @@
-#' Travel Cost Matrix
+#' Origin-Destination Cost Matrix
 #'
 #' Creates an origin-destination cost matrix containing the travel cost between every origin and destination.
 #'
 #' @param origins an `sf` or `sfc` object containing point geometries representing the starting points.
 #' @param destinations default `origins`. An `sf` or `sfc` object containing point geometries representing the ending points.
 #' @param default_target_destination_count default `NULL`. An integer scalar. The maximum number of destinations to find per origin.
-#' @param output_type default `NULL`. A scalar character. One of `"no_lines"`, `"straight_lines"`, `"true_shape"`. Controls whether route geometry is returned.
+#' @param output_type default `NULL`. A scalar character. One of `"no_lines"`, `"straight_lines"`, `"sparse_matrix"`. Controls whether route geometry is returned.
 #' @param return_geometry default `character(0)`. A character vector. Valid values: `"origins"`, `"destinations"`, `"barriers"`, `"polyline_barriers"`, `"polygon_barriers"`.
-#' @inheritParams find_closest_facility
+#' @inheritParams find_closest_facilities
 #' @inheritParams find_service_areas
 #'
 #' @returns A named list. Elements present depend on `return_geometry` and `output_type`:
+#' - `od_cost_matrix`: nested cost matrix returned when `output_type = "sparse_matrix"`. A list with `costAttributeNames` and, per origin ID, a list mapping destination ID to its cost values.
 #' - `od_lines`: OD cost matrix features
 #' - `origins`: origin features
 #' - `destinations`: destination features
@@ -38,7 +39,7 @@
 #'   crs = 4326
 #' )
 #'
-#' result <- travel_cost_matrix(
+#' result <- od_cost_matrix(
 #'   origins = origins,
 #'   destinations = destinations
 #' )
@@ -49,8 +50,8 @@
 #' @family direct
 #' @family od
 #' @export
-#' @references [API Reference](https://developers.arcgis.com/rest/routing/od-cost-matrix-synchronous-service/)
-travel_cost_matrix <- function(
+#' @references [API Reference](https://developers.arcgis.com/rest/routing/travelCostMatrix-service-direct/)
+od_cost_matrix <- function(
   origins,
   destinations = origins,
   travel_mode = NULL,
@@ -163,6 +164,10 @@ travel_cost_matrix <- function(
   }
 
   compact(list(
+    od_cost_matrix = rlang::try_fetch(
+      RcppSimdJson::fparse(resp, query = "/odCostMatrix"),
+      error = function(e) NULL
+    ),
     od_lines = try_parse(resp, query = "/odLines"),
     origins = try_parse(resp, query = "/origins"),
     destinations = try_parse(resp, query = "/destinations"),
@@ -186,7 +191,7 @@ validate_od_output_type <- function(
 
   x <- rlang::arg_match0(
     x,
-    values = c("no_lines", "straight_lines", "true_shape"),
+    values = c("no_lines", "straight_lines", "sparse_matrix"),
     arg_nm = error_arg,
     error_call = error_call
   )
@@ -194,7 +199,7 @@ validate_od_output_type <- function(
   lu <- c(
     "no_lines" = "esriNAODOutputNoLines",
     "straight_lines" = "esriNAODOutputStraightLines",
-    "true_shape" = "esriNAODOutputTrueShapeLines"
+    "sparse_matrix" = "esriNAODOutputSparseMatrix"
   )
 
   unname(lu[x])

@@ -19,7 +19,7 @@
 #' @param output_geometry_precision_units default `"meters"`. A scalar character. Units for `output_geometry_precision`. Same valid values as `trim_polygon_distance_units`.
 #' @param crs default `4326`. The coordinate reference system of the output geometries. Passed to `arcgisutils::as_spatial_reference()`.
 #' @inheritParams find_routes
-#' @inheritParams travel_cost_matrix
+#' @inheritParams od_cost_matrix
 #'
 #' @returns A list containing the service area results.
 #'
@@ -36,7 +36,7 @@
 #' @family direct
 #' @family service area
 #' @export
-#' @references [API Reference](https://developers.arcgis.com/rest/routing/service-area-service-direct/)
+#' @references [API Reference](https://developers.arcgis.com/rest/routing/serviceArea-service-direct/)
 find_service_areas <- function(
   facilities,
   default_breaks = c(5, 10, 15),

@@ -83,14 +83,14 @@ snap_to_roads(pts)
 
 }
 \references{
-\href{https://developers.arcgis.com/rest/routing/snap-to-roads-service-direct/}{API Reference}
+\href{https://developers.arcgis.com/rest/routing/snap-to-roads-direct/}{API Reference}
 }
 \seealso{
 Other direct: 
-\code{\link{find_closest_facility}()},
+\code{\link{find_closest_facilities}()},
 \code{\link{find_routes}()},
 \code{\link{find_service_areas}()},
-\code{\link{route_vehicles}()},
-\code{\link{travel_cost_matrix}()}
+\code{\link{od_cost_matrix}()},
+\code{\link{route_vehicles}()}
 }
 \concept{direct}

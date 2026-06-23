@@ -80,7 +80,7 @@ reference:
       facilities within a given travel time or distance.
     contents:
       - find_service_areas
-      - solve_service_areas_job
+      - find_service_areas_job
       - download_service_area_results
 
   - title: Closest facility
@@ -88,7 +88,7 @@ reference:
       Find one or more nearby facilities from a set of incidents based on travel
       time or distance.
     contents:
-      - find_closest_facility
+      - find_closest_facilities
       - find_closest_facilities_job
 
   - title: Origin-destination cost matrix
@@ -96,7 +96,7 @@ reference:
       Measure the travel time or distance between every origin and every
       destination in a pair of point sets.
     contents:
-      - travel_cost_matrix
+      - od_cost_matrix
       - od_cost_matrix_job
       - download_od_results
 
@@ -106,7 +106,7 @@ reference:
       including clustered last mile delivery problems.
     contents:
       - route_vehicles
-      - solve_vrp_job
+      - route_vehicles_job
       - last_mile_delivery
 
   - title: Location-allocation

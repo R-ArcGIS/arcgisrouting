@@ -32,7 +32,7 @@
 #' @param save_route_data Logical. Whether the route data is saved as a `.zip`
 #'   file. Default: `NULL` (API default: `FALSE`).
 #' @inheritParams find_routes_job
-#' @inheritParams solve_service_areas_job
+#' @inheritParams find_service_areas_job
 #'
 #' @returns A `find_closest_facilities_job` R6 object inheriting from
 #'   `arcgisutils::arc_gp_job`. Call `$start()` to submit and `$results` to
@@ -73,7 +73,7 @@
 #' @family async
 #' @family closest facility
 #' @export
-#' @references [API Reference](https://developers.arcgis.com/rest/routing/find-closest-facilities/)
+#' @references [API Reference](https://developers.arcgis.com/rest/routing/closestFacility-service-job/)
 find_closest_facilities_job <- function(
   incidents,
   facilities,
@@ -139,7 +139,9 @@ find_closest_facilities_job <- function(
   directions_distance_units <- validate_directions_distance_units(
     directions_distance_units
   )
-  directions_style_name <- validate_directions_style_name(directions_style_name)
+  directions_style_name <- validate_directions_style_name_async(
+    directions_style_name
+  )
   output_format <- validate_job_output_format(output_format)
 
   point_barriers <- as_point_barriers(point_barriers)

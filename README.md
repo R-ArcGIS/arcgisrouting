@@ -9,7 +9,6 @@
 [![R-CMD-check](https://github.com/r-arcgis/arcgisrouting/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/r-arcgis/arcgisrouting/actions/workflows/R-CMD-check.yaml)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![R-CMD-check](https://github.com/R-ArcGIS/arcgisrouting/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/R-ArcGIS/arcgisrouting/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 `arcgisrouting` brings the [ArcGIS Routing REST
@@ -21,6 +20,14 @@ mapping.
 
 It is part of the [R-ArcGIS
 Bridge](https://developers.arcgis.com/r-bridge/).
+
+> [!IMPORTANT]
+>
+> Using `arcgisrouting` requires an ArcGIS Online account, an ArcGIS
+> Location Platform account, or an ArcGIS Enterprise server. Routing
+> operations consume ArcGIS credits. For pricing, see the [ArcGIS
+> Routing pricing
+> details](https://developers.arcgis.com/rest/routing/#pricing).
 
 ## Installation
 
@@ -78,10 +85,10 @@ route$routes
 | Capability | Direct Requests | Asynchronous Geoprocessing Job |
 |----|----|----|
 | Routing and directions | `find_routes()` | `find_routes_job()` |
-| Service areas | `find_service_areas()` | `solve_service_areas_job()` |
-| Closest facility | `find_closest_facility()` | `find_closest_facilities_job()` |
-| Origin-destination cost matrix | `travel_cost_matrix()` | `od_cost_matrix_job()` |
-| Vehicle routing problem | `route_vehicles()` | `solve_vrp_job()` |
+| Service areas | `find_service_areas()` | `find_service_areas_job()` |
+| Closest facility | `find_closest_facilities()` | `find_closest_facilities_job()` |
+| Origin-destination cost matrix | `od_cost_matrix()` | `od_cost_matrix_job()` |
+| Vehicle routing problem | `route_vehicles()` | `route_vehicles_job()` |
 | Last mile delivery |  | `last_mile_delivery()` |
 | Location-allocation |  | `location_allocation_job()` |
 | Snap GPS points to roads | `snap_to_roads()` |  |

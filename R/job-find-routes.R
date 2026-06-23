@@ -102,7 +102,7 @@
 #' @family async
 #' @family routing
 #' @export
-#' @references [API Reference](https://developers.arcgis.com/rest/routing/find-routes/)
+#' @references [API Reference](https://developers.arcgis.com/rest/routing/route-service-job/)
 find_routes_job <- function(
   stops,
   travel_mode = NULL,
@@ -160,7 +160,9 @@ find_routes_job <- function(
   directions_distance_units <- validate_directions_distance_units(
     directions_distance_units
   )
-  directions_style_name <- validate_directions_style_name(directions_style_name)
+  directions_style_name <- validate_directions_style_name_async(
+    directions_style_name
+  )
   output_format <- validate_job_output_format(output_format)
 
   if (is.null(use_time_windows)) {

@@ -48,10 +48,10 @@ when reordering. Only applies if \code{find_best_sequence = TRUE}. Default: \cod
 
 \item{restrict_u_turns}{Character. Specifies U-turn restrictions. One of:
 \code{"allow_backtrack"}, \code{"deadend_intersection"}, \code{"deadend"}, \code{"no_backtrack"}.
-Default: \code{"allow_backtrack"}.}
+Default: \code{NULL}.}
 
 \item{use_hierarchy}{Logical. Whether to use hierarchy when finding routes.
-Default: \code{TRUE}.}
+Default: \code{NULL}.}
 
 \item{impedance_attribute_name}{Character. The impedance to use. One of:
 \code{"travel_time"}, \code{"minutes"}, \code{"truck_travel_time"}, \code{"truck_minutes"},
@@ -212,11 +212,11 @@ multi_impedance_route <- find_routes(
 }
 \seealso{
 Other direct: 
-\code{\link{find_closest_facility}()},
+\code{\link{find_closest_facilities}()},
 \code{\link{find_service_areas}()},
+\code{\link{od_cost_matrix}()},
 \code{\link{route_vehicles}()},
-\code{\link{snap_to_roads}()},
-\code{\link{travel_cost_matrix}()}
+\code{\link{snap_to_roads}()}
 
 Other routing: 
 \code{\link{find_routes_job}()}

@@ -46,7 +46,7 @@
 #'   request. One of: `"straight_line"` or `"none"`. Default: `NULL`
 #'   (API default: `"straight_line"`).
 #' @inheritParams find_routes_job
-#' @inheritParams solve_service_areas_job
+#' @inheritParams find_service_areas_job
 #'
 #' @returns A `location_allocation_job` R6 object inheriting from
 #'   `arcgisutils::arc_gp_job`. Call `$start()` to submit and `$results` to
@@ -91,7 +91,7 @@
 #' @family async
 #' @family location-allocation
 #' @export
-#' @references [API Reference](https://developers.arcgis.com/rest/routing/solve-location-allocation/)
+#' @references [API Reference](https://developers.arcgis.com/rest/routing/locationAllocation-service-job/)
 location_allocation_job <- function(
   facilities,
   demand_points,

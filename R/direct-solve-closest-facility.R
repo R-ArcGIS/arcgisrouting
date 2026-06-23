@@ -1,4 +1,4 @@
-#' Find Closest Facility
+#' Find Closest Facilities
 #'
 #' Finds one or more nearby facilities from incidents based on travel time or distance.
 #'
@@ -54,7 +54,7 @@
 #'   )
 #' )
 #'
-#' result <- find_closest_facility(
+#' result <- find_closest_facilities(
 #'   incidents = incidents,
 #'   facilities = facilities,
 #'   default_target_facility_count = 2,
@@ -71,8 +71,8 @@
 #' @family direct
 #' @family closest facility
 #' @export
-#' @references [API Reference](https://developers.arcgis.com/rest/routing/closest-facility-service-direct/)
-find_closest_facility <- function(
+#' @references [API Reference](https://developers.arcgis.com/rest/routing/closestFacility-service-direct/)
+find_closest_facilities <- function(
   incidents,
   facilities,
   travel_mode = NULL,

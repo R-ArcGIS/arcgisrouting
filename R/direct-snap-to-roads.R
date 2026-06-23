@@ -50,7 +50,7 @@
 #'
 #' @family direct
 #' @export
-#' @references [API Reference](https://developers.arcgis.com/rest/routing/snap-to-roads-service-direct/)
+#' @references [API Reference](https://developers.arcgis.com/rest/routing/snap-to-roads-direct/)
 snap_to_roads <- function(
   points,
   travel_mode = NULL,

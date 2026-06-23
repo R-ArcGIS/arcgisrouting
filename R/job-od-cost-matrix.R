@@ -72,7 +72,7 @@
 #' @family async
 #' @family od
 #' @export
-#' @references [API Reference](https://developers.arcgis.com/rest/routing/origin-destination-cost-matrix-service-job/)
+#' @references [API Reference](https://developers.arcgis.com/rest/routing/travelCostMatrix-service-job/)
 od_cost_matrix_job <- function(
   origins,
   destinations = NULL,

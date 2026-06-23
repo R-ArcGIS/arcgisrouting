@@ -1,5 +1,5 @@
-.solve_service_areas_job <- R6::R6Class(
-  "solve_service_areas_job",
+.find_service_areas_job <- R6::R6Class(
+  "find_service_areas_job",
   inherit = arcgisutils::arc_gp_job
 )
 
@@ -46,7 +46,7 @@
 #'   `"feature_set"`.
 #' @inheritParams find_routes_job
 #'
-#' @returns A `solve_service_areas_job` R6 object inheriting from
+#' @returns A `find_service_areas_job` R6 object inheriting from
 #'   `arcgisutils::arc_gp_job`. Call `$start()` to submit and `$results` to
 #'   retrieve output.
 #'
@@ -62,7 +62,7 @@
 #'   crs = 4326
 #' )
 #'
-#' job <- solve_service_areas_job(facilities, break_values = c(5, 10, 15))
+#' job <- find_service_areas_job(facilities, break_values = c(5, 10, 15))
 #' job$start()
 #' result <- job$results
 #' }
@@ -71,7 +71,7 @@
 #' @family service area
 #' @export
 #' @references [API Reference](https://developers.arcgis.com/rest/routing/serviceArea-service-job/)
-solve_service_areas_job <- function(
+find_service_areas_job <- function(
   facilities,
   break_values = NULL,
   break_units = NULL,
@@ -171,15 +171,15 @@ solve_service_areas_job <- function(
     cli::cli_abort("Cannot find async service area URL for this token")
   }
 
-  .solve_service_areas_job$new(
+  .find_service_areas_job$new(
     base_url,
     arcgisutils::as_form_params(params)@params,
-    parse_solve_service_areas_results,
+    parse_find_service_areas_results,
     token = token
   )
 }
 
-parse_solve_service_areas_results <- function(json) {
+parse_find_service_areas_results <- function(json) {
   compact(list(
     service_areas = try_parse(json, "/0/value"),
     solve_succeeded = RcppSimdJson::fparse(json, query = "/1/value"),

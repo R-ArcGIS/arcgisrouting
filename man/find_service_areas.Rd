@@ -65,7 +65,7 @@ find_service_areas(
 \item{return_geometry}{default \code{"service_areas"}. A character vector. Valid values: \code{"service_areas"}, \code{"sa_lines"}, \code{"facilities"}, \code{"barriers"}, \code{"polyline_barriers"}, \code{"polygon_barriers"}.}
 
 \item{use_hierarchy}{Logical. Whether to use hierarchy when finding routes.
-Default: \code{TRUE}.}
+Default: \code{NULL}.}
 
 \item{restrictions}{Character vector. Restriction names to honor.
 Default: \code{NULL}.}
@@ -105,19 +105,19 @@ find_service_areas(facility)
 
 }
 \references{
-\href{https://developers.arcgis.com/rest/routing/service-area-service-direct/}{API Reference}
+\href{https://developers.arcgis.com/rest/routing/serviceArea-service-direct/}{API Reference}
 }
 \seealso{
 Other direct: 
-\code{\link{find_closest_facility}()},
+\code{\link{find_closest_facilities}()},
 \code{\link{find_routes}()},
+\code{\link{od_cost_matrix}()},
 \code{\link{route_vehicles}()},
-\code{\link{snap_to_roads}()},
-\code{\link{travel_cost_matrix}()}
+\code{\link{snap_to_roads}()}
 
 Other service area: 
 \code{\link{download_service_area_results}()},
-\code{\link{solve_service_areas_job}()}
+\code{\link{find_service_areas_job}()}
 }
 \concept{direct}
 \concept{service area}

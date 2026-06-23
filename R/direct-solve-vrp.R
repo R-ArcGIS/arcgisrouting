@@ -64,7 +64,7 @@
 #' @param ignore_invalid_order_locations default `FALSE`. A logical scalar. Whether to
 #'   ignore invalid orders instead of failing.
 #' @inheritParams find_routes
-#' @inheritParams find_closest_facility
+#' @inheritParams find_closest_facilities
 #'
 #' @returns A named list:
 #' - `unassigned_stops`: orders that could not be assigned to any route
@@ -108,7 +108,7 @@
 #' @family direct
 #' @family vrp
 #' @export
-#' @references [API Reference](https://developers.arcgis.com/rest/routing/vehicle-routing-problem-service-direct/)
+#' @references [API Reference](https://developers.arcgis.com/rest/routing/vrp-service-direct/)
 route_vehicles <- function(
   orders,
   depots,

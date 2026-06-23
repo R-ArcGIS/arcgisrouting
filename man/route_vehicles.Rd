@@ -194,19 +194,19 @@ result <- route_vehicles(orders, depots, routes)
 
 }
 \references{
-\href{https://developers.arcgis.com/rest/routing/vehicle-routing-problem-service-direct/}{API Reference}
+\href{https://developers.arcgis.com/rest/routing/vrp-service-direct/}{API Reference}
 }
 \seealso{
 Other direct: 
-\code{\link{find_closest_facility}()},
+\code{\link{find_closest_facilities}()},
 \code{\link{find_routes}()},
 \code{\link{find_service_areas}()},
-\code{\link{snap_to_roads}()},
-\code{\link{travel_cost_matrix}()}
+\code{\link{od_cost_matrix}()},
+\code{\link{snap_to_roads}()}
 
 Other vrp: 
 \code{\link{last_mile_delivery}()},
-\code{\link{solve_vrp_job}()}
+\code{\link{route_vehicles_job}()}
 }
 \concept{direct}
 \concept{vrp}

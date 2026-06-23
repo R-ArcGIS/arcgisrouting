@@ -1,10 +1,3 @@
-# VALIDATION FUNCTIONS NEEDED:
-# - validate_directions_output_type()
-# - validate_directions_style()
-# - validate_length_units()
-# - validate_output_lines()
-# - validate_precision_units()
-
 #' Find Routes
 #'
 #' Finds the best routes between multiple stops using the ArcGIS routing service.
@@ -24,9 +17,9 @@
 #'   when reordering. Only applies if `find_best_sequence = TRUE`. Default: `TRUE`.
 #' @param restrict_u_turns Character. Specifies U-turn restrictions. One of:
 #'   `"allow_backtrack"`, `"deadend_intersection"`, `"deadend"`, `"no_backtrack"`.
-#'   Default: `"allow_backtrack"`.
+#'   Default: `NULL`.
 #' @param use_hierarchy Logical. Whether to use hierarchy when finding routes.
-#'   Default: `TRUE`.
+#'   Default: `NULL`.
 #' @param impedance_attribute_name Character. The impedance to use. One of:
 #'   `"travel_time"`, `"minutes"`, `"truck_travel_time"`, `"truck_minutes"`,
 #'   `"walk_time"`, `"miles"`, `"kilometers"`. Default: `NULL`.

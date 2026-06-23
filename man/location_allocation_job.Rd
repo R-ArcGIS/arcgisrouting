@@ -189,7 +189,7 @@ result <- job$results
 
 }
 \references{
-\href{https://developers.arcgis.com/rest/routing/solve-location-allocation/}{API Reference}
+\href{https://developers.arcgis.com/rest/routing/locationAllocation-service-job/}{API Reference}
 }
 \seealso{
 Other async: 
@@ -197,10 +197,10 @@ Other async:
 \code{\link{download_service_area_results}()},
 \code{\link{find_closest_facilities_job}()},
 \code{\link{find_routes_job}()},
+\code{\link{find_service_areas_job}()},
 \code{\link{last_mile_delivery}()},
 \code{\link{od_cost_matrix_job}()},
-\code{\link{solve_service_areas_job}()},
-\code{\link{solve_vrp_job}()}
+\code{\link{route_vehicles_job}()}
 }
 \concept{async}
 \concept{location-allocation}

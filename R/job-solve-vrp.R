@@ -1,5 +1,5 @@
-.solve_vrp_job <- R6::R6Class(
-  "solve_vrp_job",
+.route_vehicles_job <- R6::R6Class(
+  "route_vehicles_job",
   inherit = arcgisutils::arc_gp_job
 )
 
@@ -66,7 +66,7 @@
 #'   orders instead of failing. Default: `FALSE`.
 #' @inheritParams find_routes_job
 #'
-#' @returns A `solve_vrp_job` R6 object inheriting from
+#' @returns A `route_vehicles_job` R6 object inheriting from
 #'   `arcgisutils::arc_gp_job`. Call `$start()` to submit and `$results` to
 #'   retrieve output.
 #'
@@ -90,7 +90,7 @@
 #'   geometry = st_sfc(st_point(c(-0.2, 51.5)), crs = 4326)
 #' )
 #'
-#' job <- solve_vrp_job(orders, depots)
+#' job <- route_vehicles_job(orders, depots)
 #' job$start()
 #' result <- job$results
 #' }
@@ -99,7 +99,7 @@
 #' @family vrp
 #' @export
 #' @references [API Reference](https://developers.arcgis.com/rest/routing/vrp-service-job/)
-solve_vrp_job <- function(
+route_vehicles_job <- function(
   orders,
   depots,
   routes = NULL,
@@ -231,15 +231,15 @@ solve_vrp_job <- function(
     cli::cli_abort("Cannot find async VRP service URL for this token")
   }
 
-  .solve_vrp_job$new(
+  .route_vehicles_job$new(
     base_url,
     arcgisutils::as_form_params(params)@params,
-    parse_solve_vrp_results,
+    parse_route_vehicles_results,
     token = token
   )
 }
 
-parse_solve_vrp_results <- function(json) {
+parse_route_vehicles_results <- function(json) {
   compact(list(
     out_unassigned_stops = try_parse(json, "/0/value"),
     out_stops = try_parse(json, "/1/value"),

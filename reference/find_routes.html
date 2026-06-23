@@ -104,12 +104,12 @@ when reordering. Only applies if <code>find_best_sequence = TRUE</code>. Default
 <dt id="arg-restrict-u-turns">restrict_u_turns<a class="anchor" aria-label="anchor" href="#arg-restrict-u-turns"></a></dt>
 <dd><p>Character. Specifies U-turn restrictions. One of:
 <code>"allow_backtrack"</code>, <code>"deadend_intersection"</code>, <code>"deadend"</code>, <code>"no_backtrack"</code>.
-Default: <code>"allow_backtrack"</code>.</p></dd>
+Default: <code>NULL</code>.</p></dd>
 
 
 <dt id="arg-use-hierarchy">use_hierarchy<a class="anchor" aria-label="anchor" href="#arg-use-hierarchy"></a></dt>
 <dd><p>Logical. Whether to use hierarchy when finding routes.
-Default: <code>TRUE</code>.</p></dd>
+Default: <code>NULL</code>.</p></dd>
 
 
 <dt id="arg-impedance-attribute-name">impedance_attribute_name<a class="anchor" aria-label="anchor" href="#arg-impedance-attribute-name"></a></dt>
@@ -199,11 +199,11 @@ Use <code><a href="decode_compressed_geometry.html">decode_compressed_geometry()
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other direct:
-<code><a href="find_closest_facility.html">find_closest_facility()</a></code>,
+<code><a href="find_closest_facilities.html">find_closest_facilities()</a></code>,
 <code><a href="find_service_areas.html">find_service_areas()</a></code>,
+<code><a href="od_cost_matrix.html">od_cost_matrix()</a></code>,
 <code><a href="route_vehicles.html">route_vehicles()</a></code>,
-<code><a href="snap_to_roads.html">snap_to_roads()</a></code>,
-<code><a href="travel_cost_matrix.html">travel_cost_matrix()</a></code></p>
+<code><a href="snap_to_roads.html">snap_to_roads()</a></code></p>
 <p>Other routing:
 <code><a href="find_routes_job.html">find_routes_job()</a></code></p></div>
     </div>

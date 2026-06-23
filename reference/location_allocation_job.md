@@ -207,7 +207,7 @@ Call `$start()` to submit and `$results` to retrieve output.
 ## References
 
 [API
-Reference](https://developers.arcgis.com/rest/routing/solve-location-allocation/)
+Reference](https://developers.arcgis.com/rest/routing/locationAllocation-service-job/)
 
 ## See also
 
@@ -216,10 +216,10 @@ Other async:
 [`download_service_area_results()`](http://r.esri.com/arcgisrouting/reference/download_service_area_results.md),
 [`find_closest_facilities_job()`](http://r.esri.com/arcgisrouting/reference/find_closest_facilities_job.md),
 [`find_routes_job()`](http://r.esri.com/arcgisrouting/reference/find_routes_job.md),
+[`find_service_areas_job()`](http://r.esri.com/arcgisrouting/reference/find_service_areas_job.md),
 [`last_mile_delivery()`](http://r.esri.com/arcgisrouting/reference/last_mile_delivery.md),
 [`od_cost_matrix_job()`](http://r.esri.com/arcgisrouting/reference/od_cost_matrix_job.md),
-[`solve_service_areas_job()`](http://r.esri.com/arcgisrouting/reference/solve_service_areas_job.md),
-[`solve_vrp_job()`](http://r.esri.com/arcgisrouting/reference/solve_vrp_job.md)
+[`route_vehicles_job()`](http://r.esri.com/arcgisrouting/reference/route_vehicles_job.md)
 
 ## Examples
 

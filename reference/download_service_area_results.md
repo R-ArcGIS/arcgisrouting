@@ -27,12 +27,12 @@ Other async:
 [`download_od_results()`](http://r.esri.com/arcgisrouting/reference/download_od_results.md),
 [`find_closest_facilities_job()`](http://r.esri.com/arcgisrouting/reference/find_closest_facilities_job.md),
 [`find_routes_job()`](http://r.esri.com/arcgisrouting/reference/find_routes_job.md),
+[`find_service_areas_job()`](http://r.esri.com/arcgisrouting/reference/find_service_areas_job.md),
 [`last_mile_delivery()`](http://r.esri.com/arcgisrouting/reference/last_mile_delivery.md),
 [`location_allocation_job()`](http://r.esri.com/arcgisrouting/reference/location_allocation_job.md),
 [`od_cost_matrix_job()`](http://r.esri.com/arcgisrouting/reference/od_cost_matrix_job.md),
-[`solve_service_areas_job()`](http://r.esri.com/arcgisrouting/reference/solve_service_areas_job.md),
-[`solve_vrp_job()`](http://r.esri.com/arcgisrouting/reference/solve_vrp_job.md)
+[`route_vehicles_job()`](http://r.esri.com/arcgisrouting/reference/route_vehicles_job.md)
 
 Other service area:
 [`find_service_areas()`](http://r.esri.com/arcgisrouting/reference/find_service_areas.md),
-[`solve_service_areas_job()`](http://r.esri.com/arcgisrouting/reference/solve_service_areas_job.md)
+[`find_service_areas_job()`](http://r.esri.com/arcgisrouting/reference/find_service_areas_job.md)

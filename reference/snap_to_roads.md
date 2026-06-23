@@ -89,16 +89,16 @@ A named list:
 ## References
 
 [API
-Reference](https://developers.arcgis.com/rest/routing/snap-to-roads-service-direct/)
+Reference](https://developers.arcgis.com/rest/routing/snap-to-roads-direct/)
 
 ## See also
 
 Other direct:
-[`find_closest_facility()`](http://r.esri.com/arcgisrouting/reference/find_closest_facility.md),
+[`find_closest_facilities()`](http://r.esri.com/arcgisrouting/reference/find_closest_facilities.md),
 [`find_routes()`](http://r.esri.com/arcgisrouting/reference/find_routes.md),
 [`find_service_areas()`](http://r.esri.com/arcgisrouting/reference/find_service_areas.md),
-[`route_vehicles()`](http://r.esri.com/arcgisrouting/reference/route_vehicles.md),
-[`travel_cost_matrix()`](http://r.esri.com/arcgisrouting/reference/travel_cost_matrix.md)
+[`od_cost_matrix()`](http://r.esri.com/arcgisrouting/reference/od_cost_matrix.md),
+[`route_vehicles()`](http://r.esri.com/arcgisrouting/reference/route_vehicles.md)
 
 ## Examples
 

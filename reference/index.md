@@ -17,7 +17,7 @@ facilities within a given travel time or distance.
 
 - [`find_service_areas()`](http://r.esri.com/arcgisrouting/reference/find_service_areas.md)
   : Solve Service Area
-- [`solve_service_areas_job()`](http://r.esri.com/arcgisrouting/reference/solve_service_areas_job.md)
+- [`find_service_areas_job()`](http://r.esri.com/arcgisrouting/reference/find_service_areas_job.md)
   : Generate Service Areas (Async)
 - [`download_service_area_results()`](http://r.esri.com/arcgisrouting/reference/download_service_area_results.md)
   : Download Service Area Results
@@ -27,8 +27,8 @@ facilities within a given travel time or distance.
 Find one or more nearby facilities from a set of incidents based on
 travel time or distance.
 
-- [`find_closest_facility()`](http://r.esri.com/arcgisrouting/reference/find_closest_facility.md)
-  : Find Closest Facility
+- [`find_closest_facilities()`](http://r.esri.com/arcgisrouting/reference/find_closest_facilities.md)
+  : Find Closest Facilities
 - [`find_closest_facilities_job()`](http://r.esri.com/arcgisrouting/reference/find_closest_facilities_job.md)
   : Find Closest Facilities (Async)
 
@@ -37,8 +37,8 @@ travel time or distance.
 Measure the travel time or distance between every origin and every
 destination in a pair of point sets.
 
-- [`travel_cost_matrix()`](http://r.esri.com/arcgisrouting/reference/travel_cost_matrix.md)
-  : Travel Cost Matrix
+- [`od_cost_matrix()`](http://r.esri.com/arcgisrouting/reference/od_cost_matrix.md)
+  : Origin-Destination Cost Matrix
 - [`od_cost_matrix_job()`](http://r.esri.com/arcgisrouting/reference/od_cost_matrix_job.md)
   : Generate Origin-Destination Cost Matrix (Async)
 - [`download_od_results()`](http://r.esri.com/arcgisrouting/reference/download_od_results.md)
@@ -51,7 +51,7 @@ including clustered last mile delivery problems.
 
 - [`route_vehicles()`](http://r.esri.com/arcgisrouting/reference/route_vehicles.md)
   : Route Vehicles
-- [`solve_vrp_job()`](http://r.esri.com/arcgisrouting/reference/solve_vrp_job.md)
+- [`route_vehicles_job()`](http://r.esri.com/arcgisrouting/reference/route_vehicles_job.md)
   : Solve Vehicle Routing Problem (Async)
 - [`last_mile_delivery()`](http://r.esri.com/arcgisrouting/reference/last_mile_delivery.md)
   : Solve Last Mile Delivery (Async)

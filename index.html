@@ -69,6 +69,10 @@
 
 <p><code>arcgisrouting</code> brings the <a href="https://developers.arcgis.com/rest/routing/" class="external-link">ArcGIS Routing REST API</a> to R. Plan routes, measure travel time and distance, build service areas, route fleets of vehicles, and snap GPS tracks to roads, all returning <a href="https://r-spatial.github.io/sf/" class="external-link"><code>sf</code></a> objects ready for analysis and mapping.</p>
 <p>It is part of the <a href="https://developers.arcgis.com/r-bridge/" class="external-link">R-ArcGIS Bridge</a>.</p>
+<blockquote>
+<p>[!IMPORTANT]</p>
+<p>Using <code>arcgisrouting</code> requires an ArcGIS Online account, an ArcGIS Location Platform account, or an ArcGIS Enterprise server. Routing operations consume ArcGIS credits. For pricing, see the <a href="https://developers.arcgis.com/rest/routing/#pricing" class="external-link">ArcGIS Routing pricing details</a>.</p>
+</blockquote>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -135,22 +139,22 @@
 <tr>
 <td>Service areas</td>
 <td><code><a href="reference/find_service_areas.html">find_service_areas()</a></code></td>
-<td><code><a href="reference/solve_service_areas_job.html">solve_service_areas_job()</a></code></td>
+<td><code><a href="reference/find_service_areas_job.html">find_service_areas_job()</a></code></td>
 </tr>
 <tr>
 <td>Closest facility</td>
-<td><code><a href="reference/find_closest_facility.html">find_closest_facility()</a></code></td>
+<td><code><a href="reference/find_closest_facilities.html">find_closest_facilities()</a></code></td>
 <td><code><a href="reference/find_closest_facilities_job.html">find_closest_facilities_job()</a></code></td>
 </tr>
 <tr>
 <td>Origin-destination cost matrix</td>
-<td><code><a href="reference/travel_cost_matrix.html">travel_cost_matrix()</a></code></td>
+<td><code><a href="reference/od_cost_matrix.html">od_cost_matrix()</a></code></td>
 <td><code><a href="reference/od_cost_matrix_job.html">od_cost_matrix_job()</a></code></td>
 </tr>
 <tr>
 <td>Vehicle routing problem</td>
 <td><code><a href="reference/route_vehicles.html">route_vehicles()</a></code></td>
-<td><code><a href="reference/solve_vrp_job.html">solve_vrp_job()</a></code></td>
+<td><code><a href="reference/route_vehicles_job.html">route_vehicles_job()</a></code></td>
 </tr>
 <tr>
 <td>Last mile delivery</td>
@@ -329,7 +333,6 @@
 <ul class="list-unstyled">
 <li><a href="https://github.com/r-arcgis/arcgisrouting/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/r-arcgis/arcgisrouting/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
-<li><a href="https://github.com/R-ArcGIS/arcgisrouting/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/R-ArcGIS/arcgisrouting/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
 

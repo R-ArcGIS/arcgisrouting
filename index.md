@@ -10,6 +10,14 @@ mapping.
 It is part of the [R-ArcGIS
 Bridge](https://developers.arcgis.com/r-bridge/).
 
+> \[!IMPORTANT\]
+>
+> Using `arcgisrouting` requires an ArcGIS Online account, an ArcGIS
+> Location Platform account, or an ArcGIS Enterprise server. Routing
+> operations consume ArcGIS credits. For pricing, see the [ArcGIS
+> Routing pricing
+> details](https://developers.arcgis.com/rest/routing/#pricing).
+
 ## Installation
 
 Install the development version from GitHub:
@@ -69,10 +77,10 @@ route$routes
 | Capability | Direct Requests | Asynchronous Geoprocessing Job |
 |----|----|----|
 | Routing and directions | [`find_routes()`](http://r.esri.com/arcgisrouting/reference/find_routes.md) | [`find_routes_job()`](http://r.esri.com/arcgisrouting/reference/find_routes_job.md) |
-| Service areas | [`find_service_areas()`](http://r.esri.com/arcgisrouting/reference/find_service_areas.md) | [`solve_service_areas_job()`](http://r.esri.com/arcgisrouting/reference/solve_service_areas_job.md) |
-| Closest facility | [`find_closest_facility()`](http://r.esri.com/arcgisrouting/reference/find_closest_facility.md) | [`find_closest_facilities_job()`](http://r.esri.com/arcgisrouting/reference/find_closest_facilities_job.md) |
-| Origin-destination cost matrix | [`travel_cost_matrix()`](http://r.esri.com/arcgisrouting/reference/travel_cost_matrix.md) | [`od_cost_matrix_job()`](http://r.esri.com/arcgisrouting/reference/od_cost_matrix_job.md) |
-| Vehicle routing problem | [`route_vehicles()`](http://r.esri.com/arcgisrouting/reference/route_vehicles.md) | [`solve_vrp_job()`](http://r.esri.com/arcgisrouting/reference/solve_vrp_job.md) |
+| Service areas | [`find_service_areas()`](http://r.esri.com/arcgisrouting/reference/find_service_areas.md) | [`find_service_areas_job()`](http://r.esri.com/arcgisrouting/reference/find_service_areas_job.md) |
+| Closest facility | [`find_closest_facilities()`](http://r.esri.com/arcgisrouting/reference/find_closest_facilities.md) | [`find_closest_facilities_job()`](http://r.esri.com/arcgisrouting/reference/find_closest_facilities_job.md) |
+| Origin-destination cost matrix | [`od_cost_matrix()`](http://r.esri.com/arcgisrouting/reference/od_cost_matrix.md) | [`od_cost_matrix_job()`](http://r.esri.com/arcgisrouting/reference/od_cost_matrix_job.md) |
+| Vehicle routing problem | [`route_vehicles()`](http://r.esri.com/arcgisrouting/reference/route_vehicles.md) | [`route_vehicles_job()`](http://r.esri.com/arcgisrouting/reference/route_vehicles_job.md) |
 | Last mile delivery |  | [`last_mile_delivery()`](http://r.esri.com/arcgisrouting/reference/last_mile_delivery.md) |
 | Location-allocation |  | [`location_allocation_job()`](http://r.esri.com/arcgisrouting/reference/location_allocation_job.md) |
 | Snap GPS points to roads | [`snap_to_roads()`](http://r.esri.com/arcgisrouting/reference/snap_to_roads.md) |  |

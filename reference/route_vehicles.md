@@ -249,20 +249,20 @@ A named list:
 ## References
 
 [API
-Reference](https://developers.arcgis.com/rest/routing/vehicle-routing-problem-service-direct/)
+Reference](https://developers.arcgis.com/rest/routing/vrp-service-direct/)
 
 ## See also
 
 Other direct:
-[`find_closest_facility()`](http://r.esri.com/arcgisrouting/reference/find_closest_facility.md),
+[`find_closest_facilities()`](http://r.esri.com/arcgisrouting/reference/find_closest_facilities.md),
 [`find_routes()`](http://r.esri.com/arcgisrouting/reference/find_routes.md),
 [`find_service_areas()`](http://r.esri.com/arcgisrouting/reference/find_service_areas.md),
-[`snap_to_roads()`](http://r.esri.com/arcgisrouting/reference/snap_to_roads.md),
-[`travel_cost_matrix()`](http://r.esri.com/arcgisrouting/reference/travel_cost_matrix.md)
+[`od_cost_matrix()`](http://r.esri.com/arcgisrouting/reference/od_cost_matrix.md),
+[`snap_to_roads()`](http://r.esri.com/arcgisrouting/reference/snap_to_roads.md)
 
 Other vrp:
 [`last_mile_delivery()`](http://r.esri.com/arcgisrouting/reference/last_mile_delivery.md),
-[`solve_vrp_job()`](http://r.esri.com/arcgisrouting/reference/solve_vrp_job.md)
+[`route_vehicles_job()`](http://r.esri.com/arcgisrouting/reference/route_vehicles_job.md)
 
 ## Examples
 

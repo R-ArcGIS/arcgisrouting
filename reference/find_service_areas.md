@@ -114,7 +114,7 @@ find_service_areas(
 - use_hierarchy:
 
   Logical. Whether to use hierarchy when finding routes. Default:
-  `TRUE`.
+  `NULL`.
 
 - restrictions:
 
@@ -168,20 +168,20 @@ A list containing the service area results.
 ## References
 
 [API
-Reference](https://developers.arcgis.com/rest/routing/service-area-service-direct/)
+Reference](https://developers.arcgis.com/rest/routing/serviceArea-service-direct/)
 
 ## See also
 
 Other direct:
-[`find_closest_facility()`](http://r.esri.com/arcgisrouting/reference/find_closest_facility.md),
+[`find_closest_facilities()`](http://r.esri.com/arcgisrouting/reference/find_closest_facilities.md),
 [`find_routes()`](http://r.esri.com/arcgisrouting/reference/find_routes.md),
+[`od_cost_matrix()`](http://r.esri.com/arcgisrouting/reference/od_cost_matrix.md),
 [`route_vehicles()`](http://r.esri.com/arcgisrouting/reference/route_vehicles.md),
-[`snap_to_roads()`](http://r.esri.com/arcgisrouting/reference/snap_to_roads.md),
-[`travel_cost_matrix()`](http://r.esri.com/arcgisrouting/reference/travel_cost_matrix.md)
+[`snap_to_roads()`](http://r.esri.com/arcgisrouting/reference/snap_to_roads.md)
 
 Other service area:
 [`download_service_area_results()`](http://r.esri.com/arcgisrouting/reference/download_service_area_results.md),
-[`solve_service_areas_job()`](http://r.esri.com/arcgisrouting/reference/solve_service_areas_job.md)
+[`find_service_areas_job()`](http://r.esri.com/arcgisrouting/reference/find_service_areas_job.md)
 
 ## Examples
 

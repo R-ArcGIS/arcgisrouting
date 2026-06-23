@@ -67,12 +67,12 @@ find_routes(
 
   Character. Specifies U-turn restrictions. One of: `"allow_backtrack"`,
   `"deadend_intersection"`, `"deadend"`, `"no_backtrack"`. Default:
-  `"allow_backtrack"`.
+  `NULL`.
 
 - use_hierarchy:
 
   Logical. Whether to use hierarchy when finding routes. Default:
-  `TRUE`.
+  `NULL`.
 
 - impedance_attribute_name:
 
@@ -178,11 +178,11 @@ Reference](https://developers.arcgis.com/rest/routing/route-service-direct/)
 ## See also
 
 Other direct:
-[`find_closest_facility()`](http://r.esri.com/arcgisrouting/reference/find_closest_facility.md),
+[`find_closest_facilities()`](http://r.esri.com/arcgisrouting/reference/find_closest_facilities.md),
 [`find_service_areas()`](http://r.esri.com/arcgisrouting/reference/find_service_areas.md),
+[`od_cost_matrix()`](http://r.esri.com/arcgisrouting/reference/od_cost_matrix.md),
 [`route_vehicles()`](http://r.esri.com/arcgisrouting/reference/route_vehicles.md),
-[`snap_to_roads()`](http://r.esri.com/arcgisrouting/reference/snap_to_roads.md),
-[`travel_cost_matrix()`](http://r.esri.com/arcgisrouting/reference/travel_cost_matrix.md)
+[`snap_to_roads()`](http://r.esri.com/arcgisrouting/reference/snap_to_roads.md)
 
 Other routing:
 [`find_routes_job()`](http://r.esri.com/arcgisrouting/reference/find_routes_job.md)

@@ -33,7 +33,6 @@ as_specialties <- function(x, key_snake, key_api, arg) {
 #'   or `NULL`.
 #' @param ... Additional arguments passed to methods.
 #' @keywords internal
-#' @export
 as_order_specialties <- function(x, ...) {
   UseMethod("as_order_specialties")
 }

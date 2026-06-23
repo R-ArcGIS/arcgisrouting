@@ -76,6 +76,8 @@ finding routes. Default: \code{NULL} (API default: \code{TRUE}).}
 \item{restrictions}{Character vector. Restriction names to apply.
 Default: \code{NULL}.}
 
+\item{attribute_parameter_values}{List. Additional values for attributes or restrictions, passed through as a JSON object. Default: \code{NULL}.}
+
 \item{origin_destination_line_shape}{Character. Shape of the line feature
 connecting each origin-destination pair in the output matrix. One of:
 \code{"straight_line"} or \code{"none"}. Default: \code{NULL} (API default: \code{"none"}).}
@@ -99,6 +101,8 @@ Default: \code{NULL}.}
 
 \item{polygon_barriers}{Polygon barriers as \code{sf} or \code{sfc} object.
 Default: \code{NULL}.}
+
+\item{save_output_network_analysis_layer}{Logical. Whether to save the analysis as a network analysis layer package file. Default: \code{NULL} (API default: \code{FALSE}).}
 
 \item{output_format}{Character. Format for output features. One of:
 \code{"feature_set"}, \code{"json_file"}, \code{"geojson_file"}. Default:

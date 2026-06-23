@@ -18,7 +18,7 @@
 #' @param x An `sf` or `sfc` object containing point geometries, or `NULL`.
 #' @param ... Additional arguments passed to methods.
 #' @keywords internal
-#' @export
+#' @noRd
 as_point_barriers <- function(x, ...) {
   UseMethod("as_point_barriers")
 }

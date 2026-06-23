@@ -22,7 +22,7 @@
 #' @param x An `sf` or `sfc` object containing line geometries, or `NULL`.
 #' @param ... Additional arguments passed to methods.
 #' @keywords internal
-#' @export
+#' @noRd
 as_polyline_barriers <- function(x, ...) {
   UseMethod("as_polyline_barriers")
 }

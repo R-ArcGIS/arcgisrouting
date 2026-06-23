@@ -87,9 +87,6 @@ Default: \code{c("routes", "directions")}.}
 Default: \code{TRUE}.}
 
 \item{token}{Authorization token. Default: \code{\link[arcgisutils:token]{arcgisutils::arc_token()}}.}
-
-\item{return_directions}{Logical. Whether to generate driving directions.
-Default: \code{TRUE}.}
 }
 \value{
 A list containing the routing resps. The elements returned depend

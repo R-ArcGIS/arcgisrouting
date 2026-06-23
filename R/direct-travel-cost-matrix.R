@@ -9,6 +9,7 @@
 #' @param return_geometry default `character(0)`. A character vector. Valid values: `"origins"`, `"destinations"`, `"barriers"`, `"polyline_barriers"`, `"polygon_barriers"`.
 #' @inheritParams find_closest_facilities
 #' @inheritParams find_service_areas
+#' @inheritParams find_routes
 #'
 #' @returns A named list. Elements present depend on `return_geometry` and `output_type`:
 #' - `od_cost_matrix`: nested cost matrix returned when `output_type = "sparse_matrix"`. A list with `costAttributeNames` and, per origin ID, a list mapping destination ID to its cost values.

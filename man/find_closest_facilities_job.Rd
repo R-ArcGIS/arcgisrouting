@@ -88,6 +88,8 @@ finding routes. Default: \code{NULL} (API default: \code{TRUE}).}
 \item{restrictions}{Character vector. Restriction names to apply.
 Default: \code{NULL}.}
 
+\item{attribute_parameter_values}{List. Additional values for attributes or restrictions, passed through as a JSON object. Default: \code{NULL}.}
+
 \item{time_impedance}{Character. Time-based impedance. One of:
 \code{"minutes"}, \code{"travel_time"}, \code{"walk_time"}, \code{"truck_minutes"},
 \code{"truck_travel_time"}. Default: \code{NULL}.}
@@ -131,6 +133,8 @@ One of: \code{"desktop"}, \code{"navigation"}. Default: \code{NULL}.}
 
 \item{save_route_data}{Logical. Whether the route data is saved as a \code{.zip}
 file. Default: \code{NULL} (API default: \code{FALSE}).}
+
+\item{save_output_network_analysis_layer}{Logical. Whether to save the analysis as a network analysis layer package file. Default: \code{NULL} (API default: \code{FALSE}).}
 
 \item{output_format}{Character. Format for output features. One of:
 \code{"feature_set"}, \code{"json_file"}, \code{"geojson_file"}. Default:

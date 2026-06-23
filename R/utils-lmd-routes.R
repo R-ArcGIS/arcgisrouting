@@ -34,7 +34,7 @@ validate_start_time_hms <- function(x) {
 #'   or `NULL`.
 #' @param ... Additional arguments passed to methods.
 #' @keywords internal
-#' @export
+#' @noRd
 as_lmd_routes <- function(x, ...) {
   UseMethod("as_lmd_routes")
 }

@@ -9,7 +9,6 @@ numbered_field_lu <- function(snake_prefix, api_prefix, n = 9L) {
 }
 
 #' @noRd
-#' @export
 as_lmd_orders <- function(x, ...) {
   UseMethod("as_lmd_orders")
 }

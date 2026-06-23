@@ -35,15 +35,41 @@ od_cost_matrix(
 
 \item{destinations}{default \code{origins}. An \code{sf} or \code{sfc} object containing point geometries representing the ending points.}
 
+\item{travel_mode}{Character. The name of the travel mode to use. See
+\code{\link[=get_travel_modes]{get_travel_modes()}} for available options. Default: \code{NULL}.}
+
 \item{default_cutoff}{default \code{NULL}. A numeric scalar. The travel time or distance value at which to stop searching for facilities.}
 
 \item{default_target_destination_count}{default \code{NULL}. An integer scalar. The maximum number of destinations to find per origin.}
 
 \item{output_type}{default \code{NULL}. A scalar character. One of \code{"no_lines"}, \code{"straight_lines"}, \code{"sparse_matrix"}. Controls whether route geometry is returned.}
 
+\item{time_of_day}{default \code{NULL}. A scalar date-time. Either a \code{POSIXt} scalar or a character string parseable by \code{as.POSIXlt()}. The time and date at which travel begins.}
+
+\item{u_turns}{default \code{NULL}. A scalar character. U-turn policy at junctions. One of \code{"allow_backtrack"}, \code{"deadend_intersection"}, \code{"deadend"}, \code{"no_backtrack"}.}
+
+\item{use_hierarchy}{Logical. Whether to use hierarchy when finding routes.
+Default: \code{NULL}.}
+
+\item{impedance}{default \code{NULL}. A scalar character. The impedance to minimize. One of \code{"travel_time"}, \code{"minutes"}, \code{"truck_travel_time"}, \code{"truck_minutes"}, \code{"walk_time"}, \code{"miles"}, \code{"kilometers"}.}
+
+\item{accumulate_impedance}{default \code{NULL}. A character vector. Additional impedance values to accumulate.}
+
+\item{restrictions}{Character vector. Restriction names to honor.
+Default: \code{NULL}.}
+
 \item{attribute_parameter_values}{default \code{NULL}. A list of objects. Additional values required by an attribute or restriction.}
 
+\item{point_barriers}{default \code{NULL}. An \code{sf} or \code{sfc} object of point geometries representing barriers to restrict or add cost to travel.}
+
+\item{line_barriers}{default \code{NULL}. An \code{sf} or \code{sfc} object of line geometries representing barriers to restrict or add cost to travel.}
+
+\item{polygon_barriers}{Polygon barriers as \code{sf} or \code{sfc} object. Default: \code{NULL}.}
+
 \item{return_geometry}{default \code{character(0)}. A character vector. Valid values: \code{"origins"}, \code{"destinations"}, \code{"barriers"}, \code{"polyline_barriers"}, \code{"polygon_barriers"}.}
+
+\item{ignore_invalid_locations}{Logical. Whether to ignore invalid locations.
+Default: \code{TRUE}.}
 
 \item{return_empty_results}{default \code{FALSE}. A logical scalar. Returns empty results instead of an error on failure.}
 
@@ -52,6 +78,8 @@ od_cost_matrix(
 \item{locate_settings}{default \code{NULL}. A list controlling how inputs are located on the network.}
 
 \item{crs}{default \code{4326}. The coordinate reference system of the output geometries. Passed to \code{arcgisutils::as_spatial_reference()}.}
+
+\item{token}{Authorization token. Default: \code{\link[arcgisutils:token]{arcgisutils::arc_token()}}.}
 }
 \value{
 A named list. Elements present depend on \code{return_geometry} and \code{output_type}:

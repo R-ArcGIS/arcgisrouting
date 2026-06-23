@@ -8,7 +8,7 @@
 #'   or `NULL`.
 #' @param ... Additional arguments passed to methods.
 #' @keywords internal
-#' @export
+#' @noRd
 as_lmd_zones <- function(x, ...) {
   UseMethod("as_lmd_zones")
 }

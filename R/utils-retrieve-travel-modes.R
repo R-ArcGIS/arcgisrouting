@@ -7,6 +7,7 @@
 #' Retrieves the travel modes supported by the routing services associated with
 #' the provided token.
 #'
+#' @param error_call The calling environment used for error reporting. Default: [rlang::caller_call()].
 #' @inheritParams find_routes
 #'
 #' @returns A list describing the supported travel modes, including a

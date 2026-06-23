@@ -20,7 +20,7 @@
 #' @param x An `sfc` or `sf` object containing point geometries
 #' @param ... Additional arguments passed to methods
 #' @keywords internal
-#' @export
+#' @noRd
 as_stops <- function(x, ...) {
   UseMethod("as_stops")
 }

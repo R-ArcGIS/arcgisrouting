@@ -95,6 +95,10 @@ locations for routes.}
 \item{uturn_policy}{default \code{NULL}. A scalar character. One of \code{"allow_uturn"},
 \code{"allow_dead_ends_and_intersections_only"}, \code{"allow_dead_ends_only"}, \code{"no_uturns"}.}
 
+\item{point_barriers}{default \code{NULL}. An \code{sf} or \code{sfc} object of point geometries representing barriers to restrict or add cost to travel.}
+
+\item{line_barriers}{default \code{NULL}. An \code{sf} or \code{sfc} object of line geometries representing barriers to restrict or add cost to travel.}
+
 \item{polygon_barriers}{Polygon barriers as \code{sf} or \code{sfc} object. Default: \code{NULL}.}
 
 \item{use_hierarchy_in_analysis}{default \code{TRUE}. A logical scalar. Whether to use

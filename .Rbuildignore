@@ -7,7 +7,7 @@ dev/
 ^docs$
 ^pkgdown$
 ^\.github$
-.claude/
+.claude
 README.qmd
 README.md
 justfile

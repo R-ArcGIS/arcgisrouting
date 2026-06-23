@@ -30,8 +30,6 @@
 #' @param barriers Point barriers as `sf` or `sfc` object. Default: `NULL`.
 #' @param polyline_barriers Line barriers as `sf` or `sfc` object. Default: `NULL`.
 #' @param polygon_barriers Polygon barriers as `sf` or `sfc` object. Default: `NULL`.
-#' @param return_directions Logical. Whether to generate driving directions.
-#'   Default: `TRUE`.
 #' @param directions_language Character. Language code for directions (e.g., `"en"`).
 #'   Default: `"en"`.
 #' @param directions_type Character. Specifies the content and verbosity of driving

@@ -11,6 +11,8 @@ retrieve_travel_modes(
 }
 \arguments{
 \item{token}{Authorization token. Default: \code{\link[arcgisutils:token]{arcgisutils::arc_token()}}.}
+
+\item{error_call}{The calling environment used for error reporting. Default: \code{\link[rlang:stack]{rlang::caller_call()}}.}
 }
 \value{
 A list describing the supported travel modes, including a

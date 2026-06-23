@@ -16,9 +16,9 @@ Imports:
     httr2,
     sf,
     yyjsonr,
-    S7,
-    R6,
     vctrs,
+    RcppSimdJson,
+    rlang,
     hms
 Depends:
     R (>= 4.3)

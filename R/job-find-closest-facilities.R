@@ -31,6 +31,8 @@
 #'   route geometry. Default: `NULL` (API default: `10` meters).
 #' @param save_route_data Logical. Whether the route data is saved as a `.zip`
 #'   file. Default: `NULL` (API default: `FALSE`).
+#' @param attribute_parameter_values List. Additional values for attributes or restrictions, passed through as a JSON object. Default: `NULL`.
+#' @param save_output_network_analysis_layer Logical. Whether to save the analysis as a network analysis layer package file. Default: `NULL` (API default: `FALSE`).
 #' @inheritParams find_routes_job
 #' @inheritParams find_service_areas_job
 #'
@@ -272,7 +274,6 @@ validate_cf_time_of_day_usage <- function(
 
 
 #' @noRd
-#' @export
 as_incidents <- function(x, ...) {
   UseMethod("as_incidents")
 }
@@ -329,7 +330,6 @@ as_incidents.sf <- function(x, verbose = TRUE, ...) {
 }
 
 #' @noRd
-#' @export
 as_facilities <- function(x, ...) {
   UseMethod("as_facilities")
 }

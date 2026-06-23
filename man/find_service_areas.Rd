@@ -46,6 +46,8 @@ find_service_areas(
 
 \item{travel_direction}{default \code{"away"}. A scalar character. One of \code{"away"} (away from facility) or \code{"towards"} (toward facility).}
 
+\item{time_of_day}{default \code{NULL}. A scalar date-time. Either a \code{POSIXt} scalar or a character string parseable by \code{as.POSIXlt()}. The time and date at which travel begins.}
+
 \item{output_polygons}{default \code{"simplified"}. A scalar character or \code{NULL} (no polygons). One of \code{"simplified"} or \code{"detailed"}.}
 
 \item{split_polygons_at_breaks}{default \code{TRUE}. A logical scalar. When \code{TRUE}, service areas appear as rings between breaks. When \code{FALSE}, each area is a disk from the facility to the break.}
@@ -64,8 +66,14 @@ find_service_areas(
 
 \item{return_geometry}{default \code{"service_areas"}. A character vector. Valid values: \code{"service_areas"}, \code{"sa_lines"}, \code{"facilities"}, \code{"barriers"}, \code{"polyline_barriers"}, \code{"polygon_barriers"}.}
 
+\item{u_turns}{default \code{NULL}. A scalar character. U-turn policy at junctions. One of \code{"allow_backtrack"}, \code{"deadend_intersection"}, \code{"deadend"}, \code{"no_backtrack"}.}
+
 \item{use_hierarchy}{Logical. Whether to use hierarchy when finding routes.
 Default: \code{NULL}.}
+
+\item{impedance}{default \code{NULL}. A scalar character. The impedance to minimize. One of \code{"travel_time"}, \code{"minutes"}, \code{"truck_travel_time"}, \code{"truck_minutes"}, \code{"walk_time"}, \code{"miles"}, \code{"kilometers"}.}
+
+\item{accumulate_impedance}{default \code{NULL}. A character vector. Additional impedance values to accumulate.}
 
 \item{restrictions}{Character vector. Restriction names to honor.
 Default: \code{NULL}.}
@@ -73,6 +81,10 @@ Default: \code{NULL}.}
 \item{trim_polygon_distance}{default \code{100}. An integer scalar. The distance within which the service area polygon extends from the network.}
 
 \item{trim_polygon_distance_units}{default \code{"meters"}. A scalar character. Units for \code{trim_polygon_distance}. One of \code{"meters"}, \code{"kilometers"}, \code{"feet"}, \code{"miles"}, \code{"nautical_miles"}, \code{"yards"}.}
+
+\item{point_barriers}{default \code{NULL}. An \code{sf} or \code{sfc} object of point geometries representing barriers to restrict or add cost to travel.}
+
+\item{line_barriers}{default \code{NULL}. An \code{sf} or \code{sfc} object of line geometries representing barriers to restrict or add cost to travel.}
 
 \item{polygon_barriers}{Polygon barriers as \code{sf} or \code{sfc} object. Default: \code{NULL}.}
 

@@ -45,6 +45,8 @@
 #' @param allocation_line_shape Character. Type of line features output by the
 #'   request. One of: `"straight_line"` or `"none"`. Default: `NULL`
 #'   (API default: `"straight_line"`).
+#' @param attribute_parameter_values List. Additional values for attributes or restrictions, passed through as a JSON object. Default: `NULL`.
+#' @param save_output_network_analysis_layer Logical. Whether to save the analysis as a network analysis layer package file. Default: `NULL` (API default: `FALSE`).
 #' @inheritParams find_routes_job
 #' @inheritParams find_service_areas_job
 #'
@@ -338,7 +340,6 @@ validate_allocation_line_shape <- function(
 #' Convert spatial objects to facilities or demand points
 #'
 #' @noRd
-#' @export
 as_la_facilities <- function(x, ...) {
   UseMethod("as_la_facilities")
 }
@@ -369,7 +370,6 @@ as_la_facilities.sf <- function(x, verbose = TRUE, ...) {
 }
 
 #' @noRd
-#' @export
 as_demand_points <- function(x, ...) {
   UseMethod("as_demand_points")
 }

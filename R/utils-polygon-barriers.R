@@ -18,7 +18,7 @@
 #' @param x An `sf` or `sfc` object containing polygon geometries, or `NULL`.
 #' @param ... Additional arguments passed to methods.
 #' @keywords internal
-#' @export
+#' @noRd
 as_polygon_barriers <- function(x, ...) {
   UseMethod("as_polygon_barriers")
 }

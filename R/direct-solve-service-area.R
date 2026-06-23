@@ -18,8 +18,13 @@
 #' @param output_geometry_precision default `10`. A numeric scalar. Simplification tolerance applied to output geometry.
 #' @param output_geometry_precision_units default `"meters"`. A scalar character. Units for `output_geometry_precision`. Same valid values as `trim_polygon_distance_units`.
 #' @param crs default `4326`. The coordinate reference system of the output geometries. Passed to `arcgisutils::as_spatial_reference()`.
+#' @param time_of_day default `NULL`. A scalar date-time. Either a `POSIXt` scalar or a character string parseable by `as.POSIXlt()`. The time and date at which travel begins.
+#' @param u_turns default `NULL`. A scalar character. U-turn policy at junctions. One of `"allow_backtrack"`, `"deadend_intersection"`, `"deadend"`, `"no_backtrack"`.
+#' @param impedance default `NULL`. A scalar character. The impedance to minimize. One of `"travel_time"`, `"minutes"`, `"truck_travel_time"`, `"truck_minutes"`, `"walk_time"`, `"miles"`, `"kilometers"`.
+#' @param accumulate_impedance default `NULL`. A character vector. Additional impedance values to accumulate.
+#' @param point_barriers default `NULL`. An `sf` or `sfc` object of point geometries representing barriers to restrict or add cost to travel.
+#' @param line_barriers default `NULL`. An `sf` or `sfc` object of line geometries representing barriers to restrict or add cost to travel.
 #' @inheritParams find_routes
-#' @inheritParams od_cost_matrix
 #'
 #' @returns A list containing the service area results.
 #'

@@ -1,10 +1,4 @@
-# library(arcgisutils)
-
-# token <- auth_user()
-# modes <- retrieve_travel_modes(token)
-# x <- modes$defaultTravelMode
-
-.validate_travel_mode <- function(
+validate_travel_mode <- function(
   x,
   error_arg = rlang::caller_arg(x),
   error_call = rlang::caller_call(),
@@ -70,10 +64,11 @@
 #'
 #' @family travel modes
 #' @export
+#' @examples
+#' \dontrun{
+#' get_travel_modes(auth_user())
+#' }
 get_travel_modes <- function(token = arc_token()) {
   modes <- retrieve_travel_modes(token, rlang::caller_call())
   modes[["supportedTravelModes"]][["name"]]
 }
-
-
-validate_travel_mode <- .validate_travel_mode

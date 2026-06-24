@@ -16,8 +16,9 @@ A character vector of supported travel mode names.
 Returns the names of the travel modes supported by the routing services
 associated with the provided token.
 }
-\seealso{
-Other travel modes: 
-\code{\link{retrieve_travel_modes}()}
+\examples{
+\dontrun{
+get_travel_modes(auth_user())
+}
 }
 \concept{travel modes}

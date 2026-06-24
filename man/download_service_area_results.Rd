@@ -18,6 +18,26 @@ Downloads and unzips the result file produced by a completed service area
 geoprocessing job, parsing each JSON output into a named list of data frames
 with snake_case column names.
 }
+\examples{
+\dontrun{
+library(sf)
+library(arcgisutils)
+set_arc_token(auth_user())
+
+facilities <- st_sfc(
+  st_point(c(-122.4194, 37.7749)),
+  st_point(c(-122.0312, 37.3318)),
+  crs = 4326
+)
+
+job <- find_service_areas_job(facilities, break_values = c(5, 10, 15))
+job$start()
+job$await()
+
+download_service_area_results(job)
+}
+
+}
 \seealso{
 Other async: 
 \code{\link{download_od_results}()},

@@ -11,3 +11,4 @@ dev/
 README.qmd
 README.md
 justfile
+^cran-comments\.md$

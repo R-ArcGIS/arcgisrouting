@@ -127,7 +127,6 @@ reference:
       Discover the modes of transportation available to your organization.
     contents:
       - get_travel_modes
-      - retrieve_travel_modes
 
   - title: Geometry helpers
     desc: >

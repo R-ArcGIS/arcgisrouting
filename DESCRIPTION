@@ -1,10 +1,17 @@
 Package: arcgisrouting
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Access the ArcGIS Routing and Network Analysis Services
+Version: 1.0.0
 Authors@R: 
     person("Josiah", "Parry", , "josiah.parry@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9910-865X"))
-Description: What the package does (one paragraph).
+Description: Bindings to the 'ArcGIS' Routing REST API
+    (<https://developers.arcgis.com/rest/routing/>) for solving network
+    analysis problems. Plan routes and generate driving directions, measure
+    travel time and distance with origin-destination cost matrices, build
+    service areas, find the closest facilities, route fleets of vehicles, and
+    snap GPS tracks to roads. Both synchronous requests and asynchronous
+    geoprocessing jobs are supported, returning simple features ('sf') objects
+    ready for analysis and mapping.
 License: Apache License (>= 2)
 Encoding: UTF-8
 Language: en

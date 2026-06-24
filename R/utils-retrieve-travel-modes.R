@@ -13,8 +13,8 @@
 #' @returns A list describing the supported travel modes, including a
 #'   `supportedTravelModes` data frame.
 #'
-#' @family travel modes
-#' @export
+#' @keywords internal
+#' @noRd
 retrieve_travel_modes <- function(
   token = arcgisutils::arc_token(),
   error_call = rlang::caller_call()

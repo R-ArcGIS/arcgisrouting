@@ -27,12 +27,6 @@ as_specialties <- function(x, key_snake, key_api, arg) {
   arcgisutils::as_esri_featureset(x)
 }
 
-#' Convert a data.frame to Last Mile Delivery order specialties input
-#'
-#' @param x A `data.frame` with columns `order_name` and `specialty_name`,
-#'   or `NULL`.
-#' @param ... Additional arguments passed to methods.
-#' @keywords internal
 as_order_specialties <- function(x, ...) {
   UseMethod("as_order_specialties")
 }
@@ -47,13 +41,6 @@ as_order_specialties.data.frame <- function(x, ...) {
   as_specialties(x, "order_name", "OrderName", "order_specialties")
 }
 
-#' Convert a data.frame to Last Mile Delivery route specialties input
-#'
-#' @param x A `data.frame` with columns `route_name` and `specialty_name`,
-#'   or `NULL`.
-#' @param ... Additional arguments passed to methods.
-#' @keywords internal
-#' @export
 as_route_specialties <- function(x, ...) {
   UseMethod("as_route_specialties")
 }

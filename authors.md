@@ -10,14 +10,14 @@
 Source:
 [`DESCRIPTION`](https://github.com/r-arcgis/arcgisrouting/blob/HEAD/DESCRIPTION)
 
-Parry J (2026). *arcgisrouting: What the Package Does (One Line, Title
-Case)*. R package version 0.0.0.9000,
+Parry J (2026). *arcgisrouting: Access the ArcGIS Routing and Network
+Analysis Services*. R package version 1.0.0,
 <http://r.esri.com/arcgisrouting/>.
 
     @Manual{,
-      title = {arcgisrouting: What the Package Does (One Line, Title Case)},
+      title = {arcgisrouting: Access the ArcGIS Routing and Network Analysis Services},
       author = {Josiah Parry},
       year = {2026},
-      note = {R package version 0.0.0.9000},
+      note = {R package version 1.0.0},
       url = {http://r.esri.com/arcgisrouting/},
     }

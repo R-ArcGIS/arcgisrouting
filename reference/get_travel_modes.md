@@ -20,7 +20,10 @@ get_travel_modes(token = arc_token())
 
 A character vector of supported travel mode names.
 
-## See also
+## Examples
 
-Other travel modes:
-[`retrieve_travel_modes()`](http://r.esri.com/arcgisrouting/reference/retrieve_travel_modes.md)
+``` r
+if (FALSE) { # \dontrun{
+get_travel_modes(auth_user())
+} # }
+```

@@ -36,3 +36,31 @@ Other async:
 Other od:
 [`od_cost_matrix()`](http://r.esri.com/arcgisrouting/reference/od_cost_matrix.md),
 [`od_cost_matrix_job()`](http://r.esri.com/arcgisrouting/reference/od_cost_matrix_job.md)
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+library(sf)
+library(arcgisutils)
+set_arc_token(auth_user())
+
+origins <- st_sfc(
+  st_point(c(-122.4194, 37.7749)),
+  st_point(c(-122.4313, 37.7793)),
+  crs = 4326
+)
+
+destinations <- st_sfc(
+  st_point(c(-122.4083, 37.7858)),
+  st_point(c(-122.4000, 37.7900)),
+  crs = 4326
+)
+
+job <- od_cost_matrix_job(origins, destinations)
+job$start()
+job$await()
+
+download_od_results(job)
+} # }
+```

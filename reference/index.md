@@ -77,8 +77,6 @@ Discover the modes of transportation available to your organization.
 
 - [`get_travel_modes()`](http://r.esri.com/arcgisrouting/reference/get_travel_modes.md)
   : Get available travel modes
-- [`retrieve_travel_modes()`](http://r.esri.com/arcgisrouting/reference/retrieve_travel_modes.md)
-  : Retrieve Available Travel Modes
 
 ## Geometry helpers
 

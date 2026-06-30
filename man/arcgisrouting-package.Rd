@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Bindings to the 'ArcGIS' Routing REST API (\url{https://developers.arcgis.com/rest/routing/}) for solving network analysis problems. Plan routes and generate driving directions, measure travel time and distance with origin-destination cost matrices, build service areas, find the closest facilities, route fleets of vehicles, and snap GPS tracks to roads. Both synchronous requests and asynchronous geoprocessing jobs are supported, returning simple features ('sf') objects ready for analysis and mapping.
+Bindings to the ArcGIS Routing REST API (\url{https://developers.arcgis.com/rest/routing/}) for solving network analysis problems. Plan routes and generate driving directions, measure travel time and distance with origin-destination cost matrices, build service areas, find the closest facilities, route fleets of vehicles, and snap GPS tracks to roads. Both synchronous requests and asynchronous geoprocessing jobs are supported, returning simple features ('sf') objects ready for analysis and mapping.
 }
 \seealso{
 Useful links:

@@ -4,7 +4,7 @@ Version: 1.0.0
 Authors@R: 
     person("Josiah", "Parry", , "josiah.parry@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9910-865X"))
-Description: Bindings to the 'ArcGIS' Routing REST API
+Description: Bindings to the ArcGIS Routing REST API
     (<https://developers.arcgis.com/rest/routing/>) for solving network
     analysis problems. Plan routes and generate driving directions, measure
     travel time and distance with origin-destination cost matrices, build

@@ -66,7 +66,12 @@ validate_travel_mode <- function(
 #' @export
 #' @examples
 #' \dontrun{
-#' get_travel_modes(auth_user())
+#' # This example is not executed since it requires a network connection
+#' # to ArcGIS Online and a valid authentication token
+#' library(arcgisutils)
+#' set_arc_token(auth_user())
+#'
+#' get_travel_modes()
 #' }
 get_travel_modes <- function(token = arc_token()) {
   modes <- retrieve_travel_modes(token, rlang::caller_call())

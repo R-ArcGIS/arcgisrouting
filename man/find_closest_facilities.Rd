@@ -137,6 +137,8 @@ Finds one or more nearby facilities from incidents based on travel time or dista
 }
 \examples{
 \dontrun{
+# This example is not executed since it requires a network connection
+# to ArcGIS Online and a valid authentication token
 library(sf)
 library(arcgisutils)
 set_arc_token(auth_user())

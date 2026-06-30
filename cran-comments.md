@@ -6,3 +6,4 @@
 
 - Note that "ArcGIS" is not a software but a brand name therefore it is not quoted.
 - All examples are gated by `\dontrun{}` as these require an authentication token and cost money to use by the upstream service.
+- All examples now include appropriate comments indicating that an internet connection and a user account are required

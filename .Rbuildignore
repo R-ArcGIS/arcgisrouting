@@ -12,3 +12,4 @@ README.qmd
 README.md
 justfile
 ^cran-comments\.md$
+^CRAN-SUBMISSION$

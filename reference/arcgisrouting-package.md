@@ -1,6 +1,6 @@
 # arcgisrouting: Access the ArcGIS Routing and Network Analysis Services
 
-Bindings to the 'ArcGIS' Routing REST API
+Bindings to the ArcGIS Routing REST API
 (<https://developers.arcgis.com/rest/routing/>) for solving network
 analysis problems. Plan routes and generate driving directions, measure
 travel time and distance with origin-destination cost matrices, build

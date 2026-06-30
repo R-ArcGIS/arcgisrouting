@@ -24,6 +24,11 @@ A character vector of supported travel mode names.
 
 ``` r
 if (FALSE) { # \dontrun{
-get_travel_modes(auth_user())
+# This example is not executed since it requires a network connection
+# to ArcGIS Online and a valid authentication token
+library(arcgisutils)
+set_arc_token(auth_user())
+
+get_travel_modes()
 } # }
 ```
